@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BC2Fabric Preview | BC2 Fabric Documentation</title>
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+    <style>
+      .iframe-wrapper {
+        position: relative;
+        padding-top: 62.5%;
+        border-radius: 1rem;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+        border: 1px solid rgba(15, 23, 42, 0.06);
+        background: #fff;
+      }
+
+      .iframe-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      .iframe-fallback {
+        padding: 2rem;
+        text-align: center;
+        color: var(--muted-text-color);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="docs-layout">
+      <aside class="sidebar">
+        <div class="sidebar-inner">
+          <h1>BC2 Fabric Docs</h1>
+
+          <nav>
+            <div class="nav-section">
+              <div class="nav-section-title">Getting Started</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="/index.html" data-doc-link>Welcome</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/getting-started/bc2fabric-preview.html" data-doc-link>BC2Fabric Preview</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/getting-started/quickstart.html" data-doc-link>Quickstart</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Guides</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="/docs/guides/architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/guides/integration.html" data-doc-link>Integration</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/guides/best-practices.html" data-doc-link>Best Practices</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Reference</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="/docs/reference/api-overview.html" data-doc-link>API Overview</a>
+                  <ul class="nav-sublist">
+                    <li class="nav-subitem">
+                      <a href="/docs/reference/authentication.html" data-doc-link>Authentication</a>
+                    </li>
+                    <li class="nav-subitem">
+                      <a href="/docs/reference/webhooks.html" data-doc-link>Webhooks</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/reference/cli.html" data-doc-link>CLI</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header>
+          <p class="eyebrow">Preview</p>
+          <h1>BC2Fabric.com Embedded Preview</h1>
+          <p>
+            The live homepage of <a href="https://bc2fabric.com" target="_blank" rel="noreferrer">bc2fabric.com</a>
+            is embedded below for quick reference during documentation review.
+          </p>
+        </header>
+
+        <section class="content-card">
+          <h2>Embedded site</h2>
+          <div class="iframe-wrapper">
+            <iframe
+              src="https://bc2fabric.com"
+              title="BC2Fabric homepage preview"
+              loading="lazy"
+              allowfullscreen
+            ></iframe>
+            <div class="iframe-fallback">
+              <p>
+                If the site does not load inside the frame, open it directly:
+                <a href="https://bc2fabric.com" target="_blank" rel="noreferrer">https://bc2fabric.com</a>.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/assets/js/main.js"></script>
+  </body>
+</html>

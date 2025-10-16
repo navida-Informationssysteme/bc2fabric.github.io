@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quickstart | BC2 Fabric Documentation</title>
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+  </head>
+  <body>
+    <div class="docs-layout">
+      <aside class="sidebar">
+        <div class="sidebar-inner">
+          <h1>BC2 Fabric Docs</h1>
+
+          <nav>
+            <div class="nav-section">
+              <div class="nav-section-title">Getting Started</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="/index.html" data-doc-link>Welcome</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/getting-started/bc2fabric-preview.html" data-doc-link>BC2Fabric Preview</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/getting-started/quickstart.html" data-doc-link>Quickstart</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Guides</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="/docs/guides/architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/guides/integration.html" data-doc-link>Integration</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/guides/best-practices.html" data-doc-link>Best Practices</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Reference</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="/docs/reference/api-overview.html" data-doc-link>API Overview</a>
+                  <ul class="nav-sublist">
+                    <li class="nav-subitem">
+                      <a href="/docs/reference/authentication.html" data-doc-link>Authentication</a>
+                    </li>
+                    <li class="nav-subitem">
+                      <a href="/docs/reference/webhooks.html" data-doc-link>Webhooks</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/reference/cli.html" data-doc-link>CLI</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header>
+          <p class="eyebrow">Getting Started</p>
+          <h1>Quickstart</h1>
+          <p>
+            Set up your environment and connect to BC2 Fabric in under 10 minutes.
+          </p>
+        </header>
+
+        <section class="content-card">
+          <h2>Prerequisites</h2>
+          <ul>
+            <li>BC2 Fabric account with API access enabled.</li>
+            <li>Node.js 18+ or Python 3.11+ installed locally.</li>
+            <li>Access to your organization's staging environment.</li>
+          </ul>
+
+          <h2>1. Install the CLI</h2>
+          <pre><code>npm install -g @bc2fabric/cli</code></pre>
+          <p>
+            The CLI bootstraps projects, manages configuration, and inspects deployments.
+          </p>
+
+          <h2>2. Authenticate</h2>
+          <pre><code>bc2 login --client-id &lt;CLIENT_ID&gt; --client-secret &lt;CLIENT_SECRET&gt;</code></pre>
+          <p>
+            Credentials can be generated in the BC2 Fabric console. Authentication stores a
+            short-lived session on your workstation.
+          </p>
+
+          <h2>3. Create a workspace</h2>
+          <pre><code>bc2 init --workspace my-first-app</code></pre>
+          <p>
+            The command scaffolds a minimal project, installs dependencies, and provisions a
+            sandbox tenant for experimentation.
+          </p>
+
+          <h2>4. Deploy</h2>
+          <pre><code>bc2 deploy</code></pre>
+          <p>
+            Deployments automatically sync your configuration and emit structured logs you can
+            inspect in the console or via <a href="/docs/reference/webhooks.html">webhooks</a>.
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <script src="/assets/js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>API Overview | BC2 Fabric Documentation</title>
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+  </head>
+  <body>
+    <div class="docs-layout">
+      <aside class="sidebar">
+        <div class="sidebar-inner">
+          <h1>BC2 Fabric Docs</h1>
+
+          <nav>
+            <div class="nav-section">
+              <div class="nav-section-title">Getting Started</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="/index.html" data-doc-link>Welcome</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/getting-started/bc2fabric-preview.html" data-doc-link>BC2Fabric Preview</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/getting-started/quickstart.html" data-doc-link>Quickstart</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Guides</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="/docs/guides/architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/guides/integration.html" data-doc-link>Integration</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/guides/best-practices.html" data-doc-link>Best Practices</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Reference</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="/docs/reference/api-overview.html" data-doc-link>API Overview</a>
+                  <ul class="nav-sublist">
+                    <li class="nav-subitem">
+                      <a href="/docs/reference/authentication.html" data-doc-link>Authentication</a>
+                    </li>
+                    <li class="nav-subitem">
+                      <a href="/docs/reference/webhooks.html" data-doc-link>Webhooks</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/reference/cli.html" data-doc-link>CLI</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header>
+          <p class="eyebrow">Reference</p>
+          <h1>API Overview</h1>
+          <p>
+            The BC2 Fabric API is a RESTful interface with predictable resources and consistent
+            error handling patterns.
+          </p>
+        </header>
+
+        <section class="content-card">
+          <h2>Base URL</h2>
+          <pre><code>https://api.bc2fabric.com/v1</code></pre>
+
+          <h2>Common headers</h2>
+          <pre><code>Authorization: Bearer &lt;token&gt;
+X-BC2-Tenant: &lt;tenant-id&gt;
+Content-Type: application/json
+Accept: application/json</code></pre>
+
+          <h2>Pagination</h2>
+          <p>
+            All list endpoints support cursor-based pagination via the <code>next_cursor</code>
+            field. Pass the cursor value in the <code>cursor</code> query parameter to fetch the
+            next page.
+          </p>
+
+          <h2>Error format</h2>
+          <pre><code>{
+  "error": {
+    "code": "resource_not_found",
+    "message": "The requested resource does not exist.",
+    "request_id": "b9e8f8"
+  }
+}</code></pre>
+        </section>
+      </main>
+    </div>
+
+    <script src="/assets/js/main.js"></script>
+  </body>
+</html>

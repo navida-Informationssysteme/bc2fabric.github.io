@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Integration Guide | BC2 Fabric Documentation</title>
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+  </head>
+  <body>
+    <div class="docs-layout">
+      <aside class="sidebar">
+        <div class="sidebar-inner">
+          <h1>BC2 Fabric Docs</h1>
+
+          <nav>
+            <div class="nav-section">
+              <div class="nav-section-title">Getting Started</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="/index.html" data-doc-link>Welcome</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/getting-started/bc2fabric-preview.html" data-doc-link>BC2Fabric Preview</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/getting-started/quickstart.html" data-doc-link>Quickstart</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Guides</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="/docs/guides/architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/guides/integration.html" data-doc-link>Integration</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/guides/best-practices.html" data-doc-link>Best Practices</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Reference</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="/docs/reference/api-overview.html" data-doc-link>API Overview</a>
+                  <ul class="nav-sublist">
+                    <li class="nav-subitem">
+                      <a href="/docs/reference/authentication.html" data-doc-link>Authentication</a>
+                    </li>
+                    <li class="nav-subitem">
+                      <a href="/docs/reference/webhooks.html" data-doc-link>Webhooks</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/reference/cli.html" data-doc-link>CLI</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header>
+          <p class="eyebrow">Guides</p>
+          <h1>Integration Guide</h1>
+          <p>
+            Connect BC2 Fabric to your data sources and destinations with a repeatable workflow.
+          </p>
+        </header>
+
+        <section class="content-card">
+          <h2>1. Create a connector</h2>
+          <p>
+            In the console, create a new connector and select the desired template. Provide
+            connection credentials and scope access to the relevant datasets.
+          </p>
+
+          <h2>2. Configure event mappings</h2>
+          <p>
+            Use schema inference or upload your own mapping rules. The platform validates
+            transformations in real time to prevent runtime failures.
+          </p>
+
+          <h2>3. Activate routing rules</h2>
+          <p>
+            Define routing rules that reference your connector and specify retry policies. You
+            can manage these rules via the UI or the <a href="/docs/reference/api-overview.html">REST API</a>.
+          </p>
+
+          <h2>4. Monitor delivery</h2>
+          <p>
+            Track message delivery in the Observability tab. Combine live metrics with structured
+            logs for end-to-end visibility.
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <script src="/assets/js/main.js"></script>
+  </body>
+</html>

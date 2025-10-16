@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CLI Reference | BC2 Fabric Documentation</title>
+    <link rel="stylesheet" href="/assets/css/styles.css" />
+  </head>
+  <body>
+    <div class="docs-layout">
+      <aside class="sidebar">
+        <div class="sidebar-inner">
+          <h1>BC2 Fabric Docs</h1>
+
+          <nav>
+            <div class="nav-section">
+              <div class="nav-section-title">Getting Started</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="/index.html" data-doc-link>Welcome</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/getting-started/bc2fabric-preview.html" data-doc-link>BC2Fabric Preview</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/getting-started/quickstart.html" data-doc-link>Quickstart</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Guides</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="/docs/guides/architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/guides/integration.html" data-doc-link>Integration</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/guides/best-practices.html" data-doc-link>Best Practices</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Reference</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="/docs/reference/api-overview.html" data-doc-link>API Overview</a>
+                  <ul class="nav-sublist">
+                    <li class="nav-subitem">
+                      <a href="/docs/reference/authentication.html" data-doc-link>Authentication</a>
+                    </li>
+                    <li class="nav-subitem">
+                      <a href="/docs/reference/webhooks.html" data-doc-link>Webhooks</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item">
+                  <a href="/docs/reference/cli.html" data-doc-link>CLI</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header>
+          <p class="eyebrow">Reference</p>
+          <h1>CLI Reference</h1>
+          <p>
+            Automate BC2 Fabric workflows directly from your terminal using the official CLI.
+          </p>
+        </header>
+
+        <section class="content-card">
+          <h2>Commands</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Command</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>bc2 init</code></td>
+                <td>Scaffold a new workspace with boilerplate configuration.</td>
+              </tr>
+              <tr>
+                <td><code>bc2 deploy</code></td>
+                <td>Deploy the current workspace to the configured environment.</td>
+              </tr>
+              <tr>
+                <td><code>bc2 status</code></td>
+                <td>Inspect the health of recent deployments and connectors.</td>
+              </tr>
+              <tr>
+                <td><code>bc2 logs</code></td>
+                <td>Stream structured logs filtered by connector or route.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>Configuration file</h2>
+          <pre><code>{
+  "workspace": "my-app",
+  "tenantId": "acme-production",
+  "environment": "staging",
+  "connectors": ["salesforce", "s3-archive"]
+}</code></pre>
+
+          <h2>Scripting</h2>
+          <pre><code>#!/usr/bin/env bash
+set -euo pipefail
+
+bc2 init --workspace nightly-sync
+bc2 deploy --workspace nightly-sync --env staging
+bc2 logs --workspace nightly-sync --since 1h
+</code></pre>
+        </section>
+      </main>
+    </div>
+
+    <script src="/assets/js/main.js"></script>
+  </body>
+</html>
