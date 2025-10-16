@@ -1,6 +1,6 @@
-# BC2 Fabric Documentation Site
+# BC2Fabric Documentation Site
 
-This repository contains the static documentation site for BC2 Fabric. It is designed for GitHub
+This repository contains the static documentation site for BC2Fabric. It is designed for GitHub
 Pages and features a persistent left-hand navigation with a two-level hierarchy for quick access to
 getting started guides, in-depth tutorials, and reference material.
 
