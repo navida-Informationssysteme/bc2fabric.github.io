@@ -66,7 +66,7 @@
           <h2>1. Business Central environment readiness</h2>
           <ul>
             <li>
-              Confirm you are running Dynamics 365 Business Central online (version 23 or later) in
+              Confirm you are running Dynamics 365 Business Central online (version 26 or later) in
               the production or sandbox environment where BC2Fabric will synchronize data.
             </li>
             <li>
@@ -111,78 +111,27 @@
               Microsoft Fabric.
             </li>
             <li>
-              Store the BC2Fabric client secret and any integration credentials (for example, SQL or
-              storage account keys) as individual secrets following a consistent naming convention.
+              Store the BC2Fabric client secret as individual secrets.
             </li>
             <li>
               Configure access policies so that the BC2Fabric managed identity and operations team
               can retrieve secrets while limiting write access to administrators.
             </li>
-            <li>
-              Enable purge protection and soft-delete to safeguard credentials from accidental
-              removal during lifecycle operations.
-            </li>
+          
           </ul>
 
           <h2>4. Microsoft Fabric capacity and workspace</h2>
           <ul>
             <li>
-              Ensure your tenant has a Fabric capacity (F64 or higher is recommended for production)
-              with available resources to run the BC2Fabric pipelines and lakehouse refreshes.
+              Ensure your tenant has a Fabric capacity with available resources to run the BC2Fabric pipelines and lakehouse refreshes.
             </li>
             <li>
-              Create or select a dedicated workspace that will host the BC2Fabric assets. The
-              workspace admin should match the owner of the Entra ID application.
+              Create or select a dedicated workspace that will host the BC2Fabric assets.
             </li>
-            <li>
-              Assign the BC2Fabric service principals and operations staff as workspace members with
-              contributor or higher roles.
-            </li>
-            <li>
-              Validate data region compliance requirements when selecting the capacity and workspace
-              locations.
-            </li>
+       
+        
           </ul>
-
-          <h2>5. Network and security prerequisites</h2>
-          <ul>
-            <li>
-              Allow outbound connections from Business Central and Fabric to the BC2Fabric API
-              endpoints and to Azure storage services used for staging.
-            </li>
-            <li>
-              Review conditional access policies and multifactor prompts that might block automated
-              authentication for the BC2Fabric service accounts.
-            </li>
-            <li>
-              Document firewall exceptions for on-premises data gateways if they are part of your
-              data export strategy.
-            </li>
-            <li>
-              Capture audit requirements and retention policies so the Fabric workspace can be
-              configured with the correct data lake storage and monitoring integrations.
-            </li>
-          </ul>
-
-          <h2>6. Deployment checklist</h2>
-          <ul>
-            <li>
-              Gather tenant ID, application ID, client secret name, and key vault URI prior to
-              starting the installer.
-            </li>
-            <li>
-              Confirm Business Central companies enabled for BC2Fabric have job queues running and
-              that administrators can schedule updates during off-peak hours.
-            </li>
-            <li>
-              Ensure Fabric workspace roles, lakehouse storage accounts, and pipelines are named per
-              your organization's governance policies.
-            </li>
-            <li>
-              Plan for post-install validation by identifying dashboards or SQL endpoints that will
-              consume the synchronized Business Central data.
-            </li>
-          </ul>
+          
         </section>
       </main>
     </div>
