@@ -17,10 +17,7 @@
               <div class="nav-section-title">Getting Started</div>
               <ul class="nav-list">
                 <li class="nav-item">
-                  <a href="/index.html" data-doc-link>Welcome</a>
-                </li>
-                <li class="nav-item">
-                  <a href="/docs/getting-started/bc2fabric-preview.html" data-doc-link>BC2Fabric Preview</a>
+                  <a href="/docs/getting-started/bc2fabric.html" data-doc-link>BC2Fabric</a>
                 </li>
                 <li class="nav-item">
                   <a href="/docs/getting-started/quickstart.html" data-doc-link>Quickstart</a>
@@ -40,25 +37,8 @@
                 <li class="nav-item">
                   <a href="/docs/guides/best-practices.html" data-doc-link>Best Practices</a>
                 </li>
-              </ul>
-            </div>
-
-            <div class="nav-section">
-              <div class="nav-section-title">Reference</div>
-              <ul class="nav-list">
                 <li class="nav-item">
-                  <a href="/docs/reference/api-overview.html" data-doc-link>API Overview</a>
-                  <ul class="nav-sublist">
-                    <li class="nav-subitem">
-                      <a href="/docs/reference/authentication.html" data-doc-link>Authentication</a>
-                    </li>
-                    <li class="nav-subitem">
-                      <a href="/docs/reference/webhooks.html" data-doc-link>Webhooks</a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="nav-item">
-                  <a href="/docs/reference/cli.html" data-doc-link>CLI</a>
+                  <a href="/docs/guides/create-bc-queries.html" data-doc-link>Create BC Queries</a>
                 </li>
               </ul>
             </div>
@@ -71,43 +51,55 @@
           <p class="eyebrow">Getting Started</p>
           <h1>Quickstart</h1>
           <p>
-            Set up your environment and connect to BC2 Fabric in under 10 minutes.
+            Follow these essentials to connect Microsoft Dynamics 365 Business Central with Microsoft
+            Fabric using the BC2Fabric solution.
           </p>
         </header>
 
         <section class="content-card">
-          <h2>Prerequisites</h2>
-          <ul>
-            <li>BC2 Fabric account with API access enabled.</li>
-            <li>Node.js 18+ or Python 3.11+ installed locally.</li>
-            <li>Access to your organization's staging environment.</li>
-          </ul>
-
-          <h2>1. Install the CLI</h2>
-          <pre><code>npm install -g @bc2fabric/cli</code></pre>
+          <h2>1. Install the Business Central extension</h2>
           <p>
-            The CLI bootstraps projects, manages configuration, and inspects deployments.
+            Start by installing the BC2Fabric extension from Microsoft AppSource in your Dynamics 365
+            Business Central environment. The extension enables the data synchronization services
+            required for BC2Fabric.
+          </p>
+          <p>
+            <a
+              href="https://appsource.microsoft.com/de-de/product/dynamics-365-business-central/PUBID.navidainformationssysteme1611067488644%7CAID.bc_2_fabric%7CPAPPID.3f748d92-7c3f-426e-8681-5e38b34a8e3f?tab=Overview"
+              target="_blank"
+              rel="noreferrer"
+              class="button-link"
+              >Install BC2Fabric from AppSource</a
+            >
           </p>
 
-          <h2>2. Authenticate</h2>
-          <pre><code>bc2 login --client-id &lt;CLIENT_ID&gt; --client-secret &lt;CLIENT_SECRET&gt;</code></pre>
+          <h2>2. Secure application credentials</h2>
           <p>
-            Credentials can be generated in the BC2 Fabric console. Authentication stores a
-            short-lived session on your workstation.
+            Register an application in Microsoft Entra ID and store the client ID and secret in an
+            Azure Key Vault. The <a href="https://static1.squarespace.com/static/6374c12da10d83082848979d/t/68e7bf5fbee79e5ac834d08c/1760018271707/BC2Fabric+Installation+Guide.pdf" target="_blank" rel="noreferrer">BC2Fabric Installation Guide</a>
+            walks through the required permissions, Key Vault configuration, and the connection
+            details BC2Fabric needs.
           </p>
 
-          <h2>3. Create a workspace</h2>
-          <pre><code>bc2 init --workspace my-first-app</code></pre>
+          <h2>3. Provision the Fabric workload</h2>
           <p>
-            The command scaffolds a minimal project, installs dependencies, and provisions a
-            sandbox tenant for experimentation.
+            Install the BC2Fabric workload directly in Microsoft Fabric to create the workspace,
+            pipelines, and datasets that power your analytics. Use the workload hub link below and
+            sign in with the same tenant used for the Business Central extension.
+          </p>
+          <p>
+            <a
+              href="https://app.powerbi.com/workloadhub"
+              target="_blank"
+              rel="noreferrer"
+              class="button-link"
+              >Open the Microsoft Fabric workload hub</a
+            >
           </p>
 
-          <h2>4. Deploy</h2>
-          <pre><code>bc2 deploy</code></pre>
           <p>
-            Deployments automatically sync your configuration and emit structured logs you can
-            inspect in the console or via <a href="/docs/reference/webhooks.html">webhooks</a>.
+            Once the workload is deployed, follow the BC2Fabric overview to connect your Business
+            Central data sources and configure refresh schedules.
           </p>
         </section>
       </main>
