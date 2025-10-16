@@ -49,38 +49,48 @@
       <main class="main-content">
         <header>
           <p class="eyebrow">Guides</p>
-          <h1>Platform Architecture</h1>
+          <h1>BC2 Fabric Mirroring Architecture</h1>
           <p>
-            Understand how BC2 Fabric components interact so you can design resilient solutions.
+            Learn how BC2 Fabric mirrors Microsoft Business Central data into Microsoft Fabric to
+            deliver governed, analytics-ready datasets for reporting and AI-driven insights.
           </p>
         </header>
 
         <section class="content-card">
-          <h2>Core services</h2>
+          <h2>Solution overview</h2>
           <p>
-            The platform is composed of orchestration, processing, and delivery services. Each
-            service is containerized and deployed across multiple availability zones.
+            BC2 Fabric provides a managed mirroring solution that continuously synchronizes
+            operational data from Microsoft Business Central into the Microsoft Fabric lakehouse.
+            The platform focuses on zero-code connectivity, automated schema handling, and
+            end-to-end observability so finance and operations teams can build Power BI reports or
+            semantic models without managing integration plumbing.
           </p>
-          <ul>
-            <li><strong>Ingestion Gateway:</strong> Handles inbound traffic, auth, and throttling.</li>
-            <li><strong>Stream Processor:</strong> Normalizes, enriches, and routes events.</li>
-            <li><strong>Delivery Engine:</strong> Dispatches events to downstream systems.</li>
-          </ul>
-
-          <h2>Data flow</h2>
-          <ol>
-            <li>Clients connect via REST, gRPC, or WebSocket transports.</li>
-            <li>Events are persisted to a multi-tenant queue for durability.</li>
-            <li>Processing pipelines apply transformations and policy enforcement.</li>
-            <li>Outputs are delivered via connectors defined in integration profiles.</li>
-          </ol>
-
-          <h2>Reliability</h2>
           <p>
-            BC2 Fabric uses rolling deployments, automatic retries, and configurable DLQs to
-            maintain availability under failure conditions.
+            The mirroring process captures incremental changes from Business Central APIs,
+            normalizes entities into Fabric tables, and surfaces curated shortcuts and warehouse
+            views for downstream consumption. Built-in orchestration ensures the replication keeps
+            pace with production workloads while preserving data quality and lineage.
           </p>
         </section>
+
+        <section class="content-card">
+          <h2>Architecture at a glance</h2>
+          <figure class="media-frame">
+            <img
+              src="../../assets/images/BC2Fabric_Architecture.jpg"
+              alt="Diagram of the BC2 Fabric mirroring architecture from Business Central into Microsoft Fabric"
+            />
+            <figcaption>
+              BC2 Fabric orchestrates secure data movement from Business Central tenants into a
+              Microsoft Fabric lakehouse, where curated analytics layers power reporting.
+            </figcaption>
+          </figure>
+      
+        </section>
+
+        
+
+       
       </main>
     </div>
 
