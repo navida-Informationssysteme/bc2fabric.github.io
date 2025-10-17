@@ -11,10 +11,8 @@ getting started guides, in-depth tutorials, and reference material.
 ├── assets/
 │   ├── css/styles.css      # Shared styling for the docs layout
 │   └── js/main.js          # Navigation enhancements (active state detection)
-├── docs/
-│   ├── getting-started/    # Onboarding content and live preview of bc2fabric.com
-│   ├── guides/             # Deep-dive tutorials
-│   └── reference/          # API, authentication, webhook, and CLI references
+├── getting-started/        # Onboarding content and live preview of bc2fabric.com
+├── guides/                 # Deep-dive tutorials and walkthroughs
 └── index.html              # Landing page for the documentation portal
 ```
 
