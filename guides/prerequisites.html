@@ -173,6 +173,21 @@
         </ol>
         <p>Note: Azure Key Vault is a low-cost resource (typically around $0.03/month).</p>
 
+        <h3>Assign Key Vault Officer Permissions</h3>
+        <ol>
+          <li>Open the Key Vault resource and select <strong>Access control (IAM)</strong>.</li>
+          <li>Click <strong>Add</strong> &gt; <strong>Add role assignment</strong>.</li>
+          <li>
+            In the Role tab, search for and choose
+            <strong>Key Vault Secrets Officer</strong> to grant permission to manage secrets.
+          </li>
+          <li>Click <strong>Next</strong>, then choose <strong>User, group, or service principal</strong>.</li>
+          <li>
+            Select the user (or service principal) that will add and maintain the BC2Fabric
+            secrets, then click <strong>Review + assign</strong>.
+          </li>
+        </ol>
+
         <h3>Add Client Secret to Key Vault</h3>
         <ol>
           <li>After deployment, open the Key Vault.</li>
