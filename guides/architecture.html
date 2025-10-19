@@ -8,8 +8,25 @@
     <link rel="stylesheet" href="../assets/css/styles.css" />
   </head>
   <body>
+    <button
+      class="sidebar-toggle"
+      type="button"
+      data-sidebar-toggle
+      aria-expanded="false"
+      aria-controls="doc-sidebar"
+      aria-label="Open navigation"
+    >
+      <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
+      <span>Menu</span>
+    </button>
+    <div class="sidebar-backdrop" data-sidebar-backdrop></div>
     <div class="docs-layout">
-      <aside class="sidebar">
+      <aside
+        class="sidebar"
+        id="doc-sidebar"
+        data-sidebar
+        aria-label="Documentation navigation"
+      >
         <div class="sidebar-inner">
           <h1>BC2Fabric Docs</h1>
 

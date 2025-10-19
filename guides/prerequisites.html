@@ -9,9 +9,26 @@
   <link rel="stylesheet" href="../assets/css/styles.css" />
 </head>
 
-<body>
-  <div class="docs-layout">
-    <aside class="sidebar">
+  <body>
+    <button
+      class="sidebar-toggle"
+      type="button"
+      data-sidebar-toggle
+      aria-expanded="false"
+      aria-controls="doc-sidebar"
+      aria-label="Open navigation"
+    >
+      <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
+      <span>Menu</span>
+    </button>
+    <div class="sidebar-backdrop" data-sidebar-backdrop></div>
+    <div class="docs-layout">
+      <aside
+        class="sidebar"
+        id="doc-sidebar"
+        data-sidebar
+        aria-label="Documentation navigation"
+      >
       <div class="sidebar-inner">
         <h1>BC2Fabric Docs</h1>
 
@@ -146,7 +163,7 @@
 
       <section class="content-card">
         <h2>Azure Key Vault</h2>
-        <h3>Step 6: Store the Client Secret in Azure Key Vault</h3>
+        <h3>Step 5: Store the Client Secret in Azure Key Vault</h3>
         <p>
           To securely store your client secret, use Azure Key Vault. You can use an existing Key
           Vault or create a new one. Azure Key Vault is a low-cost resource (typically $0.03/month for
@@ -204,7 +221,7 @@
 
       <section class="content-card">
         <h2>Business Central configuration</h2>
-        <h3>Step 5: Assign Authorization in Business Central</h3>
+        <h3>Step 6: Assign Authorization in Business Central</h3>
         <p>
           Before the App can read any data from Business Centra we need to set the authorization in
           the Business Central App.
