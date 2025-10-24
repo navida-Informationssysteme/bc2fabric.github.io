@@ -89,6 +89,19 @@ a:hover {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.sidebar h1::before {
+  content: "";
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background: url("../images/BC2Fabric_icon.png") center/contain no-repeat;
+  flex-shrink: 0;
+  filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.18));
 }
 
 .nav-section {
