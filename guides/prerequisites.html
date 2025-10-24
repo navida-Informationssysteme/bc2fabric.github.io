@@ -9,26 +9,15 @@
   <link rel="stylesheet" href="../assets/css/styles.css" />
 </head>
 
-  <body>
-    <button
-      class="sidebar-toggle"
-      type="button"
-      data-sidebar-toggle
-      aria-expanded="false"
-      aria-controls="doc-sidebar"
-      aria-label="Open navigation"
-    >
-      <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
-      <span>Menu</span>
-    </button>
-    <div class="sidebar-backdrop" data-sidebar-backdrop></div>
-    <div class="docs-layout">
-      <aside
-        class="sidebar"
-        id="doc-sidebar"
-        data-sidebar
-        aria-label="Documentation navigation"
-      >
+<body>
+  <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-expanded="false" aria-controls="doc-sidebar"
+    aria-label="Open navigation">
+    <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
+    <span>Menu</span>
+  </button>
+  <div class="sidebar-backdrop" data-sidebar-backdrop></div>
+  <div class="docs-layout">
+    <aside class="sidebar" id="doc-sidebar" data-sidebar aria-label="Documentation navigation">
       <div class="sidebar-inner">
         <h1>BC2Fabric Docs</h1>
 
@@ -65,210 +54,212 @@
 
     <main class="main-content">
       <header>
-        <h1>BC2Fabric Authorization Setup</h1>
-      </header>
+        <p class="eyebrow">Guides</p>
+        <header>
+          <h1>BC2Fabric Authorization Setup</h1>
+        </header>
 
-      <section class="content-card">
-        <h2>Introduction</h2>
-        <p>
-          To enable secure access from BC2Fabric to your Business Central (BC) environment, you
-          need to register an application in Microsoft Entra ID (formerly Azure AD), assign the correct
-          permissions, and securely store the credentials using Azure Key Vault. This guide walks
-          you through the complete setup step-by-step.
-        </p>
-        <h3>What You Need</h3>
-        <p>Before you begin, make sure you have the following:</p>
-        <ul>
-          <li>Microsoft Azure Subscription</li>
-          <li>
-            Permissions to register applications (e.g., Application Administrator or Cloud
-            Application Administrator role)
-          </li>
-          <li>
-            Permissions to create a Key Vault (e.g., Contributor role on the subscription)
-          </li>
-          <li>Business Central Account</li>
-          <li>
-            A user account with the "Dynamics 365 Business Central Administrator" role.
-          </li>
-          <li>Microsoft Fabric</li>
-          <li>
-            An account with a Microsoft Power BI License to access Fabric (normally “Power BI
-            Pro” or “Power BI Premium per User”)
-          </li>
-          <li>
-            A Fabric Workspace that you are admin of with a Fabric Capacity assigned (can be
-            a trial capacity)
-          </li>
-        </ul>
-      </section>
+        <section class="content-card">
+          <h2>Introduction</h2>
+          <p>
+            To enable secure access from BC2Fabric to your Business Central (BC) environment, you
+            need to register an application in Microsoft Entra ID (formerly Azure AD), assign the correct
+            permissions, and securely store the credentials using Azure Key Vault. This guide walks
+            you through the complete setup step-by-step.
+          </p>
+          <h3>What You Need</h3>
+          <p>Before you begin, make sure you have the following:</p>
+          <ul>
+            <li>Microsoft Azure Subscription</li>
+            <li>
+              Permissions to register applications (e.g., Application Administrator or Cloud
+              Application Administrator role)
+            </li>
+            <li>
+              Permissions to create a Key Vault (e.g., Contributor role on the subscription)
+            </li>
+            <li>Business Central Account</li>
+            <li>
+              A user account with the "Dynamics 365 Business Central Administrator" role.
+            </li>
+            <li>Microsoft Fabric</li>
+            <li>
+              An account with a Microsoft Power BI License to access Fabric (normally “Power BI
+              Pro” or “Power BI Premium per User”)
+            </li>
+            <li>
+              A Fabric Workspace that you are admin of with a Fabric Capacity assigned (can be
+              a trial capacity)
+            </li>
+          </ul>
+        </section>
 
-      <section class="content-card">
-        <h2>Microsoft Entra application</h2>
-        <h3>Step 1: Create a Microsoft Entra Application</h3>
-        <ol>
-          <li>Sign in to the Azure Portal (https://portal.azure.com).</li>
-          <li>Go to Microsoft Entra ID &gt; App registrations.</li>
-          <li>Click + Add and choose “App registration”.</li>
-          <li>Enter a name for the app (e.g., “BC2Fabric Read from BC App”).</li>
-          <li>Leave the default option selected for supported account types (Single tenant).</li>
-          <li>
-            Under Redirect URI, choose Web and enter:
-            https://businesscentral.dynamics.com/OAuthLanding.htm
-          </li>
-          <li>Click Register.</li>
-        </ol>
+        <section class="content-card">
+          <h2>Microsoft Entra application</h2>
+          <h3>Step 1: Create a Microsoft Entra Application</h3>
+          <ol>
+            <li>Sign in to the Azure Portal (https://portal.azure.com).</li>
+            <li>Go to Microsoft Entra ID &gt; App registrations.</li>
+            <li>Click + Add and choose “App registration”.</li>
+            <li>Enter a name for the app (e.g., “BC2Fabric Read from BC App”).</li>
+            <li>Leave the default option selected for supported account types (Single tenant).</li>
+            <li>
+              Under Redirect URI, choose Web and enter:
+              https://businesscentral.dynamics.com/OAuthLanding.htm
+            </li>
+            <li>Click Register.</li>
+          </ol>
 
-        <h3>Step 2: Add API Permissions</h3>
-        <ol>
-          <li>Open your newly created application.</li>
-          <li>Under Manage, select API permissions.</li>
-          <li>Click “+ Add a permission”.</li>
-          <li>Choose Dynamics 365 Business Central from the list.</li>
-          <li>Select “Application permissions”, then check “API.ReadWrite.All”.</li>
-          <li>Click Add permissions.</li>
-        </ol>
-        <p>Note that the status shows that we have not granted permissions in Business Central yet.</p>
+          <h3>Step 2: Add API Permissions</h3>
+          <ol>
+            <li>Open your newly created application.</li>
+            <li>Under Manage, select API permissions.</li>
+            <li>Click “+ Add a permission”.</li>
+            <li>Choose Dynamics 365 Business Central from the list.</li>
+            <li>Select “Application permissions”, then check “API.ReadWrite.All”.</li>
+            <li>Click Add permissions.</li>
+          </ol>
+          <p>Note that the status shows that we have not granted permissions in Business Central yet.</p>
 
-        <h3>Step 3: Create a Client Secret</h3>
-        <p>
-          A client secret of a Windows Entra App acts as a password used for authentication and
-          therefore should be kept secret. We will store this secret later in an Azure Key Vault.
-        </p>
-        <ol>
-          <li>In your app registration, go to Certificates &amp; secrets.</li>
-          <li>Click "+ New client secret"</li>
-          <li>
-            Set a description (e.g., BC2Fabric Read App Secret) and choose an expiration period
-            (e.g., 730 days or a custom date even further in the future).
-          </li>
-          <li>Click Add.</li>
-          <li>
-            Important: Immediately copy the Value field and save it securely. This is your client
-            secret (password). You won’t be able to retrieve it again.
-          </li>
-        </ol>
-        <p>Note: You do not need the Secret ID.</p>
+          <h3>Step 3: Create a Client Secret</h3>
+          <p>
+            A client secret of a Windows Entra App acts as a password used for authentication and
+            therefore should be kept secret. We will store this secret later in an Azure Key Vault.
+          </p>
+          <ol>
+            <li>In your app registration, go to Certificates &amp; secrets.</li>
+            <li>Click "+ New client secret"</li>
+            <li>
+              Set a description (e.g., BC2Fabric Read App Secret) and choose an expiration period
+              (e.g., 730 days or a custom date even further in the future).
+            </li>
+            <li>Click Add.</li>
+            <li>
+              Important: Immediately copy the Value field and save it securely. This is your client
+              secret (password). You won’t be able to retrieve it again.
+            </li>
+          </ol>
+          <p>Note: You do not need the Secret ID.</p>
 
-        <h3>Step 4: Copy the Client ID</h3>
-        <p>Apart from this we need the Id of the Application we just created (Client ID).</p>
-        <ol>
-          <li>Go to App registrations and select your app.</li>
-          <li>
-            Copy the Application (client) ID from the overview page. You'll need it in the next
-            step.
-          </li>
-        </ol>
-      </section>
+          <h3>Step 4: Copy the Client ID</h3>
+          <p>Apart from this we need the Id of the Application we just created (Client ID).</p>
+          <ol>
+            <li>Go to App registrations and select your app.</li>
+            <li>
+              Copy the Application (client) ID from the overview page. You'll need it in the next
+              step.
+            </li>
+          </ol>
+        </section>
 
-      <section class="content-card">
-        <h2>Azure Key Vault</h2>
-        <h3>Step 5: Store the Client Secret in Azure Key Vault</h3>
-        <p>
-          To securely store your client secret, use Azure Key Vault. You can use an existing Key
-          Vault or create a new one. Azure Key Vault is a low-cost resource (typically $0.03/month for
-          the usage in this context).
-        </p>
+        <section class="content-card">
+          <h2>Azure Key Vault</h2>
+          <h3>Step 5: Store the Client Secret in Azure Key Vault</h3>
+          <p>
+            To securely store your client secret, use Azure Key Vault. You can use an existing Key
+            Vault or create a new one. Azure Key Vault is a low-cost resource (typically $0.03/month for
+            the usage in this context).
+          </p>
 
-        <h3>Create a New Azure Key Vault</h3>
-        <ol>
-          <li>
-            In the Azure portal (https://portal.azure.com/), search for “Key Vault” and select “Key
-            vaults”.
-          </li>
-          <li>Click + Create.</li>
-          <li>
-            Set the following:
-            <ul>
-              <li>Subscription: Choose your Azure subscription (you need Contributor role).</li>
-              <li>Resource group: Select or create one.</li>
-              <li>Region: Choose the desired location</li>
-            </ul>
-          </li>
-          <li>Leave other settings as default.</li>
-          <li>Click Review + Create, then Create.</li>
-        </ol>
-        <p>Note: Azure Key Vault is a low-cost resource (typically around $0.03/month).</p>
+          <h3>Create a New Azure Key Vault</h3>
+          <ol>
+            <li>
+              In the Azure portal (https://portal.azure.com/), search for “Key Vault” and select “Key
+              vaults”.
+            </li>
+            <li>Click + Create.</li>
+            <li>
+              Set the following:
+              <ul>
+                <li>Subscription: Choose your Azure subscription (you need Contributor role).</li>
+                <li>Resource group: Select or create one.</li>
+                <li>Region: Choose the desired location</li>
+              </ul>
+            </li>
+            <li>Leave other settings as default.</li>
+            <li>Click Review + Create, then Create.</li>
+          </ol>
+          <p>Note: Azure Key Vault is a low-cost resource (typically around $0.03/month).</p>
 
-        <h3>Assign Key Vault Officer Permissions</h3>
-        <ol>
-          <li>Open the Key Vault resource and select <strong>Access control (IAM)</strong>.</li>
-          <li>Click <strong>Add</strong> &gt; <strong>Add role assignment</strong>.</li>
-          <li>
-            In the Role tab, search for and choose
-            <strong>Key Vault Secrets Officer</strong> to grant permission to manage secrets.
-          </li>
-          <li>Click <strong>Next</strong>, then choose <strong>User, group, or service principal</strong>.</li>
-          <li>
-            Select the user (or service principal) that will add and maintain the BC2Fabric
-            secrets, then click <strong>Review + assign</strong>.
-          </li>
-        </ol>
+          <h3>Assign Key Vault Officer Permissions</h3>
+          <ol>
+            <li>Open the Key Vault resource and select <strong>Access control (IAM)</strong>.</li>
+            <li>Click <strong>Add</strong> &gt; <strong>Add role assignment</strong>.</li>
+            <li>
+              In the Role tab, search for and choose
+              <strong>Key Vault Secrets Officer</strong> to grant permission to manage secrets.
+            </li>
+            <li>Click <strong>Next</strong>, then choose <strong>User, group, or service principal</strong>.</li>
+            <li>
+              Select the user (or service principal) that will add and maintain the BC2Fabric
+              secrets, then click <strong>Review + assign</strong>.
+            </li>
+          </ol>
 
-        <h3>Add Client Secret to Key Vault</h3>
-        <ol>
-          <li>After deployment, open the Key Vault.</li>
-          <li>Go to Secrets and click + Generate/Import.</li>
-          <li>As name enter “bc2fabric-bc-api-secret”.</li>
-          <li>Paste the Value (client secret from earlier) into the Secret value field.</li>
-          <li>Click Create.</li>
-          <li>
-            Go to Overview and copy the Vault URI — you'll need this for your BC2Fabric
-            configuration.
-          </li>
-        </ol>
-      </section>
+          <h3>Add Client Secret to Key Vault</h3>
+          <ol>
+            <li>After deployment, open the Key Vault.</li>
+            <li>Go to Secrets and click + Generate/Import.</li>
+            <li>As name enter “bc2fabric-bc-api-secret”.</li>
+            <li>Paste the Value (client secret from earlier) into the Secret value field.</li>
+            <li>Click Create.</li>
+            <li>
+              Go to Overview and copy the Vault URI — you'll need this for your BC2Fabric
+              configuration.
+            </li>
+          </ol>
+        </section>
 
-      <section class="content-card">
-        <h2>Business Central configuration</h2>
-        <h3>Step 6: Assign Authorization in Business Central</h3>
-        <p>
-          Before the App can read any data from Business Centra we need to set the authorization in
-          the Business Central App.
-        </p>
-        <ol>
-          <li>Sign in to Business Central using your Admin account.</li>
-          <li>Search for and open Microsoft Entra Applications.</li>
-          <li>
-            Click + New and fill in the following:
-            <ul>
-              <li>Client ID: Paste the Application (client) ID from the previous step.</li>
-              <li>Set a description: e.g., “BC2Fabric Read from BC App”.</li>
-              <li>State: Set to “Enabled”.</li>
-            </ul>
-          </li>
-          <li>
-            Under User Permission Sets, click the ellipsis in the first cell and select “NBI BC2FAB
-            READER”.
-          </li>
-          <li>
-            This Permission Set provides the service principal (App) with access to “D365 READ”
-            Permission Set and permissions for BC2Fabric-specific objects.
-          </li>
-          <li>
-            Optionally, restrict access to specific companies using the Company column. If left empty,
-            all companies will be accessible. Later in the installation process you can select which
-            companies should be synchronized to Fabric.
-          </li>
-          <li>Click “Grant Consent”.</li>
-          <li>Sign in with your Business Central Admin account when prompted.</li>
-        </ol>
+        <section class="content-card">
+          <h2>Business Central configuration</h2>
+          <h3>Step 6: Assign Authorization in Business Central</h3>
+          <p>
+            Before the App can read any data from Business Centra we need to set the authorization in
+            the Business Central App.
+          </p>
+          <ol>
+            <li>Sign in to Business Central using your Admin account.</li>
+            <li>Search for and open Microsoft Entra Applications.</li>
+            <li>
+              Click + New and fill in the following:
+              <ul>
+                <li>Client ID: Paste the Application (client) ID from the previous step.</li>
+                <li>Set a description: e.g., “BC2Fabric Read from BC App”.</li>
+                <li>State: Set to “Enabled”.</li>
+              </ul>
+            </li>
+            <li>
+              Under User Permission Sets, click the ellipsis in the first cell and select “NBI BC2FAB
+              READER”.
+            </li>
+            <li>
+              This Permission Set provides the service principal (App) with access to “D365 READ”
+              Permission Set and permissions for BC2Fabric-specific objects.
+            </li>
+            <li>
+              Optionally, restrict access to specific companies using the Company column. If left empty,
+              all companies will be accessible. Later in the installation process you can select which
+              companies should be synchronized to Fabric.
+            </li>
+            <li>Click “Grant Consent”.</li>
+            <li>Sign in with your Business Central Admin account when prompted.</li>
+          </ol>
 
-        <h3>Step 7: Install BC2Fabric BC Extension from Microsoft AppSource</h3>
-        <p>
-          <a href="https://www.navida.eu/bc2fabric-connector" target="_blank" rel="noreferrer">
-            Install the BC Extension BC2Fabric from Microsoft AppSource
-          </a>
-          via the following link in the environment that should be used for synchronization.
-        </p>
+          <h3>Step 7: Install BC2Fabric BC Extension from Microsoft AppSource</h3>
+          <p>
+            <a href="https://www.navida.eu/bc2fabric-connector" target="_blank" rel="noreferrer">
+              Install the BC Extension BC2Fabric from Microsoft AppSource
+            </a>
+            via the following link in the environment that should be used for synchronization.
+          </p>
 
-        <p>No further setup is required in Business Central.</p>
+          <p>No further setup is required in Business Central.</p>
 
-        <p>
-          <a href="https://static1.squarespace.com/static/6374c12da10d83082848979d/t/68e7bf5fbee79e5ac834d08c/1760018271707/BC2Fabric+Installation+Guide.pdf"
-            target="_blank" rel="noreferrer" class="button-link">Download the full installation guide (PDF)</a>
-        </p>
-      </section>
+          <p>
+            <a href="https://static1.squarespace.com/static/6374c12da10d83082848979d/t/68e7bf5fbee79e5ac834d08c/1760018271707/BC2Fabric+Installation+Guide.pdf"
+              target="_blank" rel="noreferrer" class="button-link">Download the full installation guide (PDF)</a>
+          </p>
+        </section>
     </main>
   </div>
 

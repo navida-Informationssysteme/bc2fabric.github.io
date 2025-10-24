@@ -1,125 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Quickstart | BC2Fabric Documentation</title>
-    <link rel="icon" href="https://www.navida.eu/favicon.ico" />
-    <link rel="stylesheet" href="../assets/css/styles.css" />
-  </head>
-  <body>
-    <button
-      class="sidebar-toggle"
-      type="button"
-      data-sidebar-toggle
-      aria-expanded="false"
-      aria-controls="doc-sidebar"
-      aria-label="Open navigation"
-    >
-      <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
-      <span>Menu</span>
-    </button>
-    <div class="sidebar-backdrop" data-sidebar-backdrop></div>
-    <div class="docs-layout">
-      <aside
-        class="sidebar"
-        id="doc-sidebar"
-        data-sidebar
-        aria-label="Documentation navigation"
-      >
-        <div class="sidebar-inner">
-          <h1>BC2Fabric Docs</h1>
 
-          <nav>
-            <div class="nav-section">
-              <div class="nav-section-title">Getting Started</div>
-              <ul class="nav-list">
-                <li class="nav-item">
-                  <a href="bc2fabric.html" data-doc-link>BC2Fabric</a>
-                </li>
-                <li class="nav-item">
-                  <a href="quickstart.html" data-doc-link>Quickstart</a>
-                </li>
-              </ul>
-            </div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quickstart | BC2Fabric Documentation</title>
+  <link rel="icon" href="https://www.navida.eu/favicon.ico" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
 
-            <div class="nav-section">
-              <div class="nav-section-title">Guides</div>
-              <ul class="nav-list">
-                <li class="nav-item">
-                  <a href="../guides/architecture.html" data-doc-link>Architecture</a>
-                </li>
-                <li class="nav-item">
-                  <a href="../guides/prerequisites.html" data-doc-link>Prerequisites</a>
-                </li>
-                <li class="nav-item">
-                  <a href="../guides/create-bc-queries.html" data-doc-link>Create BC Queries</a>
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-      </aside>
+<body>
+  <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-expanded="false" aria-controls="doc-sidebar"
+    aria-label="Open navigation">
+    <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
+    <span>Menu</span>
+  </button>
+  <div class="sidebar-backdrop" data-sidebar-backdrop></div>
+  <div class="docs-layout">
+    <aside class="sidebar" id="doc-sidebar" data-sidebar aria-label="Documentation navigation">
+      <div class="sidebar-inner">
+        <h1>BC2Fabric Docs</h1>
 
-      <main class="main-content">
-        <header>
-          <p class="eyebrow">Getting Started</p>
-          <h1>Quickstart</h1>
-          <p>
-            Follow these essentials to connect Microsoft Dynamics 365 Business Central with Microsoft
-            Fabric using the BC2Fabric solution.
-          </p>
-        </header>
+        <nav>
+          <div class="nav-section">
+            <div class="nav-section-title">Getting Started</div>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a href="bc2fabric.html" data-doc-link>BC2Fabric</a>
+              </li>
+              <li class="nav-item">
+                <a href="quickstart.html" data-doc-link>Quickstart</a>
+              </li>
+            </ul>
+          </div>
 
-        <section class="content-card">
-          <h2>1. Install the Business Central extension</h2>
-          <p>
-            Start by installing the BC2Fabric extension from Microsoft AppSource in your Dynamics 365
-            Business Central environment. The extension enables the data synchronization services
-            required for BC2Fabric.
-          </p>
-          <p>
-            <a
-              href="https://appsource.microsoft.com/de-de/product/dynamics-365-business-central/PUBID.navidainformationssysteme1611067488644%7CAID.bc_2_fabric%7CPAPPID.3f748d92-7c3f-426e-8681-5e38b34a8e3f?tab=Overview"
-              target="_blank"
-              rel="noreferrer"
-              class="button-link"
-              >Install BC2Fabric from AppSource</a
-            >
-          </p>
+          <div class="nav-section">
+            <div class="nav-section-title">Guides</div>
+            <ul class="nav-list">
+              <li class="nav-item">
+                <a href="../guides/architecture.html" data-doc-link>Architecture</a>
+              </li>
+              <li class="nav-item">
+                <a href="../guides/prerequisites.html" data-doc-link>Prerequisites</a>
+              </li>
+              <li class="nav-item">
+                <a href="../guides/create-bc-queries.html" data-doc-link>Create BC Queries</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </aside>
 
-          <h2>2. Secure application credentials</h2>
-          <p>
-            Register an application in Microsoft Entra ID and store the client ID and secret in an
-            Azure Key Vault. The <a href="https://static1.squarespace.com/static/6374c12da10d83082848979d/t/68e7bf5fbee79e5ac834d08c/1760018271707/BC2Fabric+Installation+Guide.pdf" target="_blank" rel="noreferrer">BC2Fabric Installation Guide</a>
-            walks through the required permissions, Key Vault configuration, and the connection
-            details BC2Fabric needs.
-          </p>
+    <main class="main-content">
+      <header>
+        <p class="eyebrow">Getting Started</p>
+        <h1>Quickstart</h1>
+        <p>
+          Follow these essentials to connect Microsoft Dynamics 365 Business Central with Microsoft
+          Fabric using the BC2Fabric solution.
+        </p>
+      </header>
 
-          <h2>3. Provision the Fabric workload</h2>
-          <p>
-            Install the BC2Fabric workload directly in Microsoft Fabric to create the workspace,
-            pipelines, and datasets that power your analytics. Use the workload hub link below and
-            sign in with the same tenant used for the Business Central extension.
-          </p>
-          <p>
-            <a
-              href="https://app.powerbi.com/workloadhub"
-              target="_blank"
-              rel="noreferrer"
-              class="button-link"
-              >Open the Microsoft Fabric workload hub</a
-            >
-          </p>
+      <section class="content-card">
+        <h2>1. Install the Business Central extension</h2>
+        <p>
+          Start by installing the BC2Fabric extension from Microsoft AppSource in your Dynamics 365
+          Business Central environment. The extension enables the data synchronization services
+          required for BC2Fabric.
+        </p>
+        <p>
+          <a href="https://appsource.microsoft.com/de-de/product/dynamics-365-business-central/PUBID.navidainformationssysteme1611067488644%7CAID.bc_2_fabric%7CPAPPID.3f748d92-7c3f-426e-8681-5e38b34a8e3f?tab=Overview"
+            target="_blank" rel="noreferrer" class="button-link">Install BC2Fabric from AppSource</a>
+        </p>
 
-          <p>
-            Once the workload is deployed, follow the BC2Fabric overview to connect your Business
-            Central data sources and configure refresh schedules.
-          </p>
-        </section>
-      </main>
-    </div>
+        <h2>2. Secure application credentials</h2>
+        <p>
+          Register an application in Microsoft Entra ID and store the client ID and secret in an
+          Azure Key Vault. The <a
+            href="https://static1.squarespace.com/static/6374c12da10d83082848979d/t/68e7bf5fbee79e5ac834d08c/1760018271707/BC2Fabric+Installation+Guide.pdf"
+            target="_blank" rel="noreferrer">BC2Fabric Installation Guide</a>
+          walks through the required permissions, Key Vault configuration, and the connection
+          details BC2Fabric needs.
+        </p>
 
-    <script src="../assets/js/main.js"></script>
-  </body>
+        </p>
+        Follow the video guide below for step-by-step instructions:
+        </p>
+        <div style="padding:56.25% 0 0 0;position:relative;"><iframe
+            src="https://player.vimeo.com/video/1130239738?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+            frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;"
+            title="Register Application and Configure Azure Integration"></iframe></div>
+        <script src="https://player.vimeo.com/api/player.js"></script>
+
+        <h2>3. Provision the Fabric workload</h2>
+        <p>
+          Install the BC2Fabric workload directly in Microsoft Fabric to create the workspace,
+          pipelines, and datasets that power your analytics. Use the workload hub link below and
+          sign in with the same tenant used for the Business Central extension.
+        </p>
+        <p>
+          <a href="https://app.powerbi.com/workloadhub" target="_blank" rel="noreferrer" class="button-link">Open the
+            Microsoft Fabric workload hub</a>
+        </p>
+
+        <p>
+          Once the workload is deployed, follow the BC2Fabric overview to connect your Business
+          Central data sources and configure refresh schedules.
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script src="../assets/js/main.js"></script>
+</body>
+
 </html>
