@@ -6,6 +6,59 @@
     <title>BC2Fabric Documentation</title>
     <link rel="icon" href="https://www.navida.eu/favicon.ico" />
     <link rel="stylesheet" href="assets/css/styles.css" />
+    <style>
+      /* Minimal inline styles to highlight the main action */
+      .hero {
+        border: 1px solid var(--border, #e5e7eb);
+        background: var(--bg-elevated, #fff);
+        border-radius: 16px;
+        padding: 1.25rem 1.5rem;
+        box-shadow: var(--shadow, 0 1px 2px rgba(0,0,0,0.04));
+        margin-bottom: 1.25rem;
+      }
+      .hero .headline {
+        margin: 0 0 .25rem 0;
+        font-size: 1.25rem;
+        line-height: 1.4;
+      }
+      .hero .sub {
+        margin: 0;
+        opacity: .8;
+      }
+      .hero-actions {
+        display: flex;
+        gap: .75rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        padding: .7rem 1rem;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        border: 1px solid transparent;
+        transition: transform .02s ease-in-out;
+      }
+      .btn:active { transform: translateY(1px); }
+      .btn-primary {
+        background: #2563eb;
+        color: #fff;
+      }
+      .btn-secondary {
+        background: transparent;
+        color: #2563eb;
+        border-color: #bfdbfe;
+      }
+      .eyebrow {
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        font-size: .75rem;
+        opacity: .8;
+      }
+    </style>
   </head>
   <body>
     <button
@@ -64,11 +117,23 @@
       <main class="main-content">
         <header>
           <p class="eyebrow">Documentation Portal</p>
-          <h1>Welcome to the BC2Fabric Documentation</h1>
+          <h1>BC2Fabric Documentation</h1>
           <p>
-            Explore product overviews, reference guides, and integration tutorials.
+            Learn how to configure and use BC2Fabric to bring your Business Central 365 data Microsoft Fabric.
             Use the navigation on the left to jump into a specific section.
           </p>
+
+          <!-- Prominent Quickstart hero -->
+          <section class="hero" aria-labelledby="hero-title">
+            <h2 id="hero-title" class="headline">Start here</h2>
+            <p class="sub">Follow the Quickstart to set up and configure BC2Fabric (incl. Azure App Registration).</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="getting-started/quickstart.html" data-doc-link>
+                Quickstart to Configure BC2Fabric
+              </a>
+           
+            </div>
+          </section>
         </header>
 
         <section class="content-card">
@@ -82,12 +147,9 @@
             <li><strong>Guides</strong> dive into architecture, integrations, and practical walkthroughs.</li>
           </ul>
 
+          <!-- Simplified "Next steps" to only the primary action -->
           <h2>Next steps</h2>
-          <ol>
-            <li>Learn what BC2Fabric delivers in the <a href="getting-started/bc2fabric.html">BC2Fabric overview</a>.</li>
-            <li>Follow the <a href="getting-started/quickstart.html">Quickstart guide</a> to get operational fast.</li>
-            <li>Review requirements in the <a href="guides/prerequisites.html">prerequisites guide</a>.</li>
-          </ol>
+          <p><a href="getting-started/quickstart.html" data-doc-link>Follow the Quickstart guide</a> to set up BC2Fabric.</p>
         </section>
 
         <footer class="footer">
