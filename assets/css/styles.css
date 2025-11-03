@@ -204,6 +204,15 @@ a:hover {
   color: var(--muted-text-color);
 }
 
+.content-card li {
+  line-height: 1.5;
+  margin-bottom: 0.35rem;
+}
+
+.content-card li:last-child {
+  margin-bottom: 0;
+}
+
 .media-frame {
   margin: 2rem 0;
   background: var(--surface-color);
