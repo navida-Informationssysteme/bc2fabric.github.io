@@ -95,7 +95,7 @@
         </section>
 
         <section class="content-card">
-          <h2>Microsoft Entra application</h2>
+          <h2 id="Microsoft-Entra-application">Microsoft Entra application</h2>
           <h3>Step 1: Create a Microsoft Entra Application</h3>
           <ol>
             <li>Sign in to the Azure Portal (https://portal.azure.com).</li>
@@ -153,7 +153,7 @@
         </section>
 
         <section class="content-card">
-          <h2>Azure Key Vault</h2>
+          <h2 id="Store-secret-in-key-vault">Azure Key Vault</h2>
           <h3>Step 5: Store the Client Secret in Azure Key Vault</h3>
           <p>
             To securely store your client secret, use Azure Key Vault. You can use an existing Key
@@ -211,11 +211,19 @@
         </section>
 
         <section class="content-card">
-          <h2>Business Central configuration</h2>
-          <h3>Step 6: Assign Authorization in Business Central</h3>
+          <h2 id="BC-Configuration">Business Central configuration</h2>
+          <h3 id="Install-BC-App">Step 6: Install BC2Fabric BC Extension from Microsoft AppSource</h3>
           <p>
-            Before the App can read any data from Business Centra we need to set the authorization in
-            the Business Central App.
+            <a href="https://www.navida.eu/bc2fabric-connector" target="_blank" rel="noreferrer">
+              Install the BC Extension BC2Fabric from Microsoft AppSource
+            </a>
+            in the environment that should be used for synchronization.
+          </p>
+
+          <h3 id="BC-App-Accces">Step 7: Assign Authorization in Business Central</h3>
+          <p>
+            Before the App can read any data from Business Central the authorization in
+            the Business Central App must be set.
           </p>
           <ol>
             <li>Sign in to Business Central using your Admin account.</li>
@@ -244,16 +252,6 @@
             <li>Click “Grant Consent”.</li>
             <li>Sign in with your Business Central Admin account when prompted.</li>
           </ol>
-
-          <h3>Step 7: Install BC2Fabric BC Extension from Microsoft AppSource</h3>
-          <p>
-            <a href="https://www.navida.eu/bc2fabric-connector" target="_blank" rel="noreferrer">
-              Install the BC Extension BC2Fabric from Microsoft AppSource
-            </a>
-            via the following link in the environment that should be used for synchronization.
-          </p>
-
-          <p>No further setup is required in Business Central.</p>
 
           <p>
             <a href="https://static1.squarespace.com/static/6374c12da10d83082848979d/t/68e7bf5fbee79e5ac834d08c/1760018271707/BC2Fabric+Installation+Guide.pdf"
