@@ -77,18 +77,15 @@
         <section class="content-card">
           <h2>Solution overview</h2>
           <p>
-            BC2Fabric provides a managed mirroring solution that continuously synchronizes
+            BC2Fabric provides a managed mirroring solution that synchronizes
             operational data from Microsoft Business Central into the Microsoft Fabric lakehouse.
             The platform focuses on zero-code connectivity, automated schema handling, and
             end-to-end observability so finance and operations teams can build Power BI reports or
-            semantic models without managing integration plumbing.
+            semantic models without managing integration plumbing. The mirroring process captures incremental changes from Business Central APIs,
+            ensuring that the data in the Fabric lakehouse is always up-to-date and reflective of
+            the source system.
           </p>
-          <p>
-            The mirroring process captures incremental changes from Business Central APIs,
-            normalizes entities into Fabric tables, and surfaces curated shortcuts and warehouse
-            views for downstream consumption. Built-in orchestration ensures the replication keeps
-            pace with production workloads while preserving data quality and lineage.
-          </p>
+         
         </section>
 
         <section class="content-card">
@@ -100,7 +97,7 @@
             />
             <figcaption>
               BC2Fabric orchestrates secure data movement from Business Central tenants into a
-              Microsoft Fabric lakehouse, where curated analytics layers power reporting.
+              Microsoft Fabric lakehouse.
             </figcaption>
           </figure>
       
