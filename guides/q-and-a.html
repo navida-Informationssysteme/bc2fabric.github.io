@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FAQ | BC2Fabric Documentation</title>
+    <link rel="icon" href="https://www.navida.eu/favicon.ico" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+  </head>
+  <body>
+    <button
+      class="sidebar-toggle"
+      type="button"
+      data-sidebar-toggle
+      aria-expanded="false"
+      aria-controls="doc-sidebar"
+      aria-label="Open navigation"
+    >
+      <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
+      <span>Menu</span>
+    </button>
+    <div class="sidebar-backdrop" data-sidebar-backdrop></div>
+    <div class="docs-layout">
+      <aside
+        class="sidebar"
+        id="doc-sidebar"
+        data-sidebar
+        aria-label="Documentation navigation"
+      >
+        <div class="sidebar-inner">
+          <h1><a href="https://docs.bc2fabric.com">BC2Fabric Docs</a></h1>
+
+          <nav>
+            <div class="nav-section">
+              <div class="nav-section-title">Getting Started</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../getting-started/bc2fabric.html" data-doc-link>BC2Fabric</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../getting-started/quickstart.html" data-doc-link>Quickstart</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Guides</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="prerequisites.html" data-doc-link>Prerequisites</a>
+                </li>
+                <li class="nav-item">
+                  <a href="install-bc2fabric.html" data-doc-link>Install BC2Fabric</a>
+                </li>
+                <li class="nav-item">
+                  <a href="create-bc-queries.html" data-doc-link>Create BC Queries</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Resources</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="q-and-a.html" data-doc-link>Q&amp;A</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header>
+          <p class="eyebrow">Resources</p>
+          <h1>Q&amp;A</h1>
+          <p>Answers to common questions about operating and extending your BC2Fabric deployment.</p>
+        </header>
+
+        <section class="content-card">
+          <h2 id="change-refresh-time-and-schedule"><a class="anchor-link" href="#change-refresh-time-and-schedule">How do I change the refresh time and schedule?</a></h2>
+          <p>The BC2Fabric workload deploys a Fabric pipeline named <code>bc2fabric_refresh</code> that orchestrates loads from Business Central into the mirrored database. Scheduling is controlled on that pipeline.</p>
+          <ol>
+            <li>In Microsoft Fabric, open the workspace that hosts the BC2Fabric workload.</li>
+            <li>Select the <code>bc2fabric_refresh</code> pipeline and choose <strong>Schedule</strong> from the command bar.</li>
+            <li>Adjust the frequency, start time, or pause the trigger, then <strong>Apply</strong> the changes. Fabric runs the pipeline on the schedule you configure. For more details, see <a href="https://learn.microsoft.com/en-us/fabric/data-factory/pipeline-runs#scheduled-pipeline-runs">Scheduled pipeline runs in Fabric</a>.</li>
+          </ol>
+          <p>You can also trigger an on-demand load by selecting <strong>Run</strong> on the pipeline whenever you need an immediate refresh.</p>
+        </section>
+
+        <section class="content-card">
+          <h2 id="power-bi-reports"><a class="anchor-link" href="#power-bi-reports">How do I build Power BI reports on top of the mirrored data?</a></h2>
+          <p>The mirrored <code>bc2fabric_mirror</code> database supports building semantic models in Import or Direct Lake mode. When using Direct Lake, reports stay synchronized without maintaining dataset refreshes.</p>
+          <ol>
+            <li>Open the Fabric workspace and launch the <code>bc2fabric_mirror</code> database to review the synchronized Business Central tables.</li>
+            <li>From the mirroring experience, choose <strong>New</strong> &gt; <strong>Semantic model</strong>, provide a name and <strong>select the workspace</strong> where the semantic model should be created. <strong>Select the mirrored tables </strong>that should be part of the semantic model.</li>
+            <li>Use the <strong>web authoring experience</strong> to build relationships, DAX measures etc. Changes to the model will automatically be saved to the model in the service.</li>
+            <li>Build Power BI reports in the service or connect with Power BI Desktop to the Direct Lake Semantic Model, as <a href="https://learn.microsoft.com/en-us/fabric/data-warehouse/reports-power-bi-service">described here</a>.</li>
+          </ol>
+          <p>Semantic models with import (instead of Direct Lake) can be created with Power BI Desktop by using the SQL endpoint of the mirroring database and by configuring refreshes from the workspace as required.</p>
+        </section>
+
+        <section class="content-card">
+          <h2 id="data-freshness"><a class="anchor-link" href="#data-freshness">How can I see how up to date the data is?</a></h2>
+          <p>Use Fabric monitoring tools for transparency of the loading process.</p>
+          <ul>
+            <li>The overview on the mirroring database <code>bc2fabric_mirror</code> shows the last completed mirroring time for every table so you can see when each dataset finished syncing.</li>
+            <li>All mirrored tables expose a <code>Modified at BC2FAB</code> column that records when each row was last retrieved from Business Central.</li>
+          </ul>
+          <p>Surface those timestamps through T-SQL queries or Power BI reports to get transparency into the freshness of data.</p>
+        </section>
+
+        <section class="content-card">
+          <h2 id="custom-endpoints"><a class="anchor-link" href="#custom-endpoints">How can I use my own endpoints for mirroring?</a></h2>
+          <p>Custom APIs and tables can be mirrored as long as they expose the Business Central change tracking columns that BC2Fabric expects.</p>
+          <p>Follow the <a href="install-bc2fabric.html">instructions how to add custom tables.</a></p>
+          
+        </section>
+
+        <section class="content-card">
+          <h2 id="extend-data"><a class="anchor-link" href="#extend-data">How can I extend the mirrored data with other data sources?</a></h2>
+          <p>OneLake lets you combine Business Central data with other sources without copying tables out of Fabric.</p>
+          <ul>
+            <li>Create a dedicated Lakehouse for blended analytics and add a shortcut that points to the <code>bc2fabric_mirror</code> database schema so the mirrored data is available without duplicating it.</li>
+            <li>Use Dataflows Gen2, pipelines, or notebooks to join BC2Fabric tables with third-party data and persist curated outputs in that Lakehouse.</li>
+            <li>Build new Semantic Models based on the Lakehouse that combines the data.</li>
+          </ul>
+          <p>This pattern keeps governance centralized while letting you enrich Business Central insights with external sources.</p>
+        </section>
+
+        <section class="content-card">
+          <h2 id="deleted-records"><a class="anchor-link" href="#deleted-records">How are deleted records handled with incremental loading?</a></h2>
+          <p>Business Central logs deletions for BC2Fabric so incremental loads remove the same rows from the mirrored database.</p>
+         
+          <p>This targeted logging keeps analytics aligned without persisting full copies of deleted data.</p>
+        </section>
+
+        <section class="content-card">
+          <h2 id="load-notifications"><a class="anchor-link" href="#load-notifications">How do I get notified about load failures?</a></h2>
+          <p>Monitor pipeline executions in Fabric and trigger notifications when runs fail.</p>
+          <ol>
+            <li>To monitor the recent runs, open the <code>bc2fabric_refresh</code> pipeline, go to <strong>Run history</strong>, and review recent executions for status and duration.</li>
+            <li>Create alert rules to send notifications when refreshes fail by creating an Activator Item. Follow the steps <a href="https://learn.microsoft.com/en-us/fabric/data-factory/create-alerts-for-pipeline-runs?utm_source=chatgpt.com#pipeline-level-alerts">as explained here</a>.</li>
+           
+          </ol>
+        </section>
+
+        <section class="content-card">
+          <h2 id="loading-impact"><a class="anchor-link" href="#loading-impact">How does the loading impact Business Central?</a></h2>
+          <p>BC2Fabric is designed to avoid affecting transactional performance in Business Central.</p>
+          <ul>
+            <li>All data extraction runs against the Business Central <strong>read-only replica</strong>, so the operational write database remains untouched by analytics workloads.</li>
+            <li>Each pipeline run processes only the records that changed since the prior refresh by using Business Central <code>systemRowVersion</code> values, keeping load windows short.</li>
+            <li>The integration calls API <em>queries</em> instead of <em>API pages</em> to maximize throughput while staying within Business Central throttling limits.</li>
+          </ul>
+          
+        </section>
+
+        <section class="content-card">
+          <h2 id="business-central-access"><a class="anchor-link" href="#business-central-access">How is the access to Business Central working?</a></h2>
+          <p>BC2Fabric authenticates to Business Central with an Azure AD service principal and stores the credentials securely in Azure Key Vault.</p>
+          <p>For the installation follow the <a href="prerequisites.html">instructions</a>.</p>
+          
+        </section>
+
+      </main>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>
