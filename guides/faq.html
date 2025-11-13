@@ -65,7 +65,7 @@
               <div class="nav-section-title">Resources</div>
               <ul class="nav-list">
                 <li class="nav-item">
-                  <a href="q-and-a.html" data-doc-link>Q&amp;A</a>
+                  <a href="faq.html" class="is-active" data-doc-link>FAQ</a>
                 </li>
               </ul>
             </div>
@@ -76,7 +76,7 @@
       <main class="main-content">
         <header>
           <p class="eyebrow">Resources</p>
-          <h1>Q&amp;A</h1>
+          <h1>FAQ</h1>
           <p>Answers to common questions about operating and extending your BC2Fabric deployment.</p>
         </header>
 
@@ -86,9 +86,9 @@
           <ol>
             <li>In Microsoft Fabric, open the workspace that hosts the BC2Fabric workload.</li>
             <li>Select the <code>bc2fabric_refresh</code> pipeline and choose <strong>Schedule</strong> from the command bar.</li>
-            <li>Adjust the frequency, start time, or pause the trigger, then <strong>Apply</strong> the changes. Fabric runs the pipeline on the schedule you configure. For more details, see <a href="https://learn.microsoft.com/en-us/fabric/data-factory/pipeline-runs#scheduled-pipeline-runs">Scheduled pipeline runs in Fabric</a>.</li>
+            <li>Adjust the frequency, start time, end time, or deactivate the schedule. For more details, see <a href="https://learn.microsoft.com/en-us/fabric/data-factory/pipeline-runs#scheduled-pipeline-runs">Scheduled pipeline runs in Fabric</a>.</li>
           </ol>
-          <p>You can also trigger an on-demand load by selecting <strong>Run</strong> on the pipeline whenever you need an immediate refresh.</p>
+          <p>You can also trigger an on-demand load by selecting <strong>Run now</strong> on the pipeline whenever you need an immediate refresh.</p>
         </section>
 
         <section class="content-card">

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BC2Fabric Authorization Setup | BC2Fabric Documentation</title>
+  <title>Prerequisites| BC2Fabric Documentation</title>
   <link rel="icon" href="https://www.navida.eu/favicon.ico" />
   <link rel="stylesheet" href="../assets/css/styles.css" />
 </head>
@@ -56,7 +56,7 @@
               <div class="nav-section-title">Resources</div>
               <ul class="nav-list">
                 <li class="nav-item">
-                  <a href="q-and-a.html" data-doc-link>Q&amp;A</a>
+                  <a href="faq.html" data-doc-link>FAQ</a>
                 </li>
               </ul>
             </div>
@@ -107,7 +107,9 @@
         </section>
 
         <section class="content-card">
-          <h2 id="Microsoft-Entra-application">Microsoft Entra application</h2>
+          <h2 id="Microsoft-Entra-application">
+            <a class="anchor-link" href="#Microsoft-Entra-application">Microsoft Entra application</a>
+          </h2>
           <h3>Step 1: Create a Microsoft Entra Application</h3>
           <ol>
             <li>Sign in to the Azure Portal (https://portal.azure.com).</li>
@@ -143,7 +145,7 @@
             <li>Click "+ New client secret"</li>
             <li>
               Set a description (e.g., BC2Fabric Read App Secret) and choose an expiration period
-              (e.g., 730 days or a custom date even further in the future).
+              (e.g., 730 days or a custom date).
             </li>
             <li>Click Add.</li>
             <li>
@@ -165,11 +167,13 @@
         </section>
 
         <section class="content-card">
-          <h2 id="Store-secret-in-key-vault">Azure Key Vault</h2>
+          <h2 id="Store-secret-in-key-vault">
+            <a class="anchor-link" href="#Store-secret-in-key-vault">Azure Key Vault</a>
+          </h2>
           <h3>Step 5: Store the Client Secret in Azure Key Vault</h3>
           <p>
             To securely store your client secret, use Azure Key Vault. You can use an existing Key
-            Vault or create a new one. Azure Key Vault is a low-cost resource (typically $0.03/month for
+            Vault or create a new one. Azure Key Vault is a low-cost resource.
             the usage in this context).
           </p>
 
@@ -191,7 +195,7 @@
             <li>Leave other settings as default.</li>
             <li>Click Review + Create, then Create.</li>
           </ol>
-          <p>Note: Azure Key Vault is a low-cost resource (typically around $0.03/month).</p>
+          <p>Note: Azure Key Vault is a low-cost resource.</p>
 
           <h3>Assign Key Vault Officer Permissions</h3>
           <ol>
@@ -223,8 +227,12 @@
         </section>
 
         <section class="content-card">
-          <h2 id="BC-Configuration">Business Central configuration</h2>
-          <h3 id="Install-BC-App">Step 6: Install BC2Fabric BC Extension from Microsoft AppSource</h3>
+          <h2 id="BC-Configuration">
+            <a class="anchor-link" href="#BC-Configuration">Business Central configuration</a>
+          </h2>
+          <h3 id="Install-BC-App">
+            Step 6: Install BC2Fabric BC Extension from Microsoft AppSource
+          </h3>
           <p>
             <a href="https://www.navida.eu/bc2fabric-connector" target="_blank" rel="noreferrer">
               Install the BC Extension BC2Fabric from Microsoft AppSource
@@ -232,7 +240,9 @@
             in the environment that should be used for synchronization.
           </p>
 
-          <h3 id="BC-App-Accces">Step 7: Assign Authorization in Business Central</h3>
+          <h3 id="BC-App-Accces">
+            Step 7: Assign Authorization in Business Central
+          </h3>
           <p>
             Before the App can read any data from Business Central the authorization in
             the Business Central App must be set.

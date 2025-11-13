@@ -56,7 +56,7 @@
             <div class="nav-section-title">Resources</div>
             <ul class="nav-list">
               <li class="nav-item">
-                <a href="q-and-a.html" data-doc-link>Q&amp;A</a>
+                <a href="faq.html" data-doc-link>FAQ</a>
               </li>
             </ul>
           </div>
@@ -83,7 +83,9 @@
       </section>
 
       <section class="content-card">
-        <h2 id="table-setup">Configuring BC2Fabric Table Setup in Business Central</h2>
+        <h2 id="table-setup">
+          <a class="anchor-link" href="#table-setup">Configuring BC2Fabric Table Setup in Business Central</a>
+        </h2>
         <p>
           Use the BC2Fabric Table Config page to choose which Business Central tables will be
           mirrored to Fabric and to enable logging for incremental processing.
@@ -93,10 +95,7 @@
             In Business Central, use the search to open <strong><a
                 href="https://businesscentral.dynamics.com/?page=72830821" target="_blank">BC2Fabric Setup</a></strong>.
           </li>
-          <li>
-            On the <strong>General</strong> tab, enable <strong>Deletion Logging</strong>. This ensures deletions on
-            mirrored tables are captured.
-          </li>
+      
           <li>
             In the <strong>Administration</strong> section, choose <strong>Mirroring Tables</strong> to open the
             <a href="https://businesscentral.dynamics.com/?page=72830825" target="_blank"> <strong>BC2Fabric Table
@@ -109,7 +108,7 @@
           </li>
 
           <li>
-            Ensure that the <strong>Deletion Logging</strong> and <strong>Mirroring</strong> flags are enabled for every
+            Ensure that the <strong>Mirroring</strong> flag is enabled for every
             table that
             should be replicated to Fabric.
           </li>
@@ -153,7 +152,9 @@
       </section>
 
       <section class="content-card">
-        <h2 id="install-workload">Installing BC2Fabric Workload in Fabric</h2>
+        <h2 id="install-workload">
+          <a class="anchor-link" href="#install-workload">Installing BC2Fabric Workload in Fabric</a>
+        </h2>
         <p>
           Add the BC2Fabric workload to your Fabric capacity or workspace so that your Business Central data can
           be mirrored and stored in Fabric.
