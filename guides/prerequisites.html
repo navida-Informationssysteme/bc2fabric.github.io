@@ -266,6 +266,12 @@
               This Permission Set provides the service principal (App) with access to “D365 READ”
               Permission Set and permissions for BC2Fabric-specific objects.
             </li>
+            <p>
+              <strong>Optional — Access to custom tables.</strong> If your mirrored endpoints include
+              custom (non-Microsoft) tables, extend the app's user permission set with permission sets
+              that grant read access to those tables. You can also assign the “SUPER (Data)”
+              permission set, but granting only the minimum required permissions is recommended.
+            </p>
             <li>
               Optionally, restrict access to specific companies using the Company column. If left empty,
               all companies will be accessible. Later in the installation process you can select which
