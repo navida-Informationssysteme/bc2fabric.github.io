@@ -120,6 +120,12 @@
         </section>
 
         <section class="content-card">
+          <h2 id="table-field-naming"><a class="anchor-link" href="#table-field-naming">How are tables and fields named in BC2Fabric?</a></h2>
+          <p>BC2Fabric mirrors Business Central with the same table and field names from Business Central, removing only special characters such as <code>.</code>, <code>,</code>, and <code>/</code> from table names.</p>
+          <p>Behind the scenes, BC2Fabric aligns API queries with the Business Central field list so objects match their Business Central counterparts—this is ensured for the standard BC2Fabric objects and for queries generated with the <a href="create-bc-queries.html">BC2Fabric query generator</a> and facilitates subsequent queries on the data.</p>
+        </section>
+
+        <section class="content-card">
           <h2 id="custom-endpoints"><a class="anchor-link" href="#custom-endpoints">How can I use my own endpoints for mirroring?</a></h2>
           <p>Custom APIs and tables can be mirrored as long as they expose the Business Central change tracking columns that BC2Fabric expects.</p>
           <p>Follow the <a href="install-bc2fabric.html">instructions how to add custom tables.</a></p>
