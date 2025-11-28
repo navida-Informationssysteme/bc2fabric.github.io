@@ -68,6 +68,9 @@
                 <li class="nav-item">
                   <a href="faq.html" class="is-active" data-doc-link>FAQ</a>
                 </li>
+                <li class="nav-item">
+                  <a href="standard-content.html" data-doc-link>Standard content</a>
+                </li>
               </ul>
             </div>
           </nav>
@@ -147,7 +150,7 @@
           <h2 id="deleted-records"><a class="anchor-link" href="#deleted-records">How are deleted records handled with incremental loading?</a></h2>
           <p>Business Central logs deletions for BC2Fabric so incremental loads remove the same rows from the mirrored database.</p>
          
-          <p>This targeted logging keeps analytics aligned without persisting full copies of deleted data.</p>
+          <p>This targeted logging keeps analytics aligned BC while minimizing data storage and processing overhead.</p>
         </section>
 
         <section class="content-card">
@@ -164,9 +167,9 @@
           <h2 id="loading-impact"><a class="anchor-link" href="#loading-impact">How does the loading impact Business Central?</a></h2>
           <p>BC2Fabric is designed to avoid affecting transactional performance in Business Central.</p>
           <ul>
-            <li>All data extraction runs against the Business Central <strong>read-only replica</strong>, so the operational write database remains untouched by analytics workloads.</li>
-            <li>Each pipeline run processes only the records that changed since the prior refresh by using Business Central <code>systemRowVersion</code> values, keeping load windows short.</li>
-            <li>The integration calls API <em>queries</em> instead of <em>API pages</em> to maximize throughput while staying within Business Central throttling limits.</li>
+            <li><strong>Read-only replica: </strong>All data extraction runs against the Business Central read-only replica, so the operational write database remains untouched by analytics workloads.</li>
+            <li><strong>Incremental Loading: </strong>Each pipeline run processes only the records that changed since the prior refresh by using Business Central <code>systemRowVersion</code> values, keeping load windows short.</li>
+            <li><strong>API queries only: </strong> The integration calls API <em>queries</em> instead of <em>API pages</em> to maximize throughput.</li>
           </ul>
           
         </section>
