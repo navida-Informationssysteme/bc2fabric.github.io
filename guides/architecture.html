@@ -113,6 +113,57 @@
       
         </section>
 
+        <section class="content-card">
+          <h2>Main components</h2>
+          <p>
+            BC2Fabric relies on managed components that keep Business Central data synchronized while
+            minimizing operational overhead in Fabric.
+          </p>
+          <ul>
+               <li>
+              <strong>Workload:</strong> Installing the BC2Fabric workload in a Fabric workspace provisions
+              the mirror, table configuration, and authentication to the Business Central tenant so credentials and
+              schema mappings are managed securely.
+            </li>
+            <li>
+              <strong>Mirrored database:</strong> Data lands in a Fabric mirroring database that automatically aligns
+              table and field names with Business Central. This creates a governed
+              source for semantic models and downstream lakehouses.
+            </li>
+        
+            <li>
+              <strong>Refresh pipeline:</strong> A Fabric pipeline orchestrates loads
+              from Business Central into the mirrored database. A schedule on this pipeline controls the
+              refresh cadence and triggers on-demand runs when needed.
+            </li>
+            <li>
+              <strong>Business Central app:</strong> An app inside Business Central hosts the configuration UI for
+              selecting the relevant API query endpoints (including any custom queries) that BC2Fabric should mirror.
+              Once configured, these endpoints are discovered automatically by the Fabric workload.
+            </li>
+          </ul>
+        </section>
+
+        <section class="content-card">
+          <h2>Runtime model</h2>
+          <p>
+            BC2Fabric is metadata-driven in Business Central—query definitions, selected endpoints, and change-tracking
+            fields live in Business Central—but the execution runs fully in Microsoft Fabric where data is mirrored,
+            governed, and made available for analytics.
+          </p>
+        
+
+      
+          <h2>Data movement pattern</h2>
+          <p>
+            Loads are <strong>pull-based</strong>: BC2Fabric calls Business Central API <em>queries</em> rather than
+            waiting for pushed changes. Every query includes <code>DataAccessIntent = ReadOnly</code> so traffic targets
+            the Business Central read-only replica instead of the transactional database. This protects production
+            performance while still delivering incremental changes to Fabric.
+          </p>
+          </section>
+     
+
         
 
        
