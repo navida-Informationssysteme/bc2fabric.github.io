@@ -202,6 +202,25 @@
           
         </section>
 
+        <section class="content-card">
+          <h2 id="pause-resume-capacity">
+            <a class="anchor-link" href="#pause-resume-capacity">What needs to be considered when pausing/resuming the Fabric capacity?</a>
+          </h2>
+          <p>
+            Fabric capacities can be paused and resumed manually or resumed automatically (e.g. via Azure Automation Runbooks) to control costs. The
+            BC2Fabric loading process will not run while the capacity is paused.
+          </p>
+          <p>
+            After resuming the capacity, resume the <code>bc2fabric_mirror</code> database to restart mirroring. This can be
+            done manually in the mirroring experience (see the
+            <a href="https://learn.microsoft.com/en-us/fabric/mirroring/troubleshooting#changes-to-fabric-capacity">Fabric
+              mirroring troubleshooting guidance</a>) or via API by calling the
+            <a href="https://learn.microsoft.com/en-us/rest/api/fabric/mirroreddatabase/mirroring/start-mirroring?tabs=HTTP"
+              >Start Mirroring</a
+            > endpoint.
+          </p>
+        </section>
+
       </main>
     </div>
 
