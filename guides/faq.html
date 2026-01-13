@@ -158,15 +158,15 @@
             <li>
               <strong>Adding columns to exsting tables:</strong> When you extend a table that was already mirrored, the new column will appear in the mirroring database after the next refresh.
               For existing rows, the <code>systemRowVersion</code> value does not trigger a backfill for the newly added column.
-              To populate historical data, run a <strong>Clear and Reload</strong> for that table by deleting the table in the Landing-zone with the <a href="https://www.microsoft.com/en-us/download/details.aspx?id=105222">OneLake Explorer</a>. The next refresh then will reaload the entire table including the new columns.
+              To populate historical data, run a Clear and Reload for that table by deleting the table in the Landing-zone with the <a href="https://www.microsoft.com/en-us/download/details.aspx?id=105222">OneLake Explorer</a>. The next refresh then will reaload the entire table including the new columns.
             </li>
              <li>
               <strong>Removing tables:</strong> If a table is removed from the setup, it stays in the mirroring database for historical records but will not be updated anymore.
-              To remove the table entirely from the database, run <strong>Clear and Reload</strong>.
+              To remove the table entirely from the database, run Clear and Reload.
             </li>
             <li>
-              <strong>Removing columns:</strong> If a column is removed from from a table, it stays in the mirroring database for historical records but will be blank for new rows.
-              To remove the column entirely from the mirroring database, run <strong>Clear and Reload</strong>.
+              <strong>Removing columns:</strong> If a column is removed from a table, it stays in the mirroring database for historical records but will be blank for new rows.
+              To remove the column entirely from the mirroring database, run Clear and Reload.
             </li>
           </ul>
         </section>
