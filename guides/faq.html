@@ -145,31 +145,7 @@
           <p>Behind the scenes, BC2Fabric aligns API queries with the Business Central field list so objects match their Business Central counterparts—this is ensured for the standard BC2Fabric objects and for queries generated with the <a href="create-bc-queries.html">BC2Fabric query generator</a> and facilitates subsequent queries on the data.</p>
         </section>
 
-        <section class="content-card">
-          <h2 id="schema-changes">
-            <a class="anchor-link" href="#schema-changes">How are schema changes, such as adding or removing columns, handled in the pipeline and mirroring database?</a>
-          </h2>
-          <p>BC2Fabric synchronization is metadata-driven, so most changes flow through automatically.</p>
-          <ul>
-            <li>
-              <strong>Adding new tables:</strong> When you add a new table to the BC2Fabric setup, it will appear in the mirroring database after the next refresh.
-                          </li>
-
-            <li>
-              <strong>Adding columns to exsting tables:</strong> When you extend a table that was already mirrored, the new column will appear in the mirroring database after the next refresh.
-              For existing rows, the <code>systemRowVersion</code> value does not trigger a backfill for the newly added column.
-              To populate historical data, run a Clear and Reload for that table by deleting the table in the Landing-zone with the <a href="https://www.microsoft.com/en-us/download/details.aspx?id=105222">OneLake Explorer</a>. The next refresh then will reaload the entire table including the new columns.
-            </li>
-             <li>
-              <strong>Removing tables:</strong> If a table is removed from the setup, it stays in the mirroring database for historical records but will not be updated anymore.
-              To remove the table entirely from the database, run Clear and Reload.
-            </li>
-            <li>
-              <strong>Removing columns:</strong> If a column is removed from a table, it stays in the mirroring database for historical records but will be blank for new rows.
-              To remove the column entirely from the mirroring database, run Clear and Reload.
-            </li>
-          </ul>
-        </section>
+       
 
         <section class="content-card">
           <h2 id="custom-endpoints"><a class="anchor-link" href="#custom-endpoints">How can I use my own endpoints for mirroring?</a></h2>
