@@ -157,7 +157,13 @@
           <a class="anchor-link" href="#install-workload">Installing BC2Fabric Workload in Fabric</a>
         </h2>
         <p>
-          Add the BC2Fabric workload to your Fabric capacity or workspace so that your Business Central data can
+          Installing BC2Fabric in Fabric happens in two stages: first add the workload to your capacity or
+          tenant, then install it inside the workspace where the mirroring should occur.
+        </p>
+
+        <h3>Add Workload to Capacity or Tenant</h3>
+        <p>
+          Assign the BC2Fabric workload to your Fabric capacity or entire tenant so that your Business Central data can
           be mirrored and stored in Fabric.
         </p>
         <ol>
@@ -172,12 +178,44 @@
               target="_blank" rel="noopener">direct workload link</a>.
           </li>
           <li>
-            Select <strong>Add</strong>, then choose whether to add the workload to the entire capacity or to a
-            specific workspace.
+            Select <strong>Manage</strong> - <strong>By Capacity</strong> and choose the capacities where BC2Fabric should become available or select "Add to entire tenant" to make it available in the entire tenant.
+            
           </li>
           <li>
-            Confirm to complete the installation.
+            Click update to complete the assignment.
           </li>
+        </ol>
+
+        <h3>Install Workload in Workspace</h3>
+        <p>
+          Open the workspace where you want the BC2Fabric mirroring to happen.
+        </p>
+        <ol>
+          <li>Click <strong>New item</strong>, then select <strong>BC2Fabric</strong> under <strong>Get item</strong>.</li>
+          <li>When prompted, enter a name for the workload (for example, <strong>BC2Fabric workload</strong>).</li>
+          <li>
+            In the workload page that opens, provide the following information (both from the prerequisites page):
+            <ul>
+              <li>
+                <a href="prerequisites.html#app-registration-id">App registration ID</a> 
+    
+              </li>
+              <li>
+                <a href="prerequisites.html#key-vault-uri">Key Vault URI</a> 
+              </li>
+              <li>The name of the environment</li>
+              <li>List of companies that should be loaded.</li>
+            </ul>
+          </li>
+          <li>Click <strong>Install</strong> to start the setup. This will perform the following steps:</li>
+        
+          <ul>
+          <li>Validation to ensure a correct setup, access to Key Vault and Business Central</li>
+          <li>Creation of Mirroring database, pipeline and other relevant components</li>
+          <li>Initial full load from Business Central to Fabric</li>
+          <li>Activation of daily refresh schedule</li>
+
+          </ul>
         </ol>
       </section>
     </main>
