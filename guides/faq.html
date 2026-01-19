@@ -102,6 +102,20 @@
         </section>
 
         <section class="content-card">
+          <h2 id="fabric-capacity-sizing"><a class="anchor-link" href="#fabric-capacity-sizing">How to size the Fabric Capacity for the mirroring?</a></h2>
+          <p>When planning your Microsoft Fabric capacity, the distinction between the resources required for data ingestion (mirroring) and downstream consumption is required.</p>
+          <p>Based on our internal benchmarks and information from clients, <strong>BC2Fabric is approximately 5 to 10 times more CU-efficient</strong> than standard Gen2 Dataflows.</p>
+          <p>Because BC2Fabric utilizes <strong>incremental refresh</strong> by default, the computational load is significantly minimized. For most scenarios aiming for <strong>near-real-time synchronization</strong> (refresh intervals between 5 to 15 minutes), a <strong>Microsoft Fabric F2 capacity</strong> will likely be sufficient for the mirroring process.</p>
+          <p><strong>Our Recommendation:</strong></p>
+          <ul>
+            <li><strong>Start with an F2 Capacity:</strong> Configure your desired refresh frequency (e.g., every 15 minutes) on an F2 SKU.</li>
+            <li><strong>Monitor:</strong> Use the Fabric Capacity Metrics app to observe consumption and adjust the capacity if necessary</li>
+          </ul>
+          <p>
+            This estimation applies strictly to the <strong>mirroring/ingestion process</strong> handled by BC2Fabric. Any additional workloads&mdash;such as heavy SQL transformations, Notebooks, or Power BI reporting running on top of the mirrored data&mdash;consume their own Capacity Units and must be factored into your total sizing calculation separately.</p>
+        </section>
+
+        <section class="content-card">
           <h2 id="required-licenses"><a class="anchor-link" href="#required-licenses">What licenses do I need to run BC2Fabric?</a></h2>
           <p>BC2Fabric requires a license for the BC2Fabric solution, an active Fabric or Fabric Trial Capacity (F2 or larger), and at least one Power BI Pro or Premium Per User account to manage and share the workspace assets.</p>
         </section>
