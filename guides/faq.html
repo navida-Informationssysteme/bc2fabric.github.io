@@ -153,8 +153,24 @@
           <p>After creating the Queries (e.g. by using the <a href="create-bc-queries.html">BC2Fabric query
           generator</a>), endpoints for custom tables need to be added to the BC2Fabric table config. Once added, they are automatically picked up by the mirroring mechanism—no changes are required in Fabric.</p>
           <p>Follow the <a href="install-bc2fabric.html">instructions how to add custom tables.</a></p>
+          <p>If custom fields should be added to an existing standard table for mirroring, the Entity Set Name in the existing BC2Fabric table config needs to be replaced by the custom API endpoint. To do so the Assist-Edit of the "Entity Set Name" (... in the field) can be used to select the custom endpoint. The other relevant fields (Publisher, Group, API Version) will be set based on this selection. </p>
           
         </section>
+
+      <section class="content-card">
+  <h2 id="query-scope">
+    <a class="anchor-link" href="#query-scope">Should I limit the columns in my Custom Queries?</a>
+  </h2>
+  <p>
+    <strong>No, we recommend including any columns that might be needed for future reporting.</strong>
+  </p>
+  <p>
+    Because BC2Fabric is optimized for efficient refreshes (loading only new or changed data), adding extra columns has a minimal impact on compute and storage overhead.
+  </p>
+  <p>
+    Including these fields upfront ensures that Fabric and Power BI builders can enhance semantic models later without requiring you to return to Business Central to modify the API.
+  </p>
+</section>
 
         <section class="content-card">
           <h2 id="extend-data"><a class="anchor-link" href="#extend-data">How can I extend the mirrored data with other data sources?</a></h2>
