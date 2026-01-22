@@ -142,13 +142,21 @@
         <section class="content-card">
           <h2 id="power-bi-reports"><a class="anchor-link" href="#power-bi-reports">How do I build Power BI reports on top of the mirrored data?</a></h2>
           <p>The mirrored <code>bc2fabric_mirror</code> database supports building semantic models in Import or Direct Lake mode. When using Direct Lake, reports stay synchronized without maintaining dataset refreshes.</p>
+          <h3>Direct Lake Mode</h3>
           <ol>
             <li>Open the Fabric workspace and launch the <code>bc2fabric_mirror</code> database to review the synchronized Business Central tables.</li>
             <li>From the mirroring experience, choose <strong>New</strong> &gt; <strong>Semantic model</strong>, provide a name and <strong>select the workspace</strong> where the semantic model should be created. <strong>Select the mirrored tables </strong>that should be part of the semantic model.</li>
             <li>Use the <strong>web authoring experience</strong> to build relationships, DAX measures etc. Changes to the model will automatically be saved to the model in the service.</li>
-            <li>Build Power BI reports in the service or connect with Power BI Desktop to the Direct Lake Semantic Model, as <a href="https://learn.microsoft.com/en-us/fabric/data-warehouse/reports-power-bi-service">described here</a>.</li>
+            <li>Build Power BI reports in the service or connect with Power BI Desktop to the Direct Lake Semantic Model.</li>
+          </ol>  
+          <h3>Import Mode</h3>
+          <ol>
+            <li>Open Power BI Desktop.</li>
+            <li>Select <strong>Get data</strong> &gt; <strong>OneLake catalog</strong>.</li>
+            <li>Select the <code>bc2fabric_mirror</code> database in the workspace that was used for mirroring, then choose <strong>Connect</strong>.</li>
+            <li>Select the tables that should be loaded.</li>
           </ol>
-          <p>Semantic models with import (instead of Direct Lake) can be created with Power BI Desktop by using the SQL endpoint of the mirroring database and by configuring refreshes from the workspace as required.</p>
+          <p>For more details on creating semantic models in Import or DirectQuery storage modes, see <a href="https://learn.microsoft.com/en-us/fabric/data-warehouse/create-semantic-model#create-a-new-power-bi-semantic-model-in-import-or-directquery-storage-mode">this Microsoft Learn article</a>.</p>
         </section>
 
         <section class="content-card">
