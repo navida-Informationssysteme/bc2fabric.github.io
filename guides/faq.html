@@ -129,6 +129,21 @@
         </section>
 
         <section class="content-card">
+          <h2 id="near-real-time-data"><a class="anchor-link" href="#near-real-time-data">How close to real-time will the data be available in Fabric?</a></h2>
+          <p>It depends mainly on your refresh frequency and the mirroring ingestion time.</p>
+          <ul>
+            <li>With <strong>BC2Fabric Premium licenses</strong>, you can schedule refreshes at <strong>high frequency</strong> (for example, <strong>every 2 or 3 minutes</strong>) due to the incremental load that will only load new and changed data. See the section: <strong><a href="#change-refresh-time-and-schedule">How do I change the refresh…</a></strong>.</li>
+            <li>This <strong>incremental load from Business Central</strong> typically runs in <strong>~1 minute</strong>.</li>
+            <li>The <strong>mirroring replication</strong> (landing zone → OneLake/Delta) typically takes <strong>less than 2 minutes</strong>, assuming the Fabric capacity is not throttling/overloaded. (<a href="https://learn.microsoft.com/en-us/fabric/mirroring/troubleshooting">Microsoft Learn</a>)</li>
+          </ul>
+          <p>Microsoft doesn't guarantee a specific mirroring replication delay. They describe mirroring as <strong>near real-time</strong> and list factors that influence latency. (<a href="https://learn.microsoft.com/en-us/fabric/mirroring/overview#near-real-time-replication">Microsoft Learn</a>)</p>
+         <p>
+  In practice, the duration of thse steps typically translate to an end-to-end delay from data entry in Business Central to report availability of <strong>5 to 15 minutes</strong> for most setups - assuming the reports are using <a href="https://docs.bc2fabric.com/guides/faq.html#power-bi-reports">Direct Lake Mode</a> to directly reflect the changed data.
+</p>
+
+        </section>
+
+        <section class="content-card">
           <h2 id="change-refresh-time-and-schedule"><a class="anchor-link" href="#change-refresh-time-and-schedule">How do I change the refresh time and schedule?</a></h2>
           <p>The BC2Fabric workload deploys a Fabric pipeline named <code>bc2fabric_refresh</code> that orchestrates loads from Business Central into the mirrored database. Scheduling is controlled on that pipeline.</p>
           <ol>
