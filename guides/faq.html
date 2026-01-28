@@ -93,6 +93,7 @@
             <li><a href="#change-refresh-time-and-schedule">How do I change the refresh time and schedule?</a></li>
             <li><a href="#power-bi-reports">How do I build Power BI reports on top of the mirrored data?</a></li>
             <li><a href="#data-freshness">How can I see how up to date the data is?</a></li>
+            <li><a href="#row-counts">How can I see the number of rows per table (and per table and company) in my mirrored database?</a></li>
             <li><a href="#table-field-naming">How are tables and fields named in BC2Fabric?</a></li>
             <li><a href="#custom-endpoints">How can I use my own endpoints for mirroring?</a></li>
             <li><a href="#query-scope">Should I limit the columns in my Custom Queries?</a></li>
@@ -205,6 +206,230 @@
             <li>All mirrored tables expose a <code>Modified at BC2FAB</code> column that records when each row was last retrieved from Business Central.</li>
           </ul>
           <p>Surface those timestamps through T-SQL queries or Power BI reports to get transparency into the freshness of data.</p>
+        </section>
+
+        <section class="content-card">
+          <h2 id="row-counts"><a class="anchor-link" href="#row-counts">How can I see the number of rows per table (and per table and company) in my mirrored database?</a></h2>
+          <p>Open the SQL endpoint of the mirroring database (normally called <code>bc2fabric_mirror</code>) and run one of the queries below. The SQL query editor is described in <a href="https://learn.microsoft.com/en-us/fabric/data-warehouse/sql-query-editor">this Microsoft Learn article</a>.</p>
+
+          <section class="snippet">
+            <div class="code-block">
+              <div class="code-header">
+                <button class="toggle-btn" type="button" aria-expanded="false" aria-controls="sql-panel" data-collapsed-label="▶ SQL for row counts per table (across companies)" data-expanded-label="▼ Hide SQL">
+                  ▶ SQL for row counts per table (across companies)
+                </button>
+
+                <button class="copy-btn" type="button" data-copy-target="sql-code">
+                  Copy
+                </button>
+              </div>
+
+              <!-- Collapsed by default -->
+              <div class="code-panel" id="sql-panel" hidden>
+                <pre class="code-pre"><code id="sql-code">DECLARE @Schema sysname = N'bc';
+DECLARE @Sql nvarchar(max) = NULL; 
+
+SELECT
+  @Sql = COALESCE(@Sql + N' UNION ALL ', N'')
+       + N'SELECT '
+       + QUOTENAME(s.name + N'.' + t.name, '''') + N' AS [table_name], '
+       + N'COUNT_BIG(1) AS [row_count] '
+       + N'FROM ' + QUOTENAME(s.name) + N'.' + QUOTENAME(t.name)
+FROM sys.tables t
+JOIN sys.schemas s ON s.schema_id = t.schema_id
+WHERE s.name = @Schema
+ORDER BY t.name;
+
+IF @Sql IS NULL
+BEGIN
+  -- No tables found in that schema
+  SELECT CAST(NULL AS nvarchar(256)) AS [table_name], CAST(0 AS bigint) AS [row_count]
+  WHERE 1 = 0;
+END
+ELSE
+BEGIN
+  EXEC sys.sp_executesql @Sql;
+END</code></pre>
+              </div>
+            </div>
+          </section>
+
+          <section class="snippet">
+            <div class="code-block">
+              <div class="code-header">
+                <button class="toggle-btn" type="button" aria-expanded="false" aria-controls="sql-panel-company" data-collapsed-label="▶ SQL for row counts per table per company" data-expanded-label="▼ Hide SQL">
+                  ▶ SQL for row counts per table per company
+                </button>
+
+                <button class="copy-btn" type="button" data-copy-target="sql-code-company">
+                  Copy
+                </button>
+              </div>
+
+              <!-- Collapsed by default -->
+              <div class="code-panel" id="sql-panel-company" hidden>
+                <pre class="code-pre"><code id="sql-code-company">DECLARE @Schema sysname = N'bc';
+DECLARE @Sql nvarchar(max) = NULL;
+
+;WITH Tbl AS (
+    SELECT
+        s.name AS schema_name,
+        t.name AS table_name,
+        HasBCCompany = CASE
+            WHEN EXISTS (
+                SELECT 1
+                FROM sys.columns c
+                WHERE c.object_id = t.object_id
+                  AND c.name = N'BC Company'
+            ) THEN 1 ELSE 0
+        END
+    FROM sys.tables t
+    JOIN sys.schemas s ON s.schema_id = t.schema_id
+    WHERE s.name = @Schema
+)
+SELECT
+    @Sql = COALESCE(@Sql + N' UNION ALL ', N'')
+         + CASE WHEN HasBCCompany = 1 THEN
+              N'SELECT '
+            + QUOTENAME(schema_name + N'.' + table_name, '''') + N' AS [table_name], '
+            + N'CAST([BC Company] AS nvarchar(250)) AS [BC Company], '
+            + N'COUNT_BIG(1) AS [row_count] '
+            + N'FROM ' + QUOTENAME(schema_name) + N'.' + QUOTENAME(table_name) + N' '
+            + N'GROUP BY [BC Company]'
+           ELSE
+              N'SELECT '
+            + QUOTENAME(schema_name + N'.' + table_name, '''') + N' AS [table_name], '
+            + N'CAST(N'''' AS nvarchar(250)) AS [BC Company], '
+            + N'COUNT_BIG(1) AS [row_count] '
+            + N'FROM ' + QUOTENAME(schema_name) + N'.' + QUOTENAME(table_name)
+           END
+FROM Tbl
+ORDER BY table_name;
+
+IF @Sql IS NULL
+BEGIN
+  -- No tables found in that schema
+  SELECT
+    CAST(NULL AS nvarchar(256)) AS [table_name],
+    CAST(N'' AS nvarchar(250)) AS [BC Company],
+    CAST(0 AS bigint) AS [row_count]
+  WHERE 1 = 0;
+END
+ELSE
+BEGIN
+  EXEC sys.sp_executesql @Sql;
+END</code></pre>
+              </div>
+            </div>
+          </section>
+
+          <style>
+            .code-block{
+              border: 1px solid #e5e7eb;
+              border-radius: 12px;
+              overflow: hidden;
+              margin: 12px 0;
+            }
+            .code-header{
+              display:flex;
+              align-items:center;
+              justify-content:space-between;
+              gap:12px;
+              padding:10px 12px;
+              background:#f9fafb;
+              border-bottom:1px solid #e5e7eb;
+              font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            }
+            .toggle-btn{
+              border: none;
+              background: transparent;
+              padding: 6px 4px;
+              cursor: pointer;
+              font-size: 14px;
+              font-weight: 600;
+              text-align:left;
+            }
+            .copy-btn{
+              border:1px solid #d1d5db;
+              background:#fff;
+              padding:6px 10px;
+              border-radius:10px;
+              cursor:pointer;
+              font-size:14px;
+              white-space: nowrap;
+            }
+            .copy-btn:active{ transform: translateY(1px); }
+
+            .code-panel{ /* container for the pre */ }
+            .code-pre{
+              margin:0;
+              padding:12px;
+              background:#0b1020;
+              color:#e5e7eb;
+              overflow:auto;
+              font-size:13px;
+              line-height:1.45;
+            }
+            .code-pre code{
+              font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+              white-space: pre;
+              display:block;
+            }
+          </style>
+
+          <script>
+            (function () {
+              // Toggle expand/collapse
+              document.addEventListener("click", (e) => {
+                const toggle = e.target.closest(".toggle-btn");
+                if (!toggle) return;
+
+                const panelId = toggle.getAttribute("aria-controls");
+                const panel = document.getElementById(panelId);
+                if (!panel) return;
+
+                const isOpen = toggle.getAttribute("aria-expanded") === "true";
+                toggle.setAttribute("aria-expanded", String(!isOpen));
+                panel.hidden = isOpen;
+
+                // Update label + caret
+                const collapsedLabel = toggle.getAttribute("data-collapsed-label") || "▶ Show SQL";
+                const expandedLabel = toggle.getAttribute("data-expanded-label") || "▼ Hide SQL";
+                toggle.textContent = isOpen ? collapsedLabel : expandedLabel;
+              });
+
+              // Copy (works even when collapsed)
+              document.addEventListener("click", async (e) => {
+                const btn = e.target.closest(".copy-btn");
+                if (!btn) return;
+
+                const id = btn.getAttribute("data-copy-target");
+                const codeEl = document.getElementById(id);
+                if (!codeEl) return;
+
+                const text = codeEl.innerText;
+
+                try {
+                  await navigator.clipboard.writeText(text);
+                } catch (err) {
+                  // Fallback for older browsers
+                  const ta = document.createElement("textarea");
+                  ta.value = text;
+                  ta.style.position = "fixed";
+                  ta.style.opacity = "0";
+                  document.body.appendChild(ta);
+                  ta.select();
+                  document.execCommand("copy");
+                  document.body.removeChild(ta);
+                }
+
+                // UX feedback
+                const old = btn.textContent;
+                btn.textContent = "Copied!";
+                setTimeout(() => (btn.textContent = old), 1200);
+              });
+            })();
+          </script>
         </section>
 
         <section class="content-card">
