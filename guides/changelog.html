@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Changelog | BC2Fabric Documentation</title>
+    <link rel="icon" type="image/x-icon" sizes="any" href="https://www.navida.eu/favicon.ico" />
+    <link rel="shortcut icon" href="https://www.navida.eu/favicon.ico" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+  </head>
+  <body>
+    <button
+      class="sidebar-toggle"
+      type="button"
+      data-sidebar-toggle
+      aria-expanded="false"
+      aria-controls="doc-sidebar"
+      aria-label="Open navigation"
+    >
+      <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
+      <span>Menu</span>
+    </button>
+    <div class="sidebar-backdrop" data-sidebar-backdrop></div>
+    <div class="docs-layout">
+      <aside
+        class="sidebar"
+        id="doc-sidebar"
+        data-sidebar
+        aria-label="Documentation navigation"
+      >
+        <div class="sidebar-inner">
+          <h1><a href="https://docs.bc2fabric.com">BC2Fabric Docs</a></h1>
+
+          <nav>
+            <div class="nav-section">
+              <div class="nav-section-title">Getting Started</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../getting-started/bc2fabric.html" data-doc-link>BC2Fabric</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../getting-started/quickstart.html" data-doc-link>Quickstart</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Guides</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="prerequisites.html" data-doc-link>Prerequisites</a>
+                </li>
+                <li class="nav-item">
+                  <a href="install-bc2fabric.html" data-doc-link>Install BC2Fabric</a>
+                </li>
+                <li class="nav-item">
+                  <a href="create-bc-queries.html" data-doc-link>Create BC Queries</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Resources</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="faq.html" data-doc-link>FAQ</a>
+                </li>
+                <li class="nav-item">
+                  <a href="changelog.html" class="is-active" data-doc-link>Changelog</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header>
+          <p class="eyebrow">Resources</p>
+          <h1>Changelog</h1>
+          <p>Track releases and improvements for the BC2Fabric Fabric workload.</p>
+        </header>
+
+        <section class="content-card">
+          <h2>Release history</h2>
+          <p>
+            Each entry below summarizes changes to the Fabric workload in BC2Fabric.
+          </p>
+
+          <table aria-label="BC2Fabric changelog">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Version</th>
+                <th scope="col">Area</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>01.11.2025</td>
+                <td>V1.0</td>
+                <td>Fabric Workload</td>
+                <td>Initial version of Fabric Workload.</td>
+              </tr>
+              <tr>
+                <td>20.11.2025</td>
+                <td>V1.1</td>
+                <td>Fabric Workload</td>
+                <td>Performance- and stability improvements.</td>
+              </tr>
+              <tr>
+                <td>27.01.2026</td>
+                <td>V1.2</td>
+                <td>Fabric Workload</td>
+                <td>
+                  New features:
+                  <ul>
+                    <li>
+                      Table overview in BC2Fabric item showing all mirrored delta tables with last refresh timestamp and a reset-button to enforce
+                      a full refresh with schema update.
+                    </li>
+                    <li>
+                      Improved full-loading implementation that keeps the delta tables intact during the refresh for
+                      improved reporting consumption (especially when using Direct Lake Mode).
+                    </li>
+                    <li>
+                      Load-logging (aggregated logging with one row per load and detailed logging on table-company level)
+                      written into the internal lakehouse logs folder.
+                    </li>
+                    <li>
+                      New delta table "Environment Information" is automatically created with information about the mirrored
+                      environment to allow displaying the environment name in reports.
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>28.01.2026</td>
+                <td>V1.3</td>
+                <td>Fabric Workload</td>
+                <td>Hotfix for V1.2</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>
