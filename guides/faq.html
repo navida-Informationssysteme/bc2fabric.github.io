@@ -99,6 +99,7 @@
             <li><a href="#row-counts">How can I see the number of rows per table (and per table and company) in my mirrored database?</a></li>
             <li><a href="#table-field-naming">How are tables and fields named in BC2Fabric?</a></li>
             <li><a href="#custom-endpoints">How can I use my own endpoints for mirroring?</a></li>
+            <li><a href="#extend-mirroring">How can I extend or change the mirrored data after the initial load?</a></li>
             <li><a href="#query-scope">Should I limit the columns in my Custom Queries?</a></li>
             <li><a href="#extend-data">How can I extend the mirrored data with other data sources?</a></li>
             <li><a href="#deleted-records">How are deleted records handled with incremental loading?</a></li>
@@ -451,6 +452,12 @@ END</code></pre>
           <p>Follow the <a href="install-bc2fabric.html">instructions how to add custom tables.</a></p>
           <p>If custom fields should be added to an existing standard table for mirroring, the Entity Set Name in the existing BC2Fabric table config needs to be replaced by the custom API endpoint. To do so the Assist-Edit of the "Entity Set Name" (... in the field) can be used to select the custom endpoint. The other relevant fields (Publisher, Group, API Version) will be set based on this selection. </p>
           
+        </section>
+
+        <section class="content-card">
+          <h2 id="extend-mirroring"><a class="anchor-link" href="#extend-mirroring">How can I extend or change the mirrored data after the initial load?</a></h2>
+          <p><strong>Adding new tables:</strong> If you add new tables in BC2Fabric Setup in Business Central, they will be picked up automatically and fetched with the next load.</p>
+          <p><strong>Changing an existing table schema (fields):</strong> If you add or remove fields on endpoints that are already being mirrored, go to the BC2Fabric workload → <b>Tables</b> tab and use the <b>Reset</b> button for the affected table. The next refresh will reload the table using the updated schema.</p>
         </section>
 
       <section class="content-card">
