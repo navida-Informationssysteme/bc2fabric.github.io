@@ -478,13 +478,27 @@ END</code></pre>
         <section class="content-card">
           <h2 id="extend-data"><a class="anchor-link" href="#extend-data">How can I extend the mirrored data with other data sources?</a></h2>
           <p>OneLake lets you combine Business Central data with other sources without copying tables out of Fabric.</p>
+          <p><strong>For BC2Fabric mirrored data, use schema shortcuts as the recommended approach.</strong> Schema shortcuts expose the full mirrored schema in a Lakehouse and keep it in sync as new mirrored tables are added over time.</p>
+          <h3>Why schema shortcuts are recommended</h3>
           <ul>
-            <li>Create a dedicated Lakehouse for blended analytics and add a shortcut that points to the <code>bc2fabric_mirror</code> database schema so the mirrored data is available without duplicating it.</li>
-            <li>Use Dataflows Gen2, pipelines, or notebooks to join BC2Fabric tables with third-party data and persist curated outputs in that Lakehouse.</li>
-            <li>Build new Semantic Models based on the Lakehouse that combines the data.</li>
+            <li><strong>Automatic table onboarding:</strong> when BC2Fabric starts mirroring a new table into the mirrored database schema, it automatically appears through the schema shortcut without creating additional shortcuts.</li>
+            <li><strong>No duplicate storage:</strong> shortcuts reference OneLake data in place, so you can model and join data without copying mirrored tables.</li>
+            <li><strong>Lower maintenance:</strong> you manage one shortcut per schema instead of one shortcut per table.</li>
           </ul>
-          <p>This pattern keeps governance centralized while letting you enrich Business Central insights with external sources.</p>
-        </section>
+          <h3>Prerequisites</h3>
+          <ul>
+            <li>The target Lakehouse must be schema-enabled.</li>
+            <li>You need permissions on both the source (mirroring database) and the target Lakehouse.</li>
+          </ul>
+          <h3>How to create a schema shortcut</h3>
+          <ol>
+            <li>Open (or create) a schema-enabled Lakehouse that you use for blended analytics. This lakehouse can be part of the same or a different Fabric workspace.</li>
+            <li>In the Lakehouse, create a new shortcut and choose the mirrored database schema from <code>bc2fabric_mirror</code> as source.</li>
+            <li>Save the shortcut and verify that the mirrored tables are visible in the Lakehouse.</li>
+            <li>Use Dataflows Gen2, pipelines, or notebooks to combine BC2Fabric tables with other data</li>
+          </ol>
+          <p>Microsoft documentation for this pattern: <a href="https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-schemas">Lakehouse schemas and schema shortcuts</a>.</p>
+      </section>
 
         <section class="content-card">
           <h2 id="deleted-records"><a class="anchor-link" href="#deleted-records">How are deleted records handled with incremental loading?</a></h2>
