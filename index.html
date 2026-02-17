@@ -183,6 +183,21 @@
           <!-- Simplified "Next steps" to only the primary action -->
           <h2>Next steps</h2>
           <p><a href="getting-started/quickstart.html" data-doc-link>Follow the Quickstart guide</a> to set up BC2Fabric.</p>
+
+          <h2>Contact us</h2>
+          <p>
+            Need support? Use
+            <a
+              href="#"
+              id="support-email-link"
+              data-user="bc2fab"
+              data-domain="navida.eu"
+              rel="nofollow"
+            >
+              this contact link
+            </a>
+            to create an email.
+          </p>
         </section>
 
         <footer class="footer">
@@ -193,5 +208,22 @@
 
     <script src="https://player.vimeo.com/api/player.js"></script>
     <script src="assets/js/main.js"></script>
+    <script>
+      (function () {
+        const supportLink = document.getElementById('support-email-link');
+
+        if (!supportLink) {
+          return;
+        }
+
+        const user = supportLink.dataset.user;
+        const domain = supportLink.dataset.domain;
+
+        supportLink.addEventListener('click', function (event) {
+          event.preventDefault();
+          window.location.href = 'mailto:' + user + '@' + domain;
+        });
+      })();
+    </script>
   </body>
 </html>
