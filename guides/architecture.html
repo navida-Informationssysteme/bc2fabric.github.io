@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Architecture | BC2Fabric Documentation</title>
+    <title>Architecture | BC2Fab Documentation</title>
     <link rel="icon" type="image/x-icon" sizes="any" href="https://www.navida.eu/favicon.ico" />
     <link rel="shortcut icon" href="https://www.navida.eu/favicon.ico" />
     <link rel="stylesheet" href="../assets/css/styles.css" />
@@ -29,14 +29,14 @@
         aria-label="Documentation navigation"
       >
         <div class="sidebar-inner">
-          <h1><a href="https://docs.bc2fabric.com">BC2Fabric Docs</a></h1>
+          <h1><a href="https://docs.bc2fab.com">BC2Fab Docs</a></h1>
 
           <nav>
             <div class="nav-section">
               <div class="nav-section-title">Getting Started</div>
               <ul class="nav-list">
                 <li class="nav-item">
-                  <a href="../getting-started/bc2fabric.html" data-doc-link>BC2Fabric</a>
+                  <a href="../getting-started/bc2fab.html" data-doc-link>BC2Fab</a>
                 </li>
                 <li class="nav-item">
                   <a href="../getting-started/quickstart.html" data-doc-link>Quickstart</a>
@@ -54,7 +54,7 @@
                   <a href="prerequisites.html" data-doc-link>Prerequisites</a>
                 </li>
                 <li class="nav-item">
-                  <a href="install-bc2fabric.html" data-doc-link>Install BC2Fabric</a>
+                  <a href="install-bc2fab.html" data-doc-link>Install BC2Fab</a>
                 </li>
                 <li class="nav-item">
                   <a href="create-bc-queries.html" data-doc-link>Create BC Queries</a>
@@ -82,7 +82,7 @@
           <p class="eyebrow">Guides</p>
           <h1>Architecture</h1>
           <p>
-            Learn how BC2Fabric mirrors Microsoft Business Central data into Microsoft Fabric to
+            Learn how BC2Fab mirrors Microsoft Business Central data into Microsoft Fabric to
             deliver governed, analytics-ready datasets for reporting and AI-driven insights.
           </p>
         </header>
@@ -90,7 +90,7 @@
         <section class="content-card">
           <h2>Solution overview</h2>
           <p>
-            BC2Fabric provides a managed mirroring solution that synchronizes
+            BC2Fab provides a managed mirroring solution that synchronizes
             operational data from Microsoft Business Central into the Microsoft Fabric lakehouse.
             The platform focuses on zero-code connectivity, automated schema handling, and
             end-to-end observability so finance and operations teams can build Power BI reports or
@@ -106,10 +106,10 @@
           <figure class="media-frame">
             <img
               src="../assets/images/BC2Fabric_Architecture.jpg"
-              alt="Diagram of the BC2Fabric mirroring architecture from Business Central into Microsoft Fabric"
+              alt="Diagram of the BC2Fab mirroring architecture from Business Central into Microsoft Fabric"
             />
             <figcaption>
-              BC2Fabric orchestrates secure data movement from Business Central tenants into a
+              BC2Fab orchestrates secure data movement from Business Central tenants into a
               Microsoft Fabric lakehouse.
             </figcaption>
           </figure>
@@ -119,12 +119,12 @@
         <section class="content-card">
           <h2>Main components</h2>
           <p>
-            BC2Fabric relies on managed components that keep Business Central data synchronized while
+            BC2Fab relies on managed components that keep Business Central data synchronized while
             minimizing operational overhead in Fabric.
           </p>
           <ul>
                <li>
-              <strong>Workload:</strong> Installing the BC2Fabric workload in a Fabric workspace provisions
+              <strong>Workload:</strong> Installing the BC2Fab workload in a Fabric workspace provisions
               the mirror, table configuration, and authentication to the Business Central tenant so credentials and
               schema mappings are managed securely.
             </li>
@@ -141,7 +141,7 @@
             </li>
             <li>
               <strong>Business Central app:</strong> An app inside Business Central hosts the configuration UI for
-              selecting the relevant API query endpoints (including any custom queries) that BC2Fabric should mirror.
+              selecting the relevant API query endpoints (including any custom queries) that BC2Fab should mirror.
               Once configured, these endpoints are discovered automatically by the Fabric workload.
             </li>
           </ul>
@@ -150,7 +150,7 @@
         <section class="content-card">
           <h2>Runtime model</h2>
           <p>
-            BC2Fabric is metadata-driven in Business Central—query definitions, selected endpoints, and change-tracking
+            BC2Fab is metadata-driven in Business Central—query definitions, selected endpoints, and change-tracking
             fields live in Business Central—but the execution runs fully in Microsoft Fabric where data is mirrored,
             governed, and made available for analytics.
           </p>
@@ -159,7 +159,7 @@
       
           <h2>Data movement pattern</h2>
           <p>
-            Loads are <strong>pull-based</strong>: BC2Fabric calls Business Central API <em>queries</em> rather than
+            Loads are <strong>pull-based</strong>: BC2Fab calls Business Central API <em>queries</em> rather than
             waiting for pushed changes. Every query includes <code>DataAccessIntent = ReadOnly</code> so traffic targets
             the Business Central read-only replica instead of the transactional database. This protects production
             performance while still delivering incremental changes to Fabric.

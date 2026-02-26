@@ -1,6 +1,6 @@
-# BC2Fabric Documentation Site
+# BC2Fab Documentation Site
 
-This repository contains the static documentation site for BC2Fabric. It is designed for GitHub
+This repository contains the static documentation site for BC2Fab. It is designed for GitHub
 Pages and features a persistent left-hand navigation with a two-level hierarchy for quick access to
 getting started guides, in-depth tutorials, and reference material.
 
@@ -11,12 +11,12 @@ getting started guides, in-depth tutorials, and reference material.
 ├── assets/
 │   ├── css/styles.css      # Shared styling for the docs layout
 │   └── js/main.js          # Navigation enhancements (active state detection)
-├── getting-started/        # Onboarding content and live preview of bc2fabric.com
+├── getting-started/        # Onboarding content and live preview of bc2fab.com
 ├── guides/                 # Deep-dive tutorials and walkthroughs
 └── index.html              # Landing page for the documentation portal
 ```
 
-The **BC2Fabric Preview** page embeds https://bc2fabric.com directly inside the documentation for
+The **BC2Fab Preview** page embeds https://bc2fab.com directly inside the documentation for
 quick visual comparison while drafting content.
 
 ## Local development
