@@ -447,8 +447,10 @@ END</code></pre>
         <section class="content-card">
           <h2 id="custom-endpoints"><a class="anchor-link" href="#custom-endpoints">How can I use my own endpoints for mirroring?</a></h2>
           <p>Custom APIs and tables can be mirrored as long as they expose the Business Central change tracking columns that BC2Fab expects.</p>
+          <p><strong>Limitation:</strong> FlowFields are not fully supported by BC2Fab. FlowFields can slow down loads, and not all FlowField changes are tracked by the incremental load change-tracking mechanism. Instead of exposing FlowFields on mirrored endpoints, expose the underlying fact table and build the calculation in Fabric or Power BI. As a result the <a href="create-bc-queries.html">BC2Fab query generator</a> does not allow adding FlowFields.</p>
           <p>After creating the Queries (e.g. by using the <a href="create-bc-queries.html">BC2Fab query
           generator</a>), endpoints for custom tables need to be added to the BC2Fab table config. Once added, they are automatically picked up by the mirroring mechanism—no changes are required in Fabric.</p>
+          
           <p>Follow the <a href="install-bc2fab.html">instructions how to add custom tables.</a></p>
           <p>If custom fields should be added to an existing standard table for mirroring, the Entity Set Name in the existing BC2Fab table config needs to be replaced by the custom API endpoint. To do so the Assist-Edit of the "Entity Set Name" (... in the field) can be used to select the custom endpoint. The other relevant fields (Publisher, Group, API Version) will be set based on this selection. </p>
           
