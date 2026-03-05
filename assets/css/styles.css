@@ -191,6 +191,21 @@ a:hover {
   margin-top: 1.5rem;
 }
 
+.callout {
+  border-left: 4px solid;
+  border-radius: 0.5rem;
+  padding: 0.85rem 1.1rem;
+  margin: 1.25rem 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.callout-info {
+  border-color: #2563eb;
+  background: #eff6ff;
+  color: #1e3a6e;
+}
+
 .content-card h2 {
   margin-top: 2rem;
 }

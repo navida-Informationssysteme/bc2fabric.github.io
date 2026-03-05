@@ -96,6 +96,7 @@
           Use the BC2Fab query generator in Dynamics 365 Business Central to build AL queries that
           surface the tables and fields you need inside Microsoft Fabric.
         </p>
+       
       </header>
 
       <section class="content-card">
@@ -115,18 +116,209 @@
         </div>
       </section>
 
+
+
       <section class="content-card">
-        <h2>Key steps highlighted in the video</h2>
-        <ul>
-          <li>Use <strong>BC to Fabric Setup</strong> page and launch the query generator task.</li>
-          <li>Choose the tables that should be exposed to Fabric and fine-tune included fields.</li>
-          <li>Export the generated AL app package and publish it to your Business Central tenant.</li>
-        </ul>
+        <h2>Build and publish an App with the new API queries in Visual Studio Code</h2>
+        The new queries generated for BC2Fabric need to be built into an AL extension and published to your Business Central environment. This section provides step-by-step instructions on how to do this using Visual Studio Code.
+
+        <div class="callout callout-info">
+          <strong>Sandbox first, then production.</strong>
+          Always develop and build your AL app against a <strong>Business Central sandbox environment</strong>.
+          Once the <code>.app</code> file is built and validated, deploy it to your
+          <strong>production environment</strong> via Extension Management.
+       
+        </div>
         <p>
-          With the generated queries in place, refresh the Fabric workload so the new data appears in
-          your Lakehouse and Power BI datasets.
+          Follow these steps to build and publish your generated <code>.app</code> in Visual Studio Code.
+           </p>
+
+        <h3>1) Install Visual Studio Code and the AL extension</h3>
+        <ol>
+          <li>
+            Install <strong>Visual Studio Code</strong> from
+            <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">code.visualstudio.com</a>.
+          </li>
+          <li>
+            Open VS Code and install Microsoft <strong>AL Language</strong>:
+            <strong>Extensions</strong> (<code>Ctrl+Shift+X</code>) → search <code>AL Language</code> → <strong>Install</strong>.
+          </li>
+        </ol>
+
+        <h3>2) Create an AL project</h3>
+        <ol>
+          <li>Start VS Code</li>
+          <li>Open the Command Palette (<code>Ctrl+Shift+P</code>) and run <code>AL: Go!</code>.</li>
+          <li>Accept the default folder or choose an empty folder where the app should be created in</li>
+          <li>Choose the target platform that matches your BC environment</li>
+          <li>Choose Microsoft Cloud Sandbox as Server</li>
+          <li>Delete HelloWorld.al from the project if it was auto-created</li>
+          <li>
+            Confirm the project was created with:
+            <code>app.json</code>, <code>.vscode/launch.json</code>.
+          </li>
+        </ol>
+
+        <h3>3) Generate launch.json from the Business Central web client</h3>
+        <p>
+           </p>
+        <ol>
+          <li>Open your Business Central environment in the browser.</li>
+          <li>Use the Generate launch configurations for this environment action in the Troubleshooting section of the Help & Support page.</li>
+       <li>Visual Studio Code will open and use the generated launch.json file.</li>
+          <li>
+            Reference walkthrough:
+            <a href="https://learn.microsoft.com/en-ca/dynamics365/release-plan/2025wave1/smb/dynamics365-business-central/generate-launchjson-file-web-clientjson-file-from-the-web-client" target="_blank" rel="noopener noreferrer">Generate launch.json from the web client in Business Central (Wave 1 2025)</a>.
+          </li>
+                   <li>Download symbols (first-time setup)
+<ul><li>Open Command Palette (`Ctrl+Shift+P`).</li>
+<li>Run <strong>AL: Download Symbols</strong>.</li>
+
+</ul>
+</li>
+        </ol>
+
+        <h3>4) Add the generated BC2Fab files</h3>
+        <ol>
+          <li>Unzip the package exported from Query generator in BC2Fab.</li>
+          <li>
+            From the zip, copy <code>ReplaceYOurApp.json</code> and rename it to <code>app.json</code>
+            in the root of your VS Code AL project (overwrite existing file).
+          </li>
+          <li>Copy the src-Folder that includes the AL objects from the ZIP-File into your AL project folder.</li>
+        </ol>
+
+        <h3>5) Update app.json values</h3>
+        <p>Open <code>app.json</code> and set:</p>
+        <ul>
+          <li>Format the file (CTRL+Alt+F)</li>
+          <li><code>version</code> = <code>1.0.0.0</code></li>
+          <li><code>id</code> = any random GUID (example: <code>b987d68d-ab70-4b03-9ff2-157a337d8e66</code>)</li>
+        </ul>
+
+        <h3>6) Download symbols and build</h3>
+        <ol>
+          <li>Run <code>AL: Download Symbols</code> from the Command Palette.</li>
+          </li>
+          <li>Build with <code>Ctrl+Shift+B</code> (or run <code>AL: Package</code>).</li>
+          <li>Select the Sandbox from the launch configuration dropdown.</li>
+          <li>A Success message will appear in the Output window.</li>
+          <li>After a successful build, locate the generated <code>.app</code> file in the output folder of the AL-project.</li>
+        </ol>
+
+        <h3>7) Publish and install in production</h3>
+        <ol>
+          <li>Open Business Central in your production environment.</li>
+          <li>Search for and open <strong>Extension Management</strong>.</li>
+          <li>Select <strong>Manage</strong> → <strong>Upload Extension</strong>.</li>
+          <li>Select the <code>.app</code> file built in the previous step.</li>
+          <li>The selection <code>Deployment for</code> (current version) can remain as is, same as the synchronization settings.</li>
+          <li>Choose <strong>Deploy</strong> and wait for completion.</li>
+            <li>Search the extension in the list of extensions and check the "Is Installed" flag to be set. If not click "Install" on the extension overview. </li>
+            <li>The new query-object(s) should now be available to be used in the BC2Fabric table config.</li>
+        </ol>
+
+        <h3>References</h3>
+        <ul>
+          <li>
+            Microsoft AL development getting started:
+            <a href="https://learn.microsoft.com/dynamics365/business-central/dev-itpro/developer/devenv-get-started" target="_blank" rel="noopener noreferrer">Get started with AL</a>
+          </li>
+          <li>
+            App manifest (<code>app.json</code>) reference:
+            <a href="https://learn.microsoft.com/dynamics365/business-central/dev-itpro/developer/devenv-json-files" target="_blank" rel="noopener noreferrer">JSON files reference</a>
+          </li>
+          <li>
+            Packaging/deploying extensions:
+            <a href="https://learn.microsoft.com/dynamics365/business-central/dev-itpro/developer/devenv-deploy-extensions" target="_blank" rel="noopener noreferrer">Deploy extensions</a>
+          </li>
+        </ul>
+
+        <h3>Troubleshooting</h3>
+
+        <h4>Required permissions for deploying the extension</h4>
+        <p>
+          The user who uploads and installs the extension in Business Central must have sufficient permissions in both Business Central and the Microsoft 365 / Azure AD tenant.
         </p>
+        <ul>
+          <li>
+            <strong>Business Central permission set:</strong> The deploying user needs the
+            <code>D365 EXTENSION MGT</code> permission set assigned in Business Central, or
+            the <code>SUPER</code> permission set. Without this, the <strong>Upload Extension</strong>
+            action in Extension Management will not be available.
+          </li>
+          <li>
+            <strong>Azure AD / Entra ID role (Business Central Online):</strong> For SaaS environments,
+            the user must hold the <strong>Dynamics 365 Business Central Administrator</strong> role
+            in the Microsoft 365 admin center, or be a <strong>Global Administrator</strong>.
+            Delegated admin partners can also deploy extensions on behalf of a customer.
+          </li>
+          <li>
+            <strong>Sandbox access for development:</strong> The developer building the AL app
+            needs access to a Business Central sandbox environment and should have the
+            <code>D365 DEVELOPER</code> or <code>SUPER</code> permission set to download symbols
+            and publish during development.
+          </li>
+        </ul>
+
+        <h4>AL: Download Symbols fails</h4>
+        <p>
+          If <strong>AL: Download Symbols</strong> fails with an authentication error, verify that your
+          <code>launch.json</code> points to the correct environment URL and that you are signed in to
+          VS Code with the same account that has access to the BC sandbox. Re-generating
+          <code>launch.json</code> from the BC web client (Help &amp; Support → Troubleshooting) is the
+          fastest way to ensure the configuration is correct.
+        </p>
+
+        <h4>Build errors after adding BC2Fab files</h4>
+        <ul>
+          <li>
+            <strong>Target platform mismatch:</strong> Make sure the <code>runtime</code> and
+            <code>application</code> versions in <code>app.json</code> match your BC environment version.
+            Check the BC version under Help &amp; Support → About.
+          </li>
+          <li>
+            <strong>Missing symbols:</strong> Run <strong>AL: Download Symbols</strong> again after
+            replacing <code>app.json</code>, as the new manifest may reference different dependencies.
+          </li>
+     
+        </ul>
+
+        <h4>Extension deployment fails or stays "in progress"</h4>
+        <p>
+          After uploading, check the deployment status in <strong>Extension Management</strong> by
+          selecting the extension and viewing its <strong>Deployment Status</strong>. Common causes:
+        </p>
+        <ul>
+          <li>
+            <strong>Version already exists:</strong> You cannot overwrite an extension with the same
+            version number. Increment the <code>version</code> field in <code>app.json</code>
+            (e.g. <code>1.0.0.0</code> → <code>1.0.1.0</code>) and rebuild before re-uploading.
+          </li>
+          <li>
+            <strong>Schema sync errors:</strong> A table or field in the AL query conflicts with existing
+            data. Review the error details in the deployment log shown in Extension Management.
+          </li>
+          <li>
+            <strong>Insufficient permissions:</strong> Ensure the deploying user has the
+            <code>D365 EXTENSION MGT</code> permission set and the required Azure AD role (see above).
+          </li>
+        </ul>
+
+        <h4>Queries do not appear in the BC2Fabric table configuration</h4>
+        <p>
+          After deployment, confirm the extension is both installed and enabled:
+        </p>
+        <ol>
+          <li>Open <strong>Extension Management</strong> and find the extension in the list.</li>
+          <li>Verify the <strong>Is Installed</strong> flag is set. If not, select <strong>Install</strong>.</li>
+          <li>
+            If the query still does not appear, sign out and sign back in to Business Central to
+            refresh available objects, then reopen the BC2Fabric table configuration page.
+          </li>
+        </ol>
       </section>
+
     </main>
   </div>
 
