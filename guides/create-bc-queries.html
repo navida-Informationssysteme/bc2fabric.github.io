@@ -305,6 +305,34 @@
           </li>
         </ul>
 
+        <h4>Adding new or replacing existing queries in the app</h4>
+        <p>
+          When your query requirements change — whether adding new tables, removing queries that are
+          no longer needed, or replacing a test set with the final one — the approach depends on
+          whether the existing queries are already configured in BC2Fabric.
+        </p>
+        <ul>
+          <li>
+            <strong>Adding queries</strong> while keeping existing ones: generate the additional
+            queries in BC2Fab, add the new <code>.al</code> files to your AL project, increment the
+            <code>version</code> in <code>app.json</code>, rebuild, and deploy. Existing queries and
+            their BC2Fabric table configurations remain untouched.
+          </li>
+          <li>
+            <strong>Replacing queries</strong> (e.g. swapping out a test set for the final one):
+            update the <code>.al</code> files in your project, increment the
+            <code>version</code> in <code>app.json</code>, rebuild, and redeploy via
+            <strong>Extension Management → Upload Extension</strong>. BC will upgrade the
+            extension in place. Note that any BC2Fabric table configurations pointing to removed
+            queries will need to be reconfigured after the upgrade.
+          </li>
+        </ul>
+        <p>
+          In both cases, keep the same <code>id</code> GUID in <code>app.json</code> so BC
+          recognises the new <code>.app</code> as belonging to the same extension. Only include
+          queries that are actually needed.
+        </p>
+
         <h4>Queries do not appear in the BC2Fabric table configuration</h4>
         <p>
           After deployment, confirm the extension is both installed and enabled:
