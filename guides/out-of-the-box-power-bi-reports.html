@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Out-of-the-box Power BI Reports | BC2Fab Documentation</title>
+    <link rel="icon" type="image/x-icon" sizes="any" href="https://www.navida.eu/favicon.ico" />
+    <link rel="shortcut icon" href="https://www.navida.eu/favicon.ico" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <style>
+      .pbi-page {
+        --gold: #d4a017;
+        --gold-light: #f5e6c0;
+        --gold-bg: #fdf8ec;
+        --black: #1a1a1a;
+        --dark: #333333;
+        --body: #555555;
+        --muted: #999999;
+        --border: #e5e5e5;
+        --bg: #ffffff;
+        --bg-alt: #fafafa;
+        --finance: #2d7d9a;
+        --sales: #d4872d;
+        --sales-adv: #d4a017;
+        --purchasing: #7b5ea7;
+        --inventory: #3a8a6e;
+        --inv-val: #c75b5b;
+        --projects: #4a7fbf;
+        --manufacturing: #b85d8e;
+      }
+      .pbi-page * { box-sizing: border-box; }
+      .pbi-page .hero { padding: 12px 0 36px; border-bottom: 1px solid var(--border); }
+      .pbi-page .hero h2 { font-family: Georgia, serif; font-size: 36px; margin: 0 0 8px; color: var(--black); line-height: 1.2; }
+      .pbi-page .gold-bar { width: 60px; height: 3px; background: var(--gold); margin: 16px 0 20px; }
+      .pbi-page .badge-row { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+      .pbi-page .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid; }
+      .pbi-page .section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+      .pbi-page .section h3 { font-family: Georgia, serif; font-size: 26px; margin-bottom: 6px; color: var(--black); }
+      .pbi-page .subtitle { font-size: 14px; color: var(--body); margin-bottom: 28px; }
+      .pbi-page .value-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+      .pbi-page .value-card { border: 1px solid var(--border); border-radius: 8px; padding: 28px 24px; position: relative; background: var(--bg); }
+      .pbi-page .value-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+      .pbi-page .value-card.mc::before { background: var(--finance); }
+      .pbi-page .value-card.fabric::before { background: var(--purchasing); }
+      .pbi-page .value-card.extend::before { background: var(--inventory); }
+      .pbi-page .value-card .tagline { font-size: 13px; font-style: italic; margin-bottom: 12px; }
+      .pbi-page .value-card ul { list-style: none; padding: 0; margin: 0; }
+      .pbi-page .value-card li { font-size: 13px; color: var(--body); padding: 5px 0 5px 20px; position: relative; }
+      .pbi-page .value-card li::before { content: '✓'; position: absolute; left: 0; font-weight: 700; }
+      .pbi-page .app-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+      .pbi-page .app-card { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--bg); }
+      .pbi-page .accent-bar { height: 3px; }
+      .pbi-page .app-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 10px; }
+      .pbi-page .app-name { font-family: Georgia, serif; font-size: 15px; font-weight: 700; color: var(--black); }
+      .pbi-page .count { font-size: 11px; font-weight: 700; color: #fff; border-radius: 50%; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; }
+      .pbi-page .source-tag { display: inline-block; font-size: 11px; font-style: italic; padding: 0 16px; margin-bottom: 6px; }
+      .pbi-page .app-card ul { list-style: none; padding: 0 16px 14px; margin: 0; font-size: 13px; }
+      .pbi-page .app-card li { color: var(--body); padding: 3px 0 3px 14px; position: relative; }
+      .pbi-page .app-card li::before { content: '•'; position: absolute; left: 0; color: var(--muted); }
+      .pbi-page .more { font-size: 12px; color: var(--muted); font-style: italic; padding: 0 16px 14px; }
+      .pbi-page .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+      .pbi-page table { width: 100%; border-collapse: collapse; margin-top: 12px; margin-bottom: 34px; }
+      .pbi-page th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); padding: 8px 12px; border-bottom: 2px solid var(--border); }
+      .pbi-page td { padding: 10px 12px; font-size: 14px; border-bottom: 1px solid #f0f0f0; }
+      .pbi-page tr:nth-child(even) td { background: var(--bg-alt); }
+      .pbi-page .four-col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+      .pbi-page .col-block h4 { font-family: Georgia, serif; font-size: 16px; margin-bottom: 2px; }
+      .pbi-page .col-count { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+      .pbi-page .col-block ul { list-style: none; padding: 0; margin: 0; }
+      .pbi-page .col-block li { font-size: 13px; color: var(--body); padding: 5px 0 5px 10px; border-bottom: 1px solid #f0f0f0; }
+      .pbi-page .footer-note { padding: 28px 0 8px; font-size: 13px; color: var(--muted); }
+      .pbi-page .footer-note a { color: var(--gold); text-decoration: none; }
+      @media (max-width: 900px) {
+        .pbi-page .value-cards, .pbi-page .two-col { grid-template-columns: 1fr; }
+        .pbi-page .app-grid, .pbi-page .four-col { grid-template-columns: repeat(2, 1fr); }
+      }
+      @media (max-width: 600px) {
+        .pbi-page .app-grid, .pbi-page .four-col { grid-template-columns: 1fr; }
+        .pbi-page .hero h2 { font-size: 28px; }
+      }
+    </style>
+  </head>
+  <body>
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-expanded="false" aria-controls="doc-sidebar" aria-label="Open navigation">
+      <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
+      <span>Menu</span>
+    </button>
+    <div class="sidebar-backdrop" data-sidebar-backdrop></div>
+    <div class="docs-layout">
+      <aside class="sidebar" id="doc-sidebar" data-sidebar aria-label="Documentation navigation">
+        <div class="sidebar-inner">
+          <h1><a href="https://docs.bc2fab.com">BC2Fab Docs</a></h1>
+          <nav>
+            <div class="nav-section">
+              <div class="nav-section-title">Getting Started</div>
+              <ul class="nav-list">
+                <li class="nav-item"><a href="../getting-started/bc2fab.html" data-doc-link>BC2Fab</a></li>
+                <li class="nav-item"><a href="../getting-started/quickstart.html" data-doc-link>Quickstart</a></li>
+              </ul>
+            </div>
+            <div class="nav-section">
+              <div class="nav-section-title">Guides</div>
+              <ul class="nav-list">
+                <li class="nav-item"><a href="architecture.html" data-doc-link>Architecture</a></li>
+                <li class="nav-item"><a href="prerequisites.html" data-doc-link>Prerequisites</a></li>
+                <li class="nav-item"><a href="install-bc2fab.html" data-doc-link>Install BC2Fab</a></li>
+                <li class="nav-item"><a href="create-bc-queries.html" data-doc-link>Create BC Queries</a></li>
+              </ul>
+            </div>
+            <div class="nav-section">
+              <div class="nav-section-title">Resources</div>
+              <ul class="nav-list">
+                <li class="nav-item"><a href="faq.html" data-doc-link>FAQ</a></li>
+                <li class="nav-item"><a href="out-of-the-box-power-bi-reports.html" class="is-active" data-doc-link>Power BI Reports</a></li>
+                <li class="nav-item"><a href="changelog.html" data-doc-link>Changelog</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+      <main class="main-content">
+        <header>
+          <p class="eyebrow">Resources</p>
+          <h1>Out-of-the-box Power BI Reports</h1>
+          <p>Overview of standard Microsoft and NAVBI report coverage, including BC2Fab implementation details.</p>
+        </header>
+
+        <section class="content-card pbi-page">
+          <header class="hero">
+            <h2>Out-of-the-box Power BI Reports</h2>
+            <div class="gold-bar"></div>
+            <p>BC2Fab provides the data foundation for standard Power BI report apps from Microsoft, along with advanced reports from NAVBI by Navida. More than 70 reports are available across 8 functional areas, including support for multi-company reporting, Fabric connectivity, and extensibility.</p>
+            <div class="badge-row">
+              <span class="badge" style="color:var(--finance); border-color:var(--finance); background:rgba(45,125,154,0.06);">🏢 Multi-Company</span>
+              <span class="badge" style="color:var(--purchasing); border-color:var(--purchasing); background:rgba(123,94,167,0.06);">🗄️ Fabric Data Source</span>
+              <span class="badge" style="color:var(--inventory); border-color:var(--inventory); background:rgba(58,138,110,0.06);">🧩 Combine &amp; Extend</span>
+            </div>
+          </header>
+
+          <section class="section">
+            <h3>Additional capabilities</h3>
+            <p class="subtitle">This section summarizes additional capabilities available across the functional areas for Business Central reporting.</p>
+            <div class="value-cards">
+              <div class="value-card mc">
+                <h4>🏢 Multi-Company Reporting</h4>
+                <div class="tagline" style="color:var(--finance)">One view across all entities</div>
+                <ul>
+                  <li>Consolidated dashboards across multiple BC companies</li>
+                  <li>Side-by-side company comparison</li>
+                  <li>Unified KPIs with entity-level drill-down</li>
+                  <li>Single source of truth for group reporting</li>
+                </ul>
+              </div>
+              <div class="value-card fabric">
+                <h4>🗄️ Microsoft Fabric Data Source</h4>
+                <div class="tagline" style="color:var(--purchasing)">Enterprise-grade data platform</div>
+                <ul>
+                  <li>Connect reports directly to Fabric lakehouse / warehouse</li>
+                  <li>Leverage Fabric's scalable compute &amp; storage</li>
+                  <li>Real-time and batch data refresh options</li>
+                  <li>Central governed data layer for all reporting</li>
+                  <li>OneLake integration for seamless data sharing</li>
+                </ul>
+              </div>
+              <div class="value-card extend">
+                <h4>🧩 Combine &amp; Extend Data Sources</h4>
+                <div class="tagline" style="color:var(--inventory)">Limitless customization</div>
+                <ul>
+                  <li>Blend BC data with external sources (CRM, web, files)</li>
+                  <li>Add custom fields or tables from BC extensions</li>
+                  <li>Enrich reports with industry-specific KPIs</li>
+                  <li>Custom calculated columns &amp; measures</li>
+                  <li>Extend the data model without modifying standard</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h3>Functional Areas at a Glance</h3>
+            <p class="subtitle">Power BI apps are available for the following functional areas. The implementations below include support for multi-company, Fabric-based, and extensible data models.</p>
+            <div class="app-grid">
+              <div class="app-card"><div class="accent-bar" style="background:var(--finance)"></div><div class="app-head"><span class="app-name">Finance</span><span class="count" style="background:var(--finance)">15</span></div><ul><li>Financial Overview</li><li>Income Statement</li><li>Balance Sheet</li><li>Budget Comparison</li><li>Liquidity KPIs</li><li>Profitability</li></ul><div class="more">+9 more reports</div></div>
+              <div class="app-card"><div class="accent-bar" style="background:var(--sales)"></div><div class="app-head"><span class="app-name">Sales</span><span class="count" style="background:var(--sales)">18</span></div><ul><li>Sales Overview</li><li>Daily Sales</li><li>Moving Average</li><li>Sales by Item / Customer</li><li>Period-Over-Period Growth</li><li>Sales Forecasting</li></ul><div class="more">+12 more reports</div></div>
+              <div class="app-card"><div class="accent-bar" style="background:var(--sales-adv)"></div><div class="app-head"><span class="app-name">Sales Advanced</span><span class="count" style="background:var(--sales-adv)">12</span></div><div class="source-tag" style="color:var(--gold)">NAVBI — Navida</div><ul><li>Sales Dashboard</li><li>Order Intake Analysis</li><li>Revenue Forecast</li><li>Contribution Margin</li><li>New vs Existing Customers</li><li>Price Development</li></ul><div class="more">+6 more reports</div></div>
+              <div class="app-card"><div class="accent-bar" style="background:var(--purchasing)"></div><div class="app-head"><span class="app-name">Purchasing</span><span class="count" style="background:var(--purchasing)">16</span></div><ul><li>Purchases Overview</li><li>Daily Purchases</li><li>Purchases by Vendor / Item</li><li>Moving Annual Total</li><li>Actual vs Budget</li><li>Vendor Quality Analysis</li></ul><div class="more">+10 more reports</div></div>
+              <div class="app-card"><div class="accent-bar" style="background:var(--inventory)"></div><div class="app-head"><span class="app-name">Inventory</span><span class="count" style="background:var(--inventory)">11</span></div><ul><li>Inventory Overview</li><li>Inventory by Item / Location</li><li>Purchase &amp; Sales Qty</li><li>Item Availability</li><li>Gross Requirement</li><li>Inventory by Lot / Serial No.</li></ul><div class="more">+5 more reports</div></div>
+              <div class="app-card"><div class="accent-bar" style="background:var(--inv-val)"></div><div class="app-head"><span class="app-name">Inventory Valuation</span><span class="count" style="background:var(--inv-val)">3</span></div><ul><li>Valuation Overview</li><li>Valuation by Item</li><li>Valuation by Location</li></ul></div>
+              <div class="app-card"><div class="accent-bar" style="background:var(--projects)"></div><div class="app-head"><span class="app-name">Projects</span><span class="count" style="background:var(--projects)">8</span></div><ul><li>Project Overview</li><li>Project Tasks</li><li>Project Profitability</li><li>Project Realization</li><li>Performance to Budget</li><li>Invoiced Sales by Type</li></ul><div class="more">+2 more reports</div></div>
+              <div class="app-card"><div class="accent-bar" style="background:var(--manufacturing)"></div><div class="app-head"><span class="app-name">Manufacturing</span><span class="count" style="background:var(--manufacturing)">17</span></div><ul><li>Current / Historical Utilization</li><li>Work / Machine Center Load</li><li>Allocated Hours</li><li>Capacity / Consumption Variance</li><li>Production Scrap</li><li>Prod Order Routing Gantt</li></ul><div class="more">+11 more reports</div></div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h3>Finance &amp; Sales — Report Details</h3>
+            <div class="two-col">
+              <div>
+                <h4 style="color:var(--finance)">Finance App (15 reports)</h4>
+                <table>
+                  <thead><tr><th>Report</th><th>Description</th></tr></thead>
+                  <tbody>
+                    <tr><td>Financial Overview</td><td>Snapshot of financial health &amp; KPIs</td></tr>
+                    <tr><td>Income Statement</td><td>Monthly comparison of income accounts</td></tr>
+                    <tr><td>Balance Sheet</td><td>Monthly balance sheet tracking</td></tr>
+                    <tr><td>Budget Comparison</td><td>G/L budgets vs actuals</td></tr>
+                    <tr><td>Liquidity KPIs</td><td>Current, quick &amp; cash ratios</td></tr>
+                    <tr><td>Profitability</td><td>Gross/net profit margins over time</td></tr>
+                    <tr><td>EBITDA</td><td>EBITDA &amp; EBIT profitability metrics</td></tr>
+                    <tr><td>Liabilities</td><td>Liability balances, debt ratio &amp; debt-to-equity</td></tr>
+                    <tr><td>Avg Collection Period</td><td>Days to collect receivables</td></tr>
+                    <tr><td>Aged Receivables</td><td>Customer balance aging buckets</td></tr>
+                    <tr><td>Aged Payables</td><td>Vendor balance aging buckets</td></tr>
+                    <tr><td>G/L Entries</td><td>Detailed ledger with 8 shortcut dimensions</td></tr>
+                    <tr><td>Vendor Ledger Entries</td><td>Entries posted to vendor sub-ledger</td></tr>
+                    <tr><td>Customer Ledger Entries</td><td>Entries posted to customer sub-ledger</td></tr>
+                    <tr><td>Late Payments</td><td>Impact of late-paying customers</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <h4 style="color:var(--sales)">Sales App (18 reports)</h4>
+                <table>
+                  <thead><tr><th>Report</th><th>Description</th></tr></thead>
+                  <tbody>
+                    <tr><td>Sales Overview</td><td>Key sales figures &amp; summaries</td></tr>
+                    <tr><td>Daily Sales</td><td>Weekday heatmaps &amp; patterns</td></tr>
+                    <tr><td>Moving Average</td><td>30-day trend smoothing</td></tr>
+                    <tr><td>Moving Annual Total</td><td>Rolling 12-month totals</td></tr>
+                    <tr><td>Period-Over-Period</td><td>YoY / QoQ / MoM comparisons</td></tr>
+                    <tr><td>Month-To-Date</td><td>Accumulating sales for desired period</td></tr>
+                    <tr><td>Sales by Item</td><td>Item-level metrics &amp; % of total</td></tr>
+                    <tr><td>Sales by Customer</td><td>Customer metrics &amp; profitability</td></tr>
+                    <tr><td>Sales by Salesperson</td><td>Individual performance tracking</td></tr>
+                    <tr><td>Sales by Location</td><td>Location-level analysis</td></tr>
+                    <tr><td>Actual vs Budget</td><td>Target variance analysis</td></tr>
+                    <tr><td>Opportunity Overview</td><td>Pipeline &amp; sales cycles</td></tr>
+                    <tr><td>Sales Quote Overview</td><td>Prospective customer quote activity</td></tr>
+                    <tr><td>Return Order Overview</td><td>Return rate &amp; key metrics</td></tr>
+                    <tr><td>Sales Demographics</td><td>Performance across demographic segments</td></tr>
+                    <tr><td>Sales Decomposition</td><td>Contributing factors to sales figures</td></tr>
+                    <tr><td>Key Sales Influencers</td><td>Most impactful variables &amp; trends</td></tr>
+                    <tr><td>Sales Forecasting</td><td>Projected sales insights</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h3>Sales Advanced — NAVBI by Navida</h3>
+            <p class="subtitle">In-depth sales analytics with AI-driven root cause analysis, change driver decomposition, geographic mapping, and full Business Central dimension integration.</p>
+            <div class="two-col">
+              <div>
+                <h4 style="color:var(--gold)">Analysis Capabilities</h4>
+                <table>
+                  <thead><tr><th>Feature</th><th>Description</th></tr></thead>
+                  <tbody>
+                    <tr><td>Classic Dashboarding</td><td>Key metrics in comprehensible calculation schemes</td></tr>
+                    <tr><td>Dynamic Multi-Dim</td><td>Freely selectable attributes with complete drilldown</td></tr>
+                    <tr><td>BC Dimensions</td><td>Full integration of all Business Central dimensions</td></tr>
+                    <tr><td>AI Root Cause</td><td>Analysis trees for intuitive investigation</td></tr>
+                    <tr><td>Change Drivers</td><td>Quantity, price &amp; mix effects on revenue / margin</td></tr>
+                    <tr><td>Geographic Analysis</td><td>KPIs on maps for regional focal points</td></tr>
+                    <tr><td>Correlation Analysis</td><td>Identify relationships between variables</td></tr>
+                    <tr><td>Trend Identification</td><td>Small multiples for spotting outliers &amp; trends</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div>
+                <h4 style="color:var(--gold)">Key Metrics Available</h4>
+                <table>
+                  <thead><tr><th>Metric</th><th>Description</th></tr></thead>
+                  <tbody>
+                    <tr><td>Order Intake</td><td>Track incoming orders over time</td></tr>
+                    <tr><td>Revenue</td><td>Actual revenue with period comparisons</td></tr>
+                    <tr><td>Revenue Forecast</td><td>Projected revenue based on pipeline</td></tr>
+                    <tr><td>Direct Costs</td><td>Cost of goods sold tracking</td></tr>
+                    <tr><td>Contribution Margin</td><td>Margin analysis per dimension</td></tr>
+                    <tr><td>Discount Analysis</td><td>Discount volumes and impact</td></tr>
+                    <tr><td>New Customer Revenue</td><td>Revenue from new vs existing customers</td></tr>
+                    <tr><td>Price Development</td><td>Price trends across items &amp; customers</td></tr>
+                    <tr><td>Blanket Order Value</td><td>Value of framework agreements</td></tr>
+                    <tr><td>Multi-Company</td><td>Consolidated or separate by entity</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <h3>Purchasing, Inventory, Projects &amp; Manufacturing</h3>
+            <p class="subtitle">Complete report listings for the remaining four functional areas.</p>
+            <div class="four-col">
+              <div class="col-block"><h4 style="color:var(--purchasing)">Purchasing</h4><div class="col-count">16 reports</div><ul><li>Purchases Overview</li><li>Purchase Decomposition</li><li>Daily Purchases</li><li>Moving Averages</li><li>Moving Annual Total</li><li>Period-Over-Period</li><li>Year-Over-Year</li><li>Purchases by Item</li><li>Purchases by Vendor</li><li>Purchases by Purchaser</li><li>Purchases by Location</li><li>Actual vs Budget</li></ul><div class="more">+4 more reports</div></div>
+              <div class="col-block"><h4 style="color:var(--inventory)">Inventory</h4><div class="col-count">11 reports</div><ul><li>Inventory Overview</li><li>Inventory by Item</li><li>Inventory by Location</li><li>Purchase &amp; Sales Qty</li><li>Item Availability</li><li>Gross Requirement</li><li>Scheduled Receipt</li><li>Inventory by Lot</li><li>Inventory by Serial No.</li><li>Bin Contents</li><li>Bin by Item Tracking</li></ul></div>
+              <div class="col-block"><h4 style="color:var(--projects)">Projects</h4><div class="col-count">8 reports</div><ul><li>Project Overview</li><li>Project Tasks</li><li>Project Profitability</li><li>Project Realization</li><li>Performance to Budget</li><li>Invoiced Sales by Type</li><li>Invoiced by Customer</li><li>Project Timeline</li></ul></div>
+              <div class="col-block"><h4 style="color:var(--manufacturing)">Manufacturing</h4><div class="col-count">17 reports</div><ul><li>Current Utilization</li><li>Historical Utilization</li><li>Work Center Load</li><li>Machine Center Load</li><li>Allocated Hours</li><li>Expected Capacity Need</li><li>Finished Prod Breakdown</li><li>Consumption Variance</li><li>Capacity Variance</li><li>Avg Production Times</li><li>Released Prod Orders</li><li>Production Scrap</li></ul><div class="more">+5 more reports</div></div>
+            </div>
+          </section>
+
+          <div class="footer-note">
+            <strong>Sources:</strong>
+            <a href="https://learn.microsoft.com/en-us/dynamics365/business-central/across-powerbi-apps-by-functional-area" target="_blank" rel="noopener noreferrer">Microsoft Learn — Power BI apps for Business Central</a>
+            &nbsp;|&nbsp;
+            <a href="https://www.navida.eu/navbi-en" target="_blank" rel="noopener noreferrer">NAVBI by Navida</a>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>
