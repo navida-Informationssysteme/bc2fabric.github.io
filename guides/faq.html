@@ -518,9 +518,11 @@ END</code></pre>
           <p>Monitor pipeline executions in Fabric and trigger notifications when runs fail.</p>
           <ol>
             <li>To monitor the recent runs, open the <code>bc2fab_refresh</code> pipeline, go to <strong>Run history</strong>, and review recent executions for status and duration.</li>
-            <li>Create alert rules to send notifications when refreshes fail by creating an Activator Item. Follow the steps <a href="https://learn.microsoft.com/en-us/fabric/data-factory/create-alerts-for-pipeline-runs?utm_source=chatgpt.com#pipeline-level-alerts">as explained here</a>.</li>
-           
+            <li>To receive email notifications when refreshes fail, open the <code>bc2fab_refresh</code> pipeline, go to <strong>Schedule</strong>, and scroll down to the <strong>Failure notifications</strong> section. Enter the name or email address of the recipient who should receive notifications.</li>
           </ol>
+          <p style="margin-top: 16px;">
+            <img src="../assets/images/pipeline-failure-notifications.png" alt="Pipeline Schedule - Failure notifications section showing email input field" style="max-width: 100%; border: 1px solid #e5e7eb; border-radius: 8px;" />
+          </p>
         </section>
 
         <section class="content-card">
