@@ -387,6 +387,18 @@ table tbody tr:last-child td {
   border-bottom: none;
 }
 
+table.table-compact {
+  margin: 0.5rem 0 0;
+  box-shadow: none;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+table.table-compact th,
+table.table-compact td {
+  padding: 0.3rem 0.65rem;
+}
+
 .eyebrow {
   text-transform: uppercase;
   letter-spacing: 0.12em;
