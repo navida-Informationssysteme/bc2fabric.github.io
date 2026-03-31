@@ -113,6 +113,7 @@
             <li><a href="#business-central-access">How is the access to Business Central working?</a></li>
             <li><a href="#on-premise-support">Does BC2Fab support Business Central On-Premise versions?</a></li>
             <li><a href="#pause-resume-capacity">What needs to be considered when pausing/resuming the Fabric capacity?</a></li>
+            <li><a href="#excel-connect">How to connect with Excel to the mirrored database?</a></li>
           </ul>
         </section>
 
@@ -568,6 +569,31 @@ END</code></pre>
               >Start Mirroring</a
             > endpoint.
           </p>
+        </section>
+
+        <section class="content-card">
+          <h2 id="excel-connect"><a class="anchor-link" href="#excel-connect">How to connect with Excel to the mirrored database?</a></h2>
+          <p>You can query BC2Fab mirrored data directly from Excel using the SQL endpoint of the <code>bc2fab_mirror</code> database.</p>
+          <h3>Step 1 &mdash; Get the SQL endpoint</h3>
+          <ol>
+            <li>In Microsoft Fabric, open the workspace that contains the <code>bc2fab_mirror</code> database.</li>
+            <li>Select the <code>bc2fab_mirror</code> item and open it in the mirroring experience.</li>
+            <li>Switch to the <strong>SQL endpoint</strong> view (top navigation in the mirroring experience).</li>
+            <li>Copy the <strong>SQL connection string</strong> shown in the toolbar or under <strong>Settings</strong>. It looks similar to <code>&lt;workspace&gt;.datawarehouse.fabric.microsoft.com</code>.</li>
+          </ol>
+          <h3>Step 2 &mdash; Connect from Excel</h3>
+          <ol>
+            <li>Open Excel and go to <strong>Data</strong> &gt; <strong>Get Data</strong> &gt; <strong>From Database</strong> &gt; <strong>From SQL Server Database</strong>.</li>
+            <li>Paste the SQL endpoint copied above into the <strong>Server</strong> field. Leave the <strong>Database</strong> field empty or enter <code>bc2fab_mirror</code>.</li>
+            <li>Click <strong>OK</strong> and authenticate with your Microsoft 365 / Entra ID account when prompted.</li>
+          </ol>
+          <h3>Step 3 &mdash; Select tables</h3>
+          <ol>
+            <li>In the Navigator, expand the <code>bc2fab_mirror</code> database.</li>
+            <li>Open the <strong>bc</strong> schema &mdash; this schema contains all mirrored Business Central tables.</li>
+            <li>Select the tables you need and click <strong>Load</strong> (or <strong>Transform Data</strong> to apply filters in Power Query first).</li>
+          </ol>
+          <p>The data is now available in Excel as a connected table and can be refreshed on demand via <strong>Data</strong> &gt; <strong>Refresh All</strong>.</p>
         </section>
 
       </main>
