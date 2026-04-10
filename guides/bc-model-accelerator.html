@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:image" content="https://docs.bc2fab.com/assets/images/BC2Fabric_icon.png" />
+    <meta property="og:description" content="BC Model Accelerator — auto-generated SQL views with surrogate keys for every BC table relationship. Multi-company by default." />
+    <title>BC Model Accelerator | BC2Fab Documentation</title>
+    <link rel="icon" type="image/x-icon" sizes="any" href="https://www.navida.eu/favicon.ico" />
+    <link rel="shortcut icon" href="https://www.navida.eu/favicon.ico" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <style>
+      .ma-page {
+        --gold: #d4a017;
+        --gold-light: #f5e6c0;
+        --gold-bg: #fdf8ec;
+        --black: #1a1a1a;
+        --dark: #333333;
+        --body: #555555;
+        --muted: #999999;
+        --border: #e5e5e5;
+        --bg: #ffffff;
+        --bg-alt: #fafafa;
+        --teal: #2d7d9a;
+        --purple: #7b5ea7;
+        --green: #3a8a6e;
+      }
+      .ma-page * { box-sizing: border-box; }
+      .ma-page .mono { font-family: Consolas, Monaco, 'Courier New', monospace; }
+
+      /* ── HERO ── */
+      .ma-page .ma-hero { padding: 12px 0 36px; border-bottom: 1px solid var(--border); }
+      .ma-page .ma-hero h2 { font-family: Georgia, serif; font-size: 36px; margin: 0 0 8px; color: var(--black); line-height: 1.2; }
+      .ma-page .gold-bar { width: 60px; height: 3px; background: var(--gold); margin: 16px 0 20px; }
+      .ma-page .ma-hero .sub-heading {
+        font-size: 15px; font-weight: 600;
+        color: var(--dark); margin-bottom: 12px;
+      }
+      .ma-page .ma-hero .features {
+        list-style: none; padding: 0; margin: 0;
+      }
+      .ma-page .ma-hero .features li {
+        color: var(--body);
+        font-size: 14px; padding: 5px 0 5px 20px;
+        position: relative;
+      }
+      .ma-page .ma-hero .features li::before {
+        content: '✓'; position: absolute; left: 0;
+        font-weight: 700; color: var(--green);
+      }
+      .ma-page .ma-hero .transition {
+        margin-top: 20px;
+        font-size: 15px; color: var(--dark);
+        font-weight: 600; font-style: italic;
+      }
+      .ma-page .badge-row { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+      .ma-page .badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1px solid; }
+
+      /* ── SECTION ── */
+      .ma-page .section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+      .ma-page .section h3 { font-family: Georgia, serif; font-size: 26px; margin-bottom: 6px; color: var(--black); }
+      .ma-page .subtitle { font-size: 14px; color: var(--body); margin-bottom: 28px; }
+
+      /* ── CARDS ── */
+      .ma-page .card-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .ma-page .ma-card {
+        border: 1px solid var(--border); border-radius: 8px;
+        padding: 24px 20px; position: relative;
+        background: var(--bg);
+      }
+      .ma-page .ma-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 8px 8px 0 0; background: var(--gold); }
+      .ma-page .ma-card .icon { font-size: 22px; margin-bottom: 8px; }
+      .ma-page .ma-card h4 { font-family: Georgia, serif; font-size: 15px; color: var(--black); margin-bottom: 6px; }
+      .ma-page .ma-card p { font-size: 13px; color: var(--body); line-height: 1.45; }
+
+      /* ── HIGHLIGHT BOX ── */
+      .ma-page .highlight-box {
+        border: 1px solid var(--border); border-radius: 8px;
+        padding: 28px 24px; position: relative;
+        background: var(--bg);
+        margin: 28px 0 0;
+      }
+      .ma-page .highlight-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 8px 8px 0 0; background: var(--teal); }
+      .ma-page .highlight-box h3 { font-family: Georgia, serif; font-size: 22px; color: var(--black); margin-bottom: 8px; }
+      .ma-page .highlight-box p { font-size: 14px; color: var(--body); line-height: 1.55; }
+
+      /* ── PIPELINE ── */
+      .ma-page .pipeline { display: flex; flex-direction: column; gap: 0; }
+      .ma-page .step {
+        padding: 16px 20px;
+        display: flex; align-items: center; gap: 16px;
+        border: 1px solid var(--border); border-bottom: none;
+        background: var(--bg);
+      }
+      .ma-page .step:first-child { border-radius: 8px 8px 0 0; }
+      .ma-page .step:last-child { border-bottom: 1px solid var(--border); border-radius: 0 0 8px 8px; }
+      .ma-page .step .num {
+        font-family: Georgia, serif;
+        font-size: 22px; font-weight: 700;
+        color: var(--gold); min-width: 28px;
+      }
+      .ma-page .step .step-label { font-family: Georgia, serif; font-size: 16px; font-weight: 700; color: var(--black); }
+      .ma-page .step .step-desc { font-size: 13px; color: var(--body); margin-top: 2px; }
+      .ma-page .step-arrow { text-align: center; color: var(--gold); font-size: 18px; padding: 2px 0; border-left: 1px solid var(--border); border-right: 1px solid var(--border); background: var(--bg-alt); }
+      .ma-page .props-row {
+        display: flex; gap: 16px; flex-wrap: wrap;
+        margin-top: 20px;
+      }
+      .ma-page .prop {
+        font-size: 13px; color: var(--body);
+        display: flex; align-items: center; gap: 5px;
+      }
+      .ma-page .prop .ck { color: var(--green); font-weight: 700; }
+
+      /* ── EXAMPLE ── */
+      .ma-page .pbi-frame {
+        border: 1px solid var(--border); border-radius: 8px;
+        padding: 12px; margin: 20px 0;
+        background: var(--bg);
+      }
+      .ma-page .pbi-frame img { width: 100%; display: block; border-radius: 4px; }
+      .ma-page .caption {
+        font-size: 13px; color: var(--muted);
+        font-style: italic; line-height: 1.45;
+        margin: 12px 0 24px;
+      }
+      .ma-page .tbl-header {
+        background: var(--bg-alt);
+        padding: 10px 16px;
+        border: 1px solid var(--border); border-bottom: none;
+        border-radius: 8px 8px 0 0;
+      }
+      .ma-page .tbl-header span { color: var(--dark); font-size: 13px; font-weight: 600; }
+      .ma-page .tbl-row {
+        display: flex; padding: 10px 16px;
+        align-items: center;
+        border-left: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+        border-bottom: 1px solid #f0f0f0;
+      }
+      .ma-page .tbl-row:last-child { border-bottom: 1px solid var(--border); border-radius: 0 0 8px 8px; }
+      .ma-page .tbl-row:nth-child(odd) { background: var(--bg); }
+      .ma-page .tbl-row:nth-child(even) { background: var(--bg-alt); }
+      .ma-page .tbl-row .cn { flex: 1; font-size: 14px; color: var(--teal); font-weight: 700; }
+      .ma-page .tbl-row .ct { width: 36px; font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; }
+      .ma-page .tbl-row .cv { flex: 1.3; font-size: 13px; color: var(--dark); }
+
+      /* ── AGENT ── */
+      .ma-page .agent-prompt {
+        background: var(--bg-alt);
+        border: 1px solid var(--border); border-radius: 8px;
+        padding: 16px 20px;
+        display: flex; align-items: center; gap: 14px;
+        margin: 20px 0 8px;
+      }
+      .ma-page .agent-prompt .bot { font-size: 22px; }
+      .ma-page .agent-prompt .ptxt { color: var(--dark); font-style: italic; font-size: 15px; }
+      .ma-page .scan-header {
+        background: var(--bg-alt);
+        padding: 8px 16px;
+        border: 1px solid var(--border); border-bottom: none;
+        border-radius: 8px 8px 0 0;
+      }
+      .ma-page .scan-header span { font-size: 12px; color: var(--muted); }
+      .ma-page .scan-row {
+        display: flex; padding: 8px 16px;
+        align-items: center; gap: 10px;
+        border-left: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+        border-bottom: 1px solid #f0f0f0;
+      }
+      .ma-page .scan-row:last-of-type { border-bottom: 1px solid var(--border); border-radius: 0 0 8px 8px; }
+      .ma-page .scan-row:nth-child(odd) { background: var(--bg); }
+      .ma-page .scan-row:nth-child(even) { background: var(--bg-alt); }
+      .ma-page .scan-row.std { border-left: 4px solid var(--teal); }
+      .ma-page .scan-row.cust { border-left: 4px solid var(--purple); }
+      .ma-page .scan-row .ck { color: var(--green); font-weight: 700; flex-shrink: 0; }
+      .ma-page .scan-row .tn { font-size: 14px; color: var(--black); font-weight: 700; min-width: 200px; }
+      .ma-page .scan-row .badge-c {
+        background: var(--purple); color: #fff;
+        font-size: 10px; font-weight: 700;
+        padding: 2px 8px; border-radius: 10px; flex-shrink: 0;
+      }
+      .ma-page .scan-row .fk { font-size: 13px; color: var(--body); }
+      .ma-page .note {
+        font-size: 13px; color: var(--muted);
+        font-style: italic; line-height: 1.45;
+        margin-top: 16px;
+      }
+
+      /* ── BENEFITS ── */
+      .ma-page .benefit-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+      .ma-page .benefit-card {
+        border: 1px solid var(--border); border-radius: 8px;
+        padding: 28px 24px; position: relative;
+        background: var(--bg);
+      }
+      .ma-page .benefit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 8px 8px 0 0; }
+      .ma-page .benefit-card.bc-pbi::before { background: var(--teal); }
+      .ma-page .benefit-card.bc-ai::before { background: var(--purple); }
+      .ma-page .benefit-card.bc-zero::before { background: var(--green); }
+      .ma-page .benefit-card .bi { font-size: 22px; margin-bottom: 8px; }
+      .ma-page .benefit-card h4 { font-family: Georgia, serif; font-size: 15px; color: var(--black); margin-bottom: 6px; }
+      .ma-page .benefit-card p { font-size: 13px; color: var(--body); line-height: 1.45; }
+      .ma-page .feat-row {
+        display: flex; gap: 16px; flex-wrap: wrap;
+        margin-top: 20px;
+      }
+      .ma-page .feat {
+        font-size: 13px; color: var(--body);
+        display: flex; align-items: center; gap: 5px;
+      }
+      .ma-page .feat .ck { color: var(--green); font-weight: 700; }
+
+      /* ── FOOTER ── */
+      .ma-page .ma-footer {
+        padding: 28px 0 8px;
+        font-size: 13px; color: var(--muted);
+      }
+      .ma-page .ma-footer h3 { font-family: Georgia, serif; color: var(--black); font-size: 22px; margin-bottom: 12px; }
+      .ma-page .ma-footer p { color: var(--body); font-size: 14px; line-height: 1.55; margin-bottom: 0; }
+
+      @media (max-width: 900px) {
+        .ma-page .card-grid, .ma-page .benefit-cards { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 600px) {
+        .ma-page .ma-hero h2 { font-size: 28px; }
+        .ma-page .scan-row .tn { min-width: 140px; }
+        .ma-page .tbl-row { flex-wrap: wrap; }
+        .ma-page .props-row, .ma-page .feat-row { flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-expanded="false" aria-controls="doc-sidebar" aria-label="Open navigation">
+      <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
+      <span>Menu</span>
+    </button>
+    <div class="sidebar-backdrop" data-sidebar-backdrop></div>
+    <div class="docs-layout">
+      <aside class="sidebar" id="doc-sidebar" data-sidebar aria-label="Documentation navigation">
+        <div class="sidebar-inner">
+          <h1><a href="https://docs.bc2fab.com">BC2Fab Docs</a></h1>
+          <nav>
+            <div class="nav-section">
+              <div class="nav-section-title">Getting Started</div>
+              <ul class="nav-list">
+                <li class="nav-item"><a href="../getting-started/bc2fab.html" data-doc-link>BC2Fab</a></li>
+                <li class="nav-item"><a href="../getting-started/quickstart.html" data-doc-link>Quickstart</a></li>
+              </ul>
+            </div>
+            <div class="nav-section">
+              <div class="nav-section-title">Guides</div>
+              <ul class="nav-list">
+                <li class="nav-item"><a href="architecture.html" data-doc-link>Architecture</a></li>
+                <li class="nav-item"><a href="prerequisites.html" data-doc-link>Prerequisites</a></li>
+                <li class="nav-item"><a href="install-bc2fab.html" data-doc-link>Install BC2Fab</a></li>
+                <li class="nav-item"><a href="create-bc-queries.html" data-doc-link>Create BC Queries</a></li>
+              </ul>
+            </div>
+            <div class="nav-section">
+              <div class="nav-section-title">Resources</div>
+              <ul class="nav-list">
+                <li class="nav-item"><a href="faq.html" data-doc-link>FAQ</a></li>
+                <li class="nav-item"><a href="out-of-the-box-power-bi-reports.html" data-doc-link>Power BI Reports</a></li>
+                <li class="nav-item"><a href="bc-model-accelerator.html" class="is-active" data-doc-link>BC Model Accelerator</a></li>
+                <li class="nav-item"><a href="changelog.html" data-doc-link>Changelog</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header>
+          <p class="eyebrow">Resources</p>
+          <h1>BC Model Accelerator</h1>
+          <p>Auto-generated SQL views with surrogate keys for every BC table relationship. Multi-company by default.</p>
+        </header>
+
+        <section class="content-card ma-page">
+
+          <!-- HERO -->
+          <header class="ma-hero">
+            <h2>Business Central Model Accelerator</h2>
+            <div class="gold-bar"></div>
+            <p>BC2Fab mirrors your BC data reliably to Fabric — but raw BC data isn't analytics-ready yet. The Model Accelerator auto-generates SQL views with surrogate keys for every BC table relationship. Multi-company by default.</p>
+            <div class="badge-row">
+              <span class="badge" style="color:var(--teal); border-color:var(--teal); background:rgba(45,125,154,0.06);">⚙️ Surrogate Keys</span>
+              <span class="badge" style="color:var(--purple); border-color:var(--purple); background:rgba(123,94,167,0.06);">🤖 Agent Ready</span>
+              <span class="badge" style="color:var(--green); border-color:var(--green); background:rgba(58,138,110,0.06);">🏢 Multi-Company</span>
+            </div>
+          </header>
+
+          <!-- THE STARTING POINT -->
+          <section class="section">
+            <h3>BC's Data Model Wasn't Designed for Analytics</h3>
+            <p class="subtitle">Common challenges when building reports directly on mirrored BC data.</p>
+            <div class="card-grid">
+              <div class="ma-card">
+                <div class="icon">🔑</div>
+                <h4>Composite Primary Keys</h4>
+                <p>Highly relevant BC tables like Sales Line use compound keys. In multi-company models every relationship is composite.</p>
+              </div>
+              <div class="ma-card">
+                <div class="icon">🔗</div>
+                <h4>Conditional Foreign Keys</h4>
+                <p>Fields like No. on Sales Line point to Item, Resource, or G/L Account depending on Type — no single join path.</p>
+              </div>
+              <div class="ma-card">
+                <div class="icon">⚙️</div>
+                <h4>Manual Modeling Overhead</h4>
+                <p>Many projects start with writing CONCAT or Power Query concatenations for dozens of key and FK fields.</p>
+              </div>
+              <div class="ma-card">
+                <div class="icon">🤖</div>
+                <h4>AI Agents Can't Navigate</h4>
+                <p>Copilots and agents need explicit, joinable ID columns with consistent naming to traverse tables autonomously.</p>
+              </div>
+            </div>
+
+            <div class="highlight-box">
+              <h3>The Next Step — Business Central Model Accelerator</h3>
+              <p>Auto-generated SQL views with surrogate keys for every BC table relationship. Multi-company by default.</p>
+              <p style="margin-top: 8px;">Closing the gap from raw mirrored data to analytics-ready models.</p>
+            </div>
+          </section>
+
+          <!-- HOW IT WORKS -->
+          <section class="section">
+            <h3>Three-Step Pipeline</h3>
+            <p class="subtitle">How the Model Accelerator transforms raw mirrored data into an analytics-ready silver layer.</p>
+            <div class="pipeline">
+              <div class="step">
+                <span style="font-size: 22px;">🗄️</span>
+                <div>
+                  <span class="num">1</span> <span class="step-label">Landing Zone</span>
+                  <div class="step-desc">bc schema — raw mirrored BC tables via Open Mirroring</div>
+                </div>
+              </div>
+              <div class="step-arrow">↓</div>
+              <div class="step">
+                <span style="font-size: 22px;">⚙️</span>
+                <div>
+                  <span class="num">2</span> <span class="step-label">Metadata Engine</span>
+                  <div class="step-desc">Reads BC key &amp; relation metadata, generates surrogate key logic per table</div>
+                </div>
+              </div>
+              <div class="step-arrow">↓</div>
+              <div class="step">
+                <span style="font-size: 22px;">👁️</span>
+                <div>
+                  <span class="num">3</span> <span class="step-label">Silver Views</span>
+                  <div class="step-desc">bc_silver schema — all original columns plus generated ID columns. Clear BC names preserved: Sales Line, Discount %, No_ (no _ substitutions).</div>
+                </div>
+              </div>
+            </div>
+            <div class="props-row">
+              <div class="prop"><span class="ck">✓</span> CREATE OR ALTER VIEW — idempotent</div>
+              <div class="prop"><span class="ck">✓</span> Deterministic, stable IDs</div>
+              <div class="prop"><span class="ck">✓</span> Conditional FKs via CASE WHEN</div>
+            </div>
+          </section>
+
+          <!-- EXAMPLE -->
+          <section class="section">
+            <h3>Sales Line → Item &amp; Resource</h3>
+            <p class="subtitle">One example of many: Sales Line gets Item ID (No.) and Resource ID (No.) based on Line Type. IDs include the company prefix (e.g. CRONUS|) for multi-company support. Same pattern for G/L Accounts, Fixed Assets, etc.</p>
+
+            <div class="pbi-frame">
+              <img src="../assets/images/pbi_model.png" alt="Power BI model view showing Item, Sales Line, and Resource with generated surrogate key relationships">
+            </div>
+            <p class="caption">Power BI model view — Item ID (PK) → Item ID (No.) and Resource ID (PK) → Resource ID (No.) as single-column relationships, Direct Lake compatible.</p>
+
+            <div class="tbl-header"><span class="mono">bc_silver.Sales Line — generated ID columns</span></div>
+            <div class="tbl-row"><span class="cn">Sales Line ID (PK)</span><span class="ct">PK</span><span class="cv mono">CRONUS|Order|1001|10000</span></div>
+            <div class="tbl-row"><span class="cn">Item ID (No.)</span><span class="ct">FK</span><span class="cv mono">CRONUS|ITEM-X100 (Type = Item)</span></div>
+            <div class="tbl-row"><span class="cn">Resource ID (No.)</span><span class="ct">FK</span><span class="cv mono">CRONUS|RES-50 (Type = Resource)</span></div>
+          </section>
+
+          <!-- AGENT NAVIGATION -->
+          <section class="section">
+            <h3>Agents Can Navigate the Data Autonomously</h3>
+            <p class="subtitle">Consistent ID column naming across all views lets an agent scan for columns containing Customer ID to find every referencing table.</p>
+
+            <div class="agent-prompt">
+              <span class="bot">🤖</span>
+              <span class="ptxt">"Give me a 360° view of customer C-20000"</span>
+            </div>
+            <div style="text-align: center; color: var(--gold); font-size: 18px; padding: 4px 0;">↓</div>
+            <div class="scan-header"><span class="mono">Agent scans bc_silver for columns containing Customer ID →</span></div>
+            <div class="scan-row std"><span class="ck">✓</span><span class="tn">Sales Header</span><span class="fk mono">Customer ID (Sell-to Customer No.)</span></div>
+            <div class="scan-row std"><span class="ck">✓</span><span class="tn">Sales Line</span><span class="fk mono">Customer ID (Sell-to Customer No.)</span></div>
+            <div class="scan-row std"><span class="ck">✓</span><span class="tn">Sales Invoice Header</span><span class="fk mono">Customer ID (Sell-to Customer No.)</span></div>
+            <div class="scan-row std"><span class="ck">✓</span><span class="tn">Cust. Ledger Entry</span><span class="fk mono">Customer ID (Customer No.)</span></div>
+            <div class="scan-row std"><span class="ck">✓</span><span class="tn">Service Header</span><span class="fk mono">Customer ID (Customer No.)</span></div>
+            <div class="scan-row cust"><span class="ck">✓</span><span class="tn">Custom Warranty Claims</span><span class="badge-c">custom</span><span class="fk mono">Customer ID (Customer No.)</span></div>
+            <div class="scan-row cust"><span class="ck">✓</span><span class="tn">Custom Loyalty Points</span><span class="badge-c">custom</span><span class="fk mono">Customer ID (Member No.)</span></div>
+            <p class="note">Clear BC names preserved (e.g. Discount %, not Discount_Pct). Consistent ID columns make autonomous discovery trivial.</p>
+          </section>
+
+          <!-- WHAT YOU GET -->
+          <section class="section">
+            <h3>An Analytics-Optimized Silver Layer</h3>
+            <p class="subtitle">What the Model Accelerator delivers for your Power BI reports and AI agents.</p>
+            <div class="benefit-cards">
+              <div class="benefit-card bc-pbi">
+                <div class="bi">👁️</div>
+                <h4>Power BI Ready</h4>
+                <p>Single-column surrogate IDs for all table relationships. Direct Lake compatible. No DAX workarounds.</p>
+              </div>
+              <div class="benefit-card bc-ai">
+                <div class="bi">🤖</div>
+                <h4>AI &amp; Agent Ready</h4>
+                <p>Consistent ID naming lets agents discover and traverse table relationships — including custom tables.</p>
+              </div>
+              <div class="benefit-card bc-zero">
+                <div class="bi">⚙️</div>
+                <h4>Zero Maintenance</h4>
+                <p>Views automatically adjust when schemas in BC change. No manual intervention required.</p>
+              </div>
+            </div>
+            <div class="feat-row">
+              <div class="feat"><span class="ck">✓</span> Standard + custom tables</div>
+              <div class="feat"><span class="ck">✓</span> Composite keys resolved</div>
+              <div class="feat"><span class="ck">✓</span> Conditional FKs handled</div>
+            </div>
+          </section>
+
+          <!-- CLOSING -->
+          <div class="ma-footer">
+            <h3>From Raw Data to Analytics-Ready Intelligence</h3>
+            <p>The Model Accelerator completes BC2Fab's end-to-end path from Business Central to reporting and analytics. Surrogate keys are just the beginning — enriched metadata and agent-navigable schemas follow.</p>
+          </div>
+
+        </section>
+      </main>
+    </div>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>
