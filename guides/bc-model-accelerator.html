@@ -141,9 +141,24 @@
       .ma-page .tbl-row:last-child { border-bottom: 1px solid var(--border); border-radius: 0 0 8px 8px; }
       .ma-page .tbl-row:nth-child(odd) { background: var(--bg); }
       .ma-page .tbl-row:nth-child(even) { background: var(--bg-alt); }
+      .ma-page .tbl-row .tbl-tn { min-width: 120px; font-size: 14px; color: var(--black); font-weight: 700; }
       .ma-page .tbl-row .cn { flex: 1; font-size: 14px; color: var(--teal); font-weight: 700; }
       .ma-page .tbl-row .ct { width: 36px; font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; }
       .ma-page .tbl-row .cv { flex: 1.3; font-size: 13px; color: var(--dark); }
+      .ma-page .tbl-ellipsis {
+        padding: 4px 16px;
+        border-left: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 16px; color: var(--muted); letter-spacing: 3px;
+      }
+      .ma-page .scan-ellipsis {
+        padding: 4px 16px;
+        border-left: 1px solid var(--border);
+        border-right: 1px solid var(--border);
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 16px; color: var(--muted); letter-spacing: 3px;
+      }
 
       /* ── AGENT ── */
       .ma-page .agent-prompt {
@@ -219,6 +234,24 @@
       }
       .ma-page .ma-footer h3 { font-family: Georgia, serif; color: var(--black); font-size: 22px; margin-bottom: 12px; }
       .ma-page .ma-footer p { color: var(--body); font-size: 14px; line-height: 1.55; margin-bottom: 0; }
+      .ma-page .cta-box {
+        margin-top: 28px; padding: 28px 24px;
+        border: 1px solid var(--border); border-radius: 8px;
+        background: var(--bg); position: relative;
+        text-align: center;
+      }
+      .ma-page .cta-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: 8px 8px 0 0; background: var(--gold); }
+      .ma-page .cta-box h4 { font-family: Georgia, serif; font-size: 18px; color: var(--black); margin-bottom: 8px; }
+      .ma-page .cta-box p { font-size: 14px; color: var(--body); margin-bottom: 16px; }
+      .ma-page .cta-btn {
+        display: inline-block; padding: 12px 32px;
+        background: var(--gold); color: #fff;
+        font-size: 15px; font-weight: 700;
+        border-radius: 6px; text-decoration: none;
+        transition: background .2s;
+        cursor: pointer; border: none;
+      }
+      .ma-page .cta-btn:hover { background: #b8890f; }
 
       @media (max-width: 900px) {
         .ma-page .card-grid, .ma-page .benefit-cards { grid-template-columns: 1fr; }
@@ -372,10 +405,13 @@
             </div>
             <p class="caption">Power BI model view — Item ID (PK) → Item ID (No.) and Resource ID (PK) → Resource ID (No.) as single-column relationships, Direct Lake compatible.</p>
 
-            <div class="tbl-header"><span class="mono">bc_silver.Sales Line — generated ID columns</span></div>
-            <div class="tbl-row"><span class="cn">Sales Line ID (PK)</span><span class="ct">PK</span><span class="cv mono">CRONUS|Order|1001|10000</span></div>
-            <div class="tbl-row"><span class="cn">Item ID (No.)</span><span class="ct">FK</span><span class="cv mono">CRONUS|ITEM-X100 (Type = Item)</span></div>
-            <div class="tbl-row"><span class="cn">Resource ID (No.)</span><span class="ct">FK</span><span class="cv mono">CRONUS|RES-50 (Type = Resource)</span></div>
+            <div class="tbl-header"><span class="mono">bc_silver — generated ID columns</span></div>
+            <div class="tbl-row"><span class="tbl-tn">Item</span><span class="cn">Item ID (PK)</span><span class="ct">PK</span><span class="cv mono">CRONUS|ITEM-X100</span></div>
+            <div class="tbl-row"><span class="tbl-tn">Resource</span><span class="cn">Resource ID (PK)</span><span class="ct">PK</span><span class="cv mono">CRONUS|RES-50</span></div>
+            <div class="tbl-ellipsis">…</div>
+            <div class="tbl-row"><span class="tbl-tn">Sales Line</span><span class="cn">Sales Line ID (PK)</span><span class="ct">PK</span><span class="cv mono">CRONUS|Order|1001|10000</span></div>
+            <div class="tbl-row"><span class="tbl-tn">Sales Line</span><span class="cn">Item ID (No.)</span><span class="ct">FK</span><span class="cv mono">CRONUS|ITEM-X100 (Type = Item)</span></div>
+            <div class="tbl-row"><span class="tbl-tn">Sales Line</span><span class="cn">Resource ID (No.)</span><span class="ct">FK</span><span class="cv mono">CRONUS|RES-50 (Type = Resource)</span></div>
           </section>
 
           <!-- AGENT NAVIGATION -->
@@ -394,6 +430,7 @@
             <div class="scan-row std"><span class="ck">✓</span><span class="tn">Sales Invoice Header</span><span class="fk mono">Customer ID (Sell-to Customer No.)</span></div>
             <div class="scan-row std"><span class="ck">✓</span><span class="tn">Cust. Ledger Entry</span><span class="fk mono">Customer ID (Customer No.)</span></div>
             <div class="scan-row std"><span class="ck">✓</span><span class="tn">Service Header</span><span class="fk mono">Customer ID (Customer No.)</span></div>
+            <div class="scan-ellipsis">…</div>
             <div class="scan-row cust"><span class="ck">✓</span><span class="tn">Custom Warranty Claims</span><span class="badge-c">custom</span><span class="fk mono">Customer ID (Customer No.)</span></div>
             <div class="scan-row cust"><span class="ck">✓</span><span class="tn">Custom Loyalty Points</span><span class="badge-c">custom</span><span class="fk mono">Customer ID (Member No.)</span></div>
             <p class="note">Clear BC names preserved (e.g. Discount %, not Discount_Pct). Consistent ID columns make autonomous discovery trivial.</p>
@@ -431,11 +468,23 @@
           <div class="ma-footer">
             <h3>From Raw Data to Analytics-Ready Intelligence</h3>
             <p>The Model Accelerator completes BC2Fab's end-to-end path from Business Central to reporting and analytics. Surrogate keys are just the beginning — enriched metadata and agent-navigable schemas follow.</p>
+            <div class="cta-box">
+              <h4>Interested in the Model Accelerator?</h4>
+              <p>The Model Accelerator is currently in private preview. Get in touch to learn more and request access.</p>
+              <a class="cta-btn" id="cta-email" href="#" onclick="return false;">Contact Us for Private Preview</a>
+            </div>
           </div>
 
         </section>
       </main>
     </div>
     <script src="../assets/js/main.js"></script>
+    <script>
+      (function(){
+        var u='BC2FAB',d='navida',t='eu';
+        var a=document.getElementById('cta-email');
+        if(a){a.href='mai'+'lto:'+u+'@'+d+'.'+t;a.removeAttribute('onclick');}
+      })();
+    </script>
   </body>
 </html>
