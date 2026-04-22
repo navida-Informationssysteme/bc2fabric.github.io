@@ -206,6 +206,12 @@ a:hover {
   color: #1e3a6e;
 }
 
+.callout-warning {
+  border-color: #d97706;
+  background: #fffbeb;
+  color: #78350f;
+}
+
 .content-card h2 {
   margin-top: 2rem;
 }

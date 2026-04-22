@@ -189,6 +189,10 @@
             <li>Select the <code>bc2fab_refresh</code> pipeline and choose <strong>Schedule</strong> from the command bar.</li>
             <li>Adjust the frequency, start time, end time, or deactivate the schedule. For more details, see <a href="https://learn.microsoft.com/en-us/fabric/data-factory/pipeline-runs#scheduled-pipeline-runs">Scheduled pipeline runs in Fabric</a>.</li>
           </ol>
+          <div class="callout callout-warning">
+            <strong>Important:</strong> For frequent refreshes (such as every 10 minutes) use an interval based schedule.
+          </div>
+          <img src="../assets/images/interval-based-refresh.png" alt="Interval based refresh schedule" style="max-width: 70%; margin: 1rem 0;">
           <p>You can also trigger an on-demand load by selecting <strong>Run now</strong> on the pipeline whenever you need an immediate refresh.</p>
         </section>
 
