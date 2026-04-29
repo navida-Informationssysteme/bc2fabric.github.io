@@ -9,6 +9,61 @@
     <link rel="icon" type="image/x-icon" sizes="any" href="https://www.navida.eu/favicon.ico" />
     <link rel="shortcut icon" href="https://www.navida.eu/favicon.ico" />
     <link rel="stylesheet" href="../assets/css/styles.css" />
+    <style>
+      .code-block{
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 12px 0;
+      }
+      .code-header{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:12px;
+        padding:10px 12px;
+        background:#f9fafb;
+        border-bottom:1px solid #e5e7eb;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      }
+      .toggle-btn{
+        border: none;
+        background: transparent;
+        padding: 6px 4px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        text-align:left;
+        color: inherit;
+      }
+      .copy-btn{
+        border:1px solid #d1d5db;
+        background:#fff;
+        padding:6px 10px;
+        border-radius:10px;
+        cursor:pointer;
+        font-size:14px;
+        white-space: nowrap;
+        color: #374151;
+      }
+      .copy-btn:active{ transform: translateY(1px); }
+
+      .code-panel{ /* container for the pre */ }
+      .code-pre{
+        margin:0;
+        padding:12px;
+        background:#0b1020;
+        color:#e5e7eb;
+        overflow:auto;
+        font-size:13px;
+        line-height:1.45;
+      }
+      .code-pre code{
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        white-space: pre;
+        display:block;
+      }
+    </style>
   </head>
   <body>
     <button
@@ -115,6 +170,7 @@
             <li><a href="#loading-impact">How does the loading impact Business Central?</a></li>
             <li><a href="#business-central-access">How is the access to Business Central working?</a></li>
             <li><a href="#on-premise-support">Does BC2Fab support Business Central On-Premise versions?</a></li>
+            <li><a href="#multiple-environments">How to use BC2Fab with multiple BC environments?</a></li>
             <li><a href="#pause-resume-capacity">What needs to be considered when pausing/resuming the Fabric capacity?</a></li>
             <li><a href="#excel-connect">How to connect with Excel to the mirrored database?</a></li>
           </ul>
@@ -341,113 +397,6 @@ END</code></pre>
             </div>
           </section>
 
-          <style>
-            .code-block{
-              border: 1px solid #e5e7eb;
-              border-radius: 12px;
-              overflow: hidden;
-              margin: 12px 0;
-            }
-            .code-header{
-              display:flex;
-              align-items:center;
-              justify-content:space-between;
-              gap:12px;
-              padding:10px 12px;
-              background:#f9fafb;
-              border-bottom:1px solid #e5e7eb;
-              font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-            }
-            .toggle-btn{
-              border: none;
-              background: transparent;
-              padding: 6px 4px;
-              cursor: pointer;
-              font-size: 14px;
-              font-weight: 600;
-              text-align:left;
-            }
-            .copy-btn{
-              border:1px solid #d1d5db;
-              background:#fff;
-              padding:6px 10px;
-              border-radius:10px;
-              cursor:pointer;
-              font-size:14px;
-              white-space: nowrap;
-            }
-            .copy-btn:active{ transform: translateY(1px); }
-
-            .code-panel{ /* container for the pre */ }
-            .code-pre{
-              margin:0;
-              padding:12px;
-              background:#0b1020;
-              color:#e5e7eb;
-              overflow:auto;
-              font-size:13px;
-              line-height:1.45;
-            }
-            .code-pre code{
-              font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-              white-space: pre;
-              display:block;
-            }
-          </style>
-
-          <script>
-            (function () {
-              // Toggle expand/collapse
-              document.addEventListener("click", (e) => {
-                const toggle = e.target.closest(".toggle-btn");
-                if (!toggle) return;
-
-                const panelId = toggle.getAttribute("aria-controls");
-                const panel = document.getElementById(panelId);
-                if (!panel) return;
-
-                const isOpen = toggle.getAttribute("aria-expanded") === "true";
-                toggle.setAttribute("aria-expanded", String(!isOpen));
-                panel.hidden = isOpen;
-
-                // Update label + caret
-                const collapsedLabel = toggle.getAttribute("data-collapsed-label") || "▶ Show SQL";
-                const expandedLabel = toggle.getAttribute("data-expanded-label") || "▼ Hide SQL";
-                toggle.textContent = isOpen ? collapsedLabel : expandedLabel;
-              });
-
-              // Copy (works even when collapsed)
-              document.addEventListener("click", async (e) => {
-                const btn = e.target.closest(".copy-btn");
-                if (!btn) return;
-
-                const id = btn.getAttribute("data-copy-target");
-                const codeEl = document.getElementById(id);
-                if (!codeEl) return;
-
-                const text = codeEl.innerText;
-
-                try {
-                  await navigator.clipboard.writeText(text);
-                } catch (err) {
-                  // Fallback for older browsers
-                  const ta = document.createElement("textarea");
-                  ta.value = text;
-                  ta.style.position = "fixed";
-                  ta.style.opacity = "0";
-                  document.body.appendChild(ta);
-                  ta.select();
-                  document.execCommand("copy");
-                  document.body.removeChild(ta);
-                }
-
-                // UX feedback
-                const old = btn.textContent;
-                btn.textContent = "Copied!";
-                setTimeout(() => (btn.textContent = old), 1200);
-              });
-            })();
-          </script>
         </section>
 
         <section class="content-card">
@@ -560,6 +509,17 @@ END</code></pre>
         </section>
 
         <section class="content-card">
+          <h2 id="multiple-environments"><a class="anchor-link" href="#multiple-environments">How to use BC2Fab with multiple BC environments?</a></h2>
+          <p>Each BC environment requires its own dedicated BC2Fab Fabric workspace. Once the data is landing in Fabric, you can unify it in a silver layer by creating <a href="#extend-data">shortcuts</a> or copying tables from each BC2Fab landing zone into a shared Lakehouse.</p>
+          <ul>
+            <li><strong>One workspace per environment:</strong> Install BC2Fab separately for each Business Central environment you want to mirror.</li>
+            <li><strong>Silver-layer consolidation:</strong> Combine the mirrored data across environments by pointing schema shortcuts from a shared Lakehouse at each <code>bc2fab_mirror</code> database, or by copying the data using pipelines or notebooks.</li>
+            <li><strong>Single license key:</strong> One BC2Fab license key covers all instances.</li>
+          </ul>
+          <p>Multiple companies within a single BC environment can be synchronized from within one BC2Fab workspace, so a separate workspace is only needed when the environments themselves differ.</p>
+        </section>
+
+        <section class="content-card">
           <h2 id="pause-resume-capacity">
             <a class="anchor-link" href="#pause-resume-capacity">What needs to be considered when pausing/resuming the Fabric capacity?</a>
           </h2>
@@ -607,5 +567,58 @@ END</code></pre>
     </div>
 
     <script src="../assets/js/main.js"></script>
+    <script>
+      (function () {
+        // Toggle expand/collapse
+        document.addEventListener("click", (e) => {
+          const toggle = e.target.closest(".toggle-btn");
+          if (!toggle) return;
+
+          const panelId = toggle.getAttribute("aria-controls");
+          const panel = document.getElementById(panelId);
+          if (!panel) return;
+
+          const isOpen = toggle.getAttribute("aria-expanded") === "true";
+          toggle.setAttribute("aria-expanded", String(!isOpen));
+          panel.hidden = isOpen;
+
+          // Update label + caret
+          const collapsedLabel = toggle.getAttribute("data-collapsed-label") || "▶ Show SQL";
+          const expandedLabel = toggle.getAttribute("data-expanded-label") || "▼ Hide SQL";
+          toggle.textContent = isOpen ? collapsedLabel : expandedLabel;
+        });
+
+        // Copy (works even when collapsed)
+        document.addEventListener("click", async (e) => {
+          const btn = e.target.closest(".copy-btn");
+          if (!btn) return;
+
+          const id = btn.getAttribute("data-copy-target");
+          const codeEl = document.getElementById(id);
+          if (!codeEl) return;
+
+          const text = codeEl.innerText;
+
+          try {
+            await navigator.clipboard.writeText(text);
+          } catch (err) {
+            // Fallback for older browsers
+            const ta = document.createElement("textarea");
+            ta.value = text;
+            ta.style.position = "fixed";
+            ta.style.opacity = "0";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            document.body.removeChild(ta);
+          }
+
+          // UX feedback
+          const old = btn.textContent;
+          btn.textContent = "Copied!";
+          setTimeout(() => (btn.textContent = old), 1200);
+        });
+      })();
+    </script>
   </body>
 </html>

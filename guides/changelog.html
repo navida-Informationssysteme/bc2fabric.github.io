@@ -247,6 +247,30 @@
                 <td>BC App</td>
                 <td>Performance and stability upgrade.</td>
               </tr>
+              <tr>
+                <td>28.04.2026</td>
+                <td>V1.5</td>
+                <td>Fabric Workload</td>
+                <td>
+                  New features &amp; improvements:
+                  <ul>
+                    <li>
+                      <strong><a href="bc-model-accelerator.html">BC Model Accelerator</a></strong> — generates a <code>bc_silver</code> schema on top of the raw mirrored
+                      <code>bc</code> tables. The Metadata Engine reads BC key and relation metadata and emits
+                      <code>CREATE OR ALTER VIEW</code> statements for every BC table. Each view
+                      preserves all original columns and adds deterministic surrogate-key columns
+                      (e.g. <code>Sales Line ID (PK)</code>, <code>Item ID (No.)</code>) with a company prefix
+                      for multi-company support. Conditional foreign keys (e.g. Sales Line → Item / Resource / G/L Account)
+                      are resolved via <code>CASE WHEN</code> on the <code>Type</code> field, producing single-column
+                      relationships that are Direct Lake compatible and navigable by AI agents.
+                    </li>
+                    <li>
+                      Robustness improvements: reliable handling of late-arriving BC data to prevent
+                      stale or missing rows when BC API responses are delayed or arrive out of order.
+                    </li>
+                  </ul>
+                </td>
+              </tr>
             </tbody>
           </table>
         </section>
