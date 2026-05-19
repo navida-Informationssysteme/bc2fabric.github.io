@@ -464,6 +464,43 @@
             </div>
           </section>
 
+          <!-- HOW TO CREATE -->
+          <section class="section">
+            <h3>How to Create the Silver Layer</h3>
+            <p class="subtitle">Generate all bc_silver views in three steps directly from the BC2Fab workload.</p>
+            <div class="pipeline">
+              <div class="step">
+                <span style="font-size: 22px;">🧩</span>
+                <div>
+                  <span class="num">1</span> <span class="step-label">Open BC2Fab Workload</span>
+                  <div class="step-desc">Navigate to the BC2Fab workload in your Microsoft Fabric workspace.</div>
+                </div>
+              </div>
+              <div class="step-arrow">↓</div>
+              <div class="step">
+                <span style="font-size: 22px;">⭐</span>
+                <div>
+                  <span class="num">2</span> <span class="step-label">Generate Silver Layers</span>
+                  <div class="step-desc">On the Ribbon, under <strong>Premium</strong>, click <strong>Generate Silver Layers</strong>. The Metadata Engine reads your BC key &amp; relation metadata and generates all SQL views automatically.</div>
+                </div>
+              </div>
+              <div class="step-arrow">↓</div>
+              <div class="step">
+                <span style="font-size: 22px;">🔍</span>
+                <div>
+                  <span class="num">3</span> <span class="step-label">Explore in the SQL Endpoint</span>
+                  <div class="step-desc">Open the <strong>BC2Fab Mirroring</strong> database and locate the <span class="mono">bc_silver</span> schema in the SQL Endpoint. You will find one view per mirrored table, each containing all original columns plus the generated ID columns.</div>
+                </div>
+              </div>
+            </div>
+            <div class="props-row">
+              <div class="prop"><span class="ck">✓</span> One view per mirrored table</div>
+              <div class="prop"><span class="ck">✓</span> All original columns preserved</div>
+              <div class="prop"><span class="ck">✓</span> Additional surrogate ID columns generated</div>
+            </div>
+            <p class="note">💡 <strong>Schema changes?</strong> Whenever your BC schema changes — such as when new endpoints are added or existing tables are updated — simply rerun <strong>Generate Silver Layers</strong> to refresh all views in the <span class="mono">bc_silver</span> schema.</p>
+          </section>
+
           <!-- CLOSING -->
           <div class="ma-footer">
             <h3>From Raw Data to Analytics-Ready Intelligence</h3>
