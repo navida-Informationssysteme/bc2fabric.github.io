@@ -154,6 +154,7 @@
             <li><a href="#data-synchronization">How is the data synchronizing working?</a></li>
             <li><a href="#fabric-capacity-sizing">How to size the Fabric Capacity for the mirroring?</a></li>
             <li><a href="#required-licenses">What licenses do I need to run BC2Fab?</a></li>
+            <li><a href="#count-licensed-bc-users">How to get the number of licensed BC users for the BC2Fab subscription offer?</a></li>
             <li><a href="#test-bc2fab">How to test BC2Fab?</a></li>
             <li><a href="#near-real-time-data">How close to real-time will the data be available in Fabric?</a></li>
             <li><a href="#change-refresh-time-and-schedule">How do I change the refresh time and schedule?</a></li>
@@ -211,6 +212,21 @@
         <section class="content-card">
           <h2 id="required-licenses"><a class="anchor-link" href="#required-licenses">What licenses do I need to run BC2Fab?</a></h2>
           <p>BC2Fab requires a license for the BC2Fab solution, an active Fabric or Fabric Trial Capacity (F2 or larger), and at least one Power BI Pro or Premium Per User account to manage and share the workspace assets.</p>
+        </section>
+
+        <section class="content-card">
+          <h2 id="count-licensed-bc-users"><a class="anchor-link" href="#count-licensed-bc-users">How to get the number of licensed BC users for the BC2Fab subscription offer?</a></h2>
+          <p>The BC2Fab subscription is priced based on the number of assigned <strong>Dynamics 365 Business Central Premium</strong> and <strong>Dynamics 365 Business Central Essentials</strong> licenses in your tenant. Use the Microsoft 365 Admin Center to look up the current count.</p>
+          <ol>
+            <li>Open the <a href="https://admin.microsoft.com" target="_blank" rel="noopener">Microsoft 365 Admin Center</a> (<code>admin.microsoft.com</code>) and sign in with a global or billing administrator account.</li>
+            <li>In the left-hand navigation, go to <strong>Billing</strong> &gt; <strong>Licenses</strong>.</li>
+            <li>In the product list, locate <strong>Dynamics 365 Business Central Premium</strong> and <strong>Dynamics 365 Business Central Essentials</strong>.</li>
+            <li>Read the <strong>Assigned licenses</strong> column for each product (e.g. <em>47/47</em> means 47 assigned licenses).</li>
+            <li>Add the assigned counts of both products together — that total is the number of licensed BC users relevant for your BC2Fab subscription tier.</li>
+          </ol>
+          <div class="callout callout-info">
+            <strong>Note:</strong> Only <em>Premium</em> and <em>Essentials</em> licenses count towards the BC2Fab subscription. Other Business Central license types (Device, Team Member, for IWs) are not included in the count.
+          </div>
         </section>
 
         <section class="content-card">
