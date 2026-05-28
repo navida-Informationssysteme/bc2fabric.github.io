@@ -63,6 +63,12 @@
         display: flex; align-items: center; gap: 0.45rem;
       }
       .arch-ns { font-size: 0.8rem; margin: 0.18rem 0 0; opacity: 0.9; }
+      .arch-premium {
+        font-size: 0.7rem; font-weight: 500; font-style: italic;
+        margin-left: 0.4rem; opacity: 0.75;
+      }
+      .arch-ns a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+      .arch-ns a:hover { text-decoration-thickness: 2px; }
 
       .arch-n-navida { background: #e6f1fb; border-color: #185fa5; }
       .arch-n-navida .arch-nt { color: #0c447c; } .arch-n-navida .arch-ns { color: #185fa5; }
@@ -91,22 +97,10 @@
         margin: 0.15rem 0 1rem; padding: 0.5rem 0;
       }
 
-      .arch-tabs {
-        display: flex; gap: 0.5rem; flex-wrap: wrap;
-        margin: 1.75rem 0 1rem;
+      .arch-panel-stack {
+        display: flex; flex-direction: column; gap: 1rem;
+        margin-top: 1.75rem;
       }
-      .arch-tab {
-        font-size: 0.85rem; padding: 0.5rem 1rem; border-radius: 0.5rem;
-        border: 1px solid var(--border-color); background: var(--surface-color);
-        color: var(--muted-text-color); cursor: pointer;
-        transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
-        font-family: inherit;
-      }
-      .arch-tab:hover { background: rgba(37, 99, 235, 0.06); }
-      .arch-tab.is-active {
-        background: #eff6ff; color: #1e3a6e; border-color: var(--link-color);
-      }
-      .arch-tab:focus-visible { outline: 2px solid var(--link-color); outline-offset: 2px; }
 
       .arch-panel {
         background: var(--background-color);
@@ -320,7 +314,7 @@
             <div class="arch-tier">
               <div class="arch-node arch-n-green">
                 <p class="arch-nt"><i class="ti ti-cpu" aria-hidden="true"></i>BC2Fab loader notebook</p>
-                <p class="arch-ns">Orchestrator · calls license check on each run</p>
+                <p class="arch-ns">Orchestrator · calls Python code from internal lakehouse</p>
               </div>
             </div>
 
@@ -331,7 +325,7 @@
               </div>
               <div class="arch-node arch-n-gray">
                 <p class="arch-nt">Internal lakehouse</p>
-                <p class="arch-ns">Config · watermarks · logs</p>
+                <p class="arch-ns">Config · code repository · watermarks · logs</p>
               </div>
               <div class="arch-node arch-n-red">
                 <p class="arch-nt">Key Vault · Entra ID</p>
@@ -351,10 +345,10 @@
             <div class="arch-tier arch-grid-13-1">
               <div class="arch-node arch-n-blue">
                 <p class="arch-nt">bc schema</p>
-                <p class="arch-ns">Raw mirrored delta tables</p>
+                <p class="arch-ns">Mirrored delta tables</p>
               </div>
               <div class="arch-node arch-n-amber">
-                <p class="arch-nt">bc_silver schema</p>
+                <p class="arch-nt">bc_silver schema<span class="arch-premium">* premium</span></p>
                 <p class="arch-ns">SQL views · surrogate + relation IDs</p>
               </div>
             </div>
@@ -362,31 +356,74 @@
 
             <div class="arch-tier">
               <div class="arch-node arch-n-teal">
-                <p class="arch-nt"><i class="ti ti-chart-bar" aria-hidden="true"></i>Power BI semantic models</p>
-                <p class="arch-ns">DAX · joins on surrogate IDs</p>
+                <p class="arch-nt"><i class="ti ti-chart-bar" aria-hidden="true"></i>Power BI semantic models<span class="arch-premium">* premium</span></p>
+                <p class="arch-ns"><a href="out-of-the-box-power-bi-reports.html">Out-of-the-box reports</a></p>
               </div>
             </div>
           </div>
 
-          <div class="arch-tabs" role="tablist" aria-label="Sub-flow detail">
-            <button class="arch-tab is-active" data-arch-tab="install" role="tab" aria-selected="true" type="button">
-              Install, license &amp; update
-            </button>
-            <button class="arch-tab" data-arch-tab="load" role="tab" aria-selected="false" type="button">
-              Incremental load
-            </button>
-            <button class="arch-tab" data-arch-tab="delete" role="tab" aria-selected="false" type="button">
-              Deletion handling
-            </button>
-            <button class="arch-tab" data-arch-tab="auth" role="tab" aria-selected="false" type="button">
-              Authentication
-            </button>
-            <button class="arch-tab" data-arch-tab="perms" role="tab" aria-selected="false" type="button">
-              Permissions
-            </button>
-          </div>
+          <div class="arch-panel-stack">
+            <div class="arch-panel">
+              <h3>Install, license &amp; update — the workload boundary</h3>
+              <p class="arch-panel-lead">
+                The BC2Fab workload lives in Navida's backend. Everything it deploys runs in the customer's own Fabric tenant.
+              </p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body"><b>Deploy:</b> the workload's installer service retrieves the installation files and provisions all Fabric components — loader notebook, pipeline, lakehouse, mirrored database — into the customer tenant.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body"><b>Ownership handover:</b> once installed, those components belong to and run entirely inside the customer's Fabric capacity. No customer data flows back to Navida.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body"><b>License check:</b> on each run, the loader calls the workload's license endpoint to validate the customer's entitlement before loading.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body"><b>Update check:</b> when a user opens the workload, it checks for a newer version of the BC2Fab components.</div></div>
+              <div class="arch-step"><div class="arch-num">5</div><div class="arch-step-body"><b>Update on demand:</b> if a new version is available, an update button appears. The components are updated only when the user clicks it — updates are never applied automatically.</div></div>
+              <div class="arch-step"><div class="arch-num">6</div><div class="arch-step-body"><b>Separation:</b> the Navida backend only ever serves install files and answers license and update calls — it never sees BC data, watermarks, or the mirrored tables.</div></div>
+            </div>
 
-          <div class="arch-panel" id="arch-panel" role="tabpanel"></div>
+            <div class="arch-panel">
+              <h3>Incremental load engine</h3>
+              <p class="arch-panel-lead">
+                Runs inside the customer tenant. Delta detection per endpoint × company, in parallel.
+              </p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">The loader reads the last stored watermark to determine which records have changed since the previous run.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">Only the changed records are retrieved from Business Central, page by page.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">The records are written as Parquet upserts to the landing zone.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">The watermark is advanced so the next run picks up only newer changes; endpoints are processed in parallel.</div></div>
+            </div>
+
+            <div class="arch-panel">
+              <h3>Deletion handling</h3>
+              <p class="arch-panel-lead">
+                Business Central reports deleted records through a change feed; the loader turns them into delete markers.
+              </p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">The loader reads records deleted in Business Central since the previous run.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">Each deletion is matched back to the correct mirrored table.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">A delete marker is written to the landing zone, and repeated deletions are ignored.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Open Mirroring applies the delete markers to the mirrored delta tables automatically.</div></div>
+            </div>
+
+            <div class="arch-panel">
+              <h3>Authentication</h3>
+              <p class="arch-panel-lead">
+                Access is granted through an Entra ID app registration set up during installation.
+              </p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">The client ID of the app registration is stored in the environment configuration and is set during installation.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">The app registration's secret is stored securely in Azure Key Vault.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">The same app registration is used for both the initial load and all incremental loads.</div></div>
+            </div>
+
+            <div class="arch-panel">
+              <h3>Why the workload needs delegated permissions</h3>
+              <p class="arch-panel-lead">
+                Fabric workloads currently must run actions using delegated permissions. Delegated means the consent process can never grant the BC2Fab app more than the signed-in user already has — the requested permissions reflect exactly what the app needs to automate setup inside the Fabric tenant. No customer data is ever accessed by the app.
+              </p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body"><b>Extend Fabric with new item types</b><br>Mandatory for every custom Fabric workload.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body"><b>Read and write all workspaces</b><br>Used to create the <code>bc2fab_internal</code> folder for organisation. Fabric offers no finer-grained permission scoped to folder creation.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body"><b>Read and write on all Fabric items</b><br>Used to create the solution's items — the <code>bc2fab_internal</code> lakehouse, mirrored database, notebooks and the data pipeline. The actual data flow runs directly between Business Central and the workspace; the workload only installs and manages these components.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body"><b>Execute on all Fabric items</b><br>Used to run the notebooks and pipeline that validate settings and perform the initial load.</div></div>
+              <div class="arch-step"><div class="arch-num">5</div><div class="arch-step-body"><b>Access Azure Storage</b><br>Used to store workload settings (such as environment and company name) inside the <code>bc2fab_internal</code> lakehouse.</div></div>
+              <div class="arch-step"><div class="arch-num">6</div><div class="arch-step-body"><b>Sign you in and read your profile</b><br>Every custom Fabric workload must declare at least one Microsoft Graph permission; this is the standard default.</div></div>
+              <p class="arch-panel-note">
+                <i class="ti ti-shield-check" aria-hidden="true"></i>Microsoft validated and approved the workload after an extensive review. Security is a high priority: BC2Fab requires an Entra app with minimal access in Business Central, and its secret must be stored in a Key Vault.
+              </p>
+            </div>
+          </div>
         </section>
 
      
@@ -397,108 +434,6 @@
       </main>
     </div>
 
-    <script>
-      (function () {
-        const flows = {
-          install: {
-            h: "Install, license & update — the workload boundary",
-            lead:
-              "The BC2Fab workload lives in Navida's backend. Everything it deploys runs in the customer's own Fabric tenant.",
-            steps: [
-              "<b>Deploy:</b> the workload's installer service retrieves the installation files and provisions all Fabric components — loader notebook, pipeline, lakehouse, mirrored database — into the customer tenant.",
-              "<b>Ownership handover:</b> once installed, those components belong to and run entirely inside the customer's Fabric capacity. No customer data flows back to Navida.",
-              "<b>License check:</b> on each run, the loader calls the workload's license endpoint to validate the customer's entitlement before loading.",
-              "<b>Update check:</b> when a user opens the workload, it checks for a newer version of the BC2Fab components.",
-              "<b>Update on demand:</b> if a new version is available, an update button appears. The components are updated only when the user clicks it — updates are never applied automatically.",
-              "<b>Separation:</b> the Navida backend only ever serves install files and answers license and update calls — it never sees BC data, watermarks, or the mirrored tables."
-            ]
-          },
-          load: {
-            h: "Incremental load engine",
-            lead: "Runs inside the customer tenant. Delta detection per endpoint × company, in parallel.",
-            steps: [
-              "The loader reads the last stored watermark to determine which records have changed since the previous run.",
-              "Only the changed records are retrieved from Business Central, page by page.",
-              "The records are written as Parquet upserts to the landing zone.",
-              "The watermark is advanced so the next run picks up only newer changes; endpoints are processed in parallel."
-            ]
-          },
-          delete: {
-            h: "Deletion handling",
-            lead: "Business Central reports deleted records through a change feed; the loader turns them into delete markers.",
-            steps: [
-              "The loader reads records deleted in Business Central since the previous run.",
-              "Each deletion is matched back to the correct mirrored table.",
-              "A delete marker is written to the landing zone, and repeated deletions are ignored.",
-              "Open Mirroring applies the delete markers to the mirrored delta tables automatically."
-            ]
-          },
-          auth: {
-            h: "Authentication",
-            lead: "Access is granted through an Entra ID app registration set up during installation.",
-            steps: [
-              "The client ID of the app registration is stored in the environment configuration and is set during installation.",
-              "The app registration's secret is stored securely in Azure Key Vault.",
-              "The same app registration is used for both the initial load and all incremental loads."
-            ]
-          },
-          perms: {
-            h: "Why the workload needs delegated permissions",
-            lead:
-              "Fabric workloads currently must run actions using delegated permissions. Delegated means the consent process can never grant the BC2Fab app more than the signed-in user already has — the requested permissions reflect exactly what the app needs to automate setup inside the Fabric tenant. No customer data is ever accessed by the app.",
-            steps: [
-              "<b>Extend Fabric with new item types</b><br>Mandatory for every custom Fabric workload.",
-              "<b>Read and write all workspaces</b><br>Used to create the <code>bc2fabric_internal</code> folder for organisation. Fabric offers no finer-grained permission scoped to folder creation.",
-              "<b>Read and write on all Fabric items</b><br>Used to create the solution's items — the <code>bc2fabric_internal</code> lakehouse, mirrored database, notebooks and the data pipeline. The actual data flow runs directly between Business Central and the workspace; the workload only installs and manages these components.",
-              "<b>Execute on all Fabric items</b><br>Used to run the notebooks and pipeline that validate settings and perform the initial load.",
-              "<b>Access Azure Storage</b><br>Used to store workload settings (such as environment and company name) inside the <code>bc2fabric_internal</code> lakehouse.",
-              "<b>Sign you in and read your profile</b><br>Every custom Fabric workload must declare at least one Microsoft Graph permission; this is the standard default."
-            ],
-            note:
-              "Microsoft validated and approved the workload after an extensive review. Security is a high priority: BC2Fab requires an Entra app with minimal access in Business Central, and its secret must be stored in a Key Vault."
-          }
-        };
-
-        const panel = document.getElementById('arch-panel');
-        if (!panel) return;
-
-        function render(key) {
-          const f = flows[key];
-          const steps = f.steps
-            .map(
-              (s, i) =>
-                '<div class="arch-step"><div class="arch-num">' +
-                (i + 1) +
-                '</div><div class="arch-step-body">' +
-                s +
-                '</div></div>'
-            )
-            .join('');
-          const note = f.note
-            ? '<p class="arch-panel-note"><i class="ti ti-shield-check" aria-hidden="true"></i>' +
-              f.note +
-              '</p>'
-            : '';
-          panel.innerHTML =
-            '<h3>' + f.h + '</h3><p class="arch-panel-lead">' + f.lead + '</p>' + steps + note;
-        }
-
-        function selectTab(key) {
-          document.querySelectorAll('.arch-tab').forEach((t) => {
-            const on = t.dataset.archTab === key;
-            t.classList.toggle('is-active', on);
-            t.setAttribute('aria-selected', on ? 'true' : 'false');
-          });
-          render(key);
-        }
-
-        document.querySelectorAll('.arch-tab').forEach((t) =>
-          t.addEventListener('click', () => selectTab(t.dataset.archTab))
-        );
-
-        selectTab('install');
-      })();
-    </script>
     <script src="../assets/js/main.js"></script>
   </body>
 </html>
