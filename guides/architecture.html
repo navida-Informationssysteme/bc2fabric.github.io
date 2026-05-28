@@ -9,6 +9,144 @@
     <link rel="icon" type="image/x-icon" sizes="any" href="https://www.navida.eu/favicon.ico" />
     <link rel="shortcut icon" href="https://www.navida.eu/favicon.ico" />
     <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"
+    />
+    <style>
+      .arch-section p.arch-lead { margin: 0 0 1.25rem; }
+      .arch-legend {
+        display: flex; flex-wrap: wrap; gap: 1.1rem;
+        margin: 0.5rem 0 1.5rem;
+        font-size: 0.85rem; color: var(--muted-text-color);
+      }
+      .arch-legend span { display: inline-flex; align-items: center; gap: 0.45rem; }
+      .arch-swatch { width: 22px; height: 0; border-top: 2px dashed; border-radius: 2px; }
+
+      .arch-zone {
+        border-radius: 18px;
+        padding: 1rem 1rem 1.1rem;
+        margin-bottom: 0.85rem;
+        border: 1.5px dashed;
+      }
+      .arch-zone.arch-navida { border-color: #185fa5; }
+      .arch-zone.arch-tenant { border-color: #ba7517; }
+      .arch-zone-hd {
+        display: flex; align-items: center; gap: 0.55rem;
+        font-size: 0.85rem; font-weight: 600; margin: 0 0 0.9rem;
+        flex-wrap: wrap;
+      }
+      .arch-zone.arch-navida .arch-zone-hd { color: #0c447c; }
+      .arch-zone.arch-tenant .arch-zone-hd { color: #854f0b; }
+      .arch-tag {
+        font-size: 0.7rem; font-weight: 500;
+        padding: 0.18rem 0.6rem; border-radius: 999px;
+      }
+      .arch-zone.arch-navida .arch-tag { background: #e6f1fb; color: #0c447c; }
+      .arch-zone.arch-tenant .arch-tag { background: #faeeda; color: #854f0b; }
+
+      .arch-tier { display: grid; gap: 0.75rem; margin-bottom: 0.75rem; }
+      .arch-tier:last-child { margin-bottom: 0; }
+      .arch-grid-2 { grid-template-columns: 1fr 1fr; }
+      .arch-grid-3 { grid-template-columns: repeat(3, 1fr); }
+      .arch-grid-13-1 { grid-template-columns: 1.3fr 1fr; }
+
+      .arch-node {
+        border-radius: 12px;
+        padding: 0.8rem 0.95rem;
+        border: 1px solid rgba(15, 23, 42, 0.1);
+        background: var(--surface-color);
+      }
+      .arch-nt {
+        font-size: 0.9rem; font-weight: 600; margin: 0;
+        display: flex; align-items: center; gap: 0.45rem;
+      }
+      .arch-ns { font-size: 0.8rem; margin: 0.18rem 0 0; opacity: 0.9; }
+
+      .arch-n-navida { background: #e6f1fb; border-color: #185fa5; }
+      .arch-n-navida .arch-nt { color: #0c447c; } .arch-n-navida .arch-ns { color: #185fa5; }
+      .arch-n-green  { background: #eaf3de; border-color: #3b6d11; }
+      .arch-n-green .arch-nt  { color: #27500a; } .arch-n-green .arch-ns  { color: #3b6d11; }
+      .arch-n-gray   { background: #f1efe8; border-color: #5f5e5a; }
+      .arch-n-gray .arch-nt   { color: #444441; } .arch-n-gray .arch-ns   { color: #5f5e5a; }
+      .arch-n-red    { background: #fcebeb; border-color: #a32d2d; }
+      .arch-n-red .arch-nt    { color: #791f1f; } .arch-n-red .arch-ns    { color: #a32d2d; }
+      .arch-n-blue   { background: #e6f1fb; border-color: #185fa5; }
+      .arch-n-blue .arch-nt   { color: #0c447c; } .arch-n-blue .arch-ns   { color: #185fa5; }
+      .arch-n-amber  { background: #faeeda; border-color: #854f0b; }
+      .arch-n-amber .arch-nt  { color: #633806; } .arch-n-amber .arch-ns  { color: #854f0b; }
+      .arch-n-teal   { background: #e1f5ee; border-color: #0f6e56; }
+      .arch-n-teal .arch-nt   { color: #085041; } .arch-n-teal .arch-ns   { color: #0f6e56; }
+      .arch-n-neutral { border-color: rgba(15, 23, 42, 0.18); }
+      .arch-n-neutral .arch-nt { color: var(--text-color); }
+      .arch-n-neutral .arch-ns { color: var(--muted-text-color); }
+
+      .arch-flowline {
+        text-align: center; color: #8b8a83; font-size: 0.85rem;
+        margin: -0.1rem 0 0.65rem;
+      }
+      .arch-crossline {
+        text-align: center; color: #185fa5; font-size: 0.85rem; font-weight: 500;
+        margin: 0.15rem 0 1rem; padding: 0.5rem 0;
+      }
+
+      .arch-tabs {
+        display: flex; gap: 0.5rem; flex-wrap: wrap;
+        margin: 1.75rem 0 1rem;
+      }
+      .arch-tab {
+        font-size: 0.85rem; padding: 0.5rem 1rem; border-radius: 0.5rem;
+        border: 1px solid var(--border-color); background: var(--surface-color);
+        color: var(--muted-text-color); cursor: pointer;
+        transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+        font-family: inherit;
+      }
+      .arch-tab:hover { background: rgba(37, 99, 235, 0.06); }
+      .arch-tab.is-active {
+        background: #eff6ff; color: #1e3a6e; border-color: var(--link-color);
+      }
+      .arch-tab:focus-visible { outline: 2px solid var(--link-color); outline-offset: 2px; }
+
+      .arch-panel {
+        background: var(--background-color);
+        border: 1px solid var(--border-color);
+        border-radius: 14px;
+        padding: 1.1rem 1.25rem;
+      }
+      .arch-panel h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.3rem; color: var(--text-color); }
+      .arch-panel-lead { font-size: 0.875rem; color: var(--muted-text-color); margin: 0 0 1rem; }
+      .arch-step {
+        display: flex; gap: 0.85rem; align-items: flex-start;
+        padding: 0.6rem 0; border-top: 1px solid var(--border-color);
+      }
+      .arch-step:first-of-type { border-top: none; padding-top: 0; }
+      .arch-num {
+        flex: 0 0 23px; height: 23px; border-radius: 50%;
+        background: #eff6ff; color: var(--link-color);
+        font-size: 0.75rem; font-weight: 600;
+        display: flex; align-items: center; justify-content: center;
+        margin-top: 1px;
+      }
+      .arch-step-body { font-size: 0.875rem; line-height: 1.55; color: var(--text-color); }
+      .arch-step-body code {
+        font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        font-size: 0.78rem; background: var(--surface-color);
+        padding: 0.05rem 0.35rem; border-radius: 4px;
+        border: 1px solid var(--border-color);
+      }
+      .arch-panel-note {
+        margin: 1rem 0 0; padding: 0.75rem 0.9rem;
+        border-radius: 10px;
+        background: #eff6ff; color: #1e3a6e;
+        font-size: 0.85rem; line-height: 1.55;
+      }
+      .arch-panel-note i { vertical-align: -2px; margin-right: 0.4rem; }
+
+      @media (max-width: 720px) {
+        .arch-grid-2, .arch-grid-3, .arch-grid-13-1 { grid-template-columns: 1fr; }
+      }
+    </style>
   </head>
   <body>
     <button
@@ -124,55 +262,133 @@
       
         </section>
 
-        <section class="content-card">
-          <h2>Main components</h2>
-          <p>
-            BC2Fab relies on managed components that keep Business Central data synchronized while
-            minimizing operational overhead in Fabric.
+        <section class="content-card arch-section">
+          <h2>BC2Fab components in detail</h2>
+          <p class="arch-lead">
+            BC2Fab spans two trust boundaries. The <strong>BC2Fab workload</strong> is hosted in
+            Navida's backend and is responsible for serving installation files and performing the
+            license check. Everything it deploys runs entirely inside the
+            <strong>customer's own Fabric tenant</strong> — no business data ever leaves it.
           </p>
-          <ul>
-               <li>
-              <strong>Workload:</strong> Installing the BC2Fab workload in a Fabric workspace provisions
-              the mirror, table configuration, and authentication to the Business Central tenant so credentials and
-              schema mappings are managed securely.
-            </li>
-            <li>
-              <strong>Mirrored database:</strong> Data lands in a Fabric mirroring database that automatically aligns
-              table and field names with Business Central. This creates a governed
-              source for semantic models and downstream lakehouses.
-            </li>
-        
-            <li>
-              <strong>Refresh pipeline:</strong> A Fabric pipeline orchestrates loads
-              from Business Central into the mirrored database. A schedule on this pipeline controls the
-              refresh cadence and triggers on-demand runs when needed.
-            </li>
-            <li>
-              <strong>Business Central app:</strong> An app inside Business Central hosts the configuration UI for
-              selecting the relevant API query endpoints (including any custom queries) that BC2Fab should mirror.
-              Once configured, these endpoints are discovered automatically by the Fabric workload.
-            </li>
-          </ul>
+
+          <div class="arch-legend" aria-hidden="true">
+            <span><span class="arch-swatch" style="border-color: #185fa5;"></span> Navida backend (BC2Fab workload)</span>
+            <span><span class="arch-swatch" style="border-color: #ba7517;"></span> Customer Fabric tenant</span>
+          </div>
+
+          <div class="arch-zone arch-navida">
+            <p class="arch-zone-hd">
+              <i class="ti ti-cloud-lock" style="font-size: 1rem" aria-hidden="true"></i>
+              Navida backend
+              <span class="arch-tag">BC2Fab workload — hosted by Navida</span>
+            </p>
+            <div class="arch-tier arch-grid-3">
+              <div class="arch-node arch-n-navida">
+                <p class="arch-nt"><i class="ti ti-package" aria-hidden="true"></i>Installer service</p>
+                <p class="arch-ns">Serves install &amp; update files</p>
+              </div>
+              <div class="arch-node arch-n-navida">
+                <p class="arch-nt"><i class="ti ti-license" aria-hidden="true"></i>License check</p>
+                <p class="arch-ns">Validates the customer's entitlement</p>
+              </div>
+              <div class="arch-node arch-n-navida">
+                <p class="arch-nt"><i class="ti ti-shield-lock" aria-hidden="true"></i>Delegated permissions</p>
+                <p class="arch-ns">Consent capped at signed-in user</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="arch-crossline">
+            ↕ &nbsp;install &amp; update files (deploy / on open) &nbsp;·&nbsp; license validation (runtime) &nbsp;↕
+          </div>
+
+          <div class="arch-zone arch-tenant">
+            <p class="arch-zone-hd">
+              <i class="ti ti-building" style="font-size: 1rem" aria-hidden="true"></i>
+              Customer Fabric tenant
+              <span class="arch-tag">all components installed by the workload</span>
+            </p>
+
+            <div class="arch-tier">
+              <div class="arch-node arch-n-neutral">
+                <p class="arch-nt"><i class="ti ti-clock" aria-hidden="true"></i>bc2fab_refresh pipeline</p>
+                <p class="arch-ns">Scheduler · triggers the loader notebook</p>
+              </div>
+            </div>
+            <div class="arch-flowline">↓ triggers</div>
+
+            <div class="arch-tier">
+              <div class="arch-node arch-n-green">
+                <p class="arch-nt"><i class="ti ti-cpu" aria-hidden="true"></i>BC2Fab loader notebook</p>
+                <p class="arch-ns">Orchestrator · calls license check on each run</p>
+              </div>
+            </div>
+
+            <div class="arch-tier arch-grid-3">
+              <div class="arch-node arch-n-green">
+                <p class="arch-nt">Business Central</p>
+                <p class="arch-ns">OData / REST · paged reads</p>
+              </div>
+              <div class="arch-node arch-n-gray">
+                <p class="arch-nt">Internal lakehouse</p>
+                <p class="arch-ns">Config · watermarks · logs</p>
+              </div>
+              <div class="arch-node arch-n-red">
+                <p class="arch-nt">Key Vault · Entra ID</p>
+                <p class="arch-ns">App registration · secret</p>
+              </div>
+            </div>
+            <div class="arch-flowline">↓ writes Parquet change files</div>
+
+            <div class="arch-tier">
+              <div class="arch-node arch-n-blue">
+                <p class="arch-nt"><i class="ti ti-database-import" aria-hidden="true"></i>Landing zone · Mirrored Database</p>
+                <p class="arch-ns">Parquet upserts + delete markers · Open Mirroring</p>
+              </div>
+            </div>
+            <div class="arch-flowline">↓ auto-mirrors to delta</div>
+
+            <div class="arch-tier arch-grid-13-1">
+              <div class="arch-node arch-n-blue">
+                <p class="arch-nt">bc schema</p>
+                <p class="arch-ns">Raw mirrored delta tables</p>
+              </div>
+              <div class="arch-node arch-n-amber">
+                <p class="arch-nt">bc_silver schema</p>
+                <p class="arch-ns">SQL views · surrogate + relation IDs</p>
+              </div>
+            </div>
+            <div class="arch-flowline">↓ consumed by</div>
+
+            <div class="arch-tier">
+              <div class="arch-node arch-n-teal">
+                <p class="arch-nt"><i class="ti ti-chart-bar" aria-hidden="true"></i>Power BI semantic models</p>
+                <p class="arch-ns">DAX · joins on surrogate IDs</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="arch-tabs" role="tablist" aria-label="Sub-flow detail">
+            <button class="arch-tab is-active" data-arch-tab="install" role="tab" aria-selected="true" type="button">
+              Install, license &amp; update
+            </button>
+            <button class="arch-tab" data-arch-tab="load" role="tab" aria-selected="false" type="button">
+              Incremental load
+            </button>
+            <button class="arch-tab" data-arch-tab="delete" role="tab" aria-selected="false" type="button">
+              Deletion handling
+            </button>
+            <button class="arch-tab" data-arch-tab="auth" role="tab" aria-selected="false" type="button">
+              Authentication
+            </button>
+            <button class="arch-tab" data-arch-tab="perms" role="tab" aria-selected="false" type="button">
+              Permissions
+            </button>
+          </div>
+
+          <div class="arch-panel" id="arch-panel" role="tabpanel"></div>
         </section>
 
-        <section class="content-card">
-          <h2>Runtime model</h2>
-          <p>
-            BC2Fab is metadata-driven in Business Central—query definitions, selected endpoints, and change-tracking
-            fields live in Business Central—but the execution runs fully in Microsoft Fabric where data is mirrored,
-            governed, and made available for analytics.
-          </p>
-        
-
-      
-          <h2>Data movement pattern</h2>
-          <p>
-            Loads are <strong>pull-based</strong>: BC2Fab calls Business Central API <em>queries</em> rather than
-            waiting for pushed changes. Every query includes <code>DataAccessIntent = ReadOnly</code> so traffic targets
-            the Business Central read-only replica instead of the transactional database. This protects production
-            performance while still delivering incremental changes to Fabric.
-          </p>
-          </section>
      
 
         
@@ -181,6 +397,108 @@
       </main>
     </div>
 
+    <script>
+      (function () {
+        const flows = {
+          install: {
+            h: "Install, license & update — the workload boundary",
+            lead:
+              "The BC2Fab workload lives in Navida's backend. Everything it deploys runs in the customer's own Fabric tenant.",
+            steps: [
+              "<b>Deploy:</b> the workload's installer service retrieves the installation files and provisions all Fabric components — loader notebook, pipeline, lakehouse, mirrored database — into the customer tenant.",
+              "<b>Ownership handover:</b> once installed, those components belong to and run entirely inside the customer's Fabric capacity. No customer data flows back to Navida.",
+              "<b>License check:</b> on each run, the loader calls the workload's license endpoint to validate the customer's entitlement before loading.",
+              "<b>Update check:</b> when a user opens the workload, it checks for a newer version of the BC2Fab components.",
+              "<b>Update on demand:</b> if a new version is available, an update button appears. The components are updated only when the user clicks it — updates are never applied automatically.",
+              "<b>Separation:</b> the Navida backend only ever serves install files and answers license and update calls — it never sees BC data, watermarks, or the mirrored tables."
+            ]
+          },
+          load: {
+            h: "Incremental load engine",
+            lead: "Runs inside the customer tenant. Delta detection per endpoint × company, in parallel.",
+            steps: [
+              "The loader reads the last stored watermark to determine which records have changed since the previous run.",
+              "Only the changed records are retrieved from Business Central, page by page.",
+              "The records are written as Parquet upserts to the landing zone.",
+              "The watermark is advanced so the next run picks up only newer changes; endpoints are processed in parallel."
+            ]
+          },
+          delete: {
+            h: "Deletion handling",
+            lead: "Business Central reports deleted records through a change feed; the loader turns them into delete markers.",
+            steps: [
+              "The loader reads records deleted in Business Central since the previous run.",
+              "Each deletion is matched back to the correct mirrored table.",
+              "A delete marker is written to the landing zone, and repeated deletions are ignored.",
+              "Open Mirroring applies the delete markers to the mirrored delta tables automatically."
+            ]
+          },
+          auth: {
+            h: "Authentication",
+            lead: "Access is granted through an Entra ID app registration set up during installation.",
+            steps: [
+              "The client ID of the app registration is stored in the environment configuration and is set during installation.",
+              "The app registration's secret is stored securely in Azure Key Vault.",
+              "The same app registration is used for both the initial load and all incremental loads."
+            ]
+          },
+          perms: {
+            h: "Why the workload needs delegated permissions",
+            lead:
+              "Fabric workloads currently must run actions using delegated permissions. Delegated means the consent process can never grant the BC2Fab app more than the signed-in user already has — the requested permissions reflect exactly what the app needs to automate setup inside the Fabric tenant. No customer data is ever accessed by the app.",
+            steps: [
+              "<b>Extend Fabric with new item types</b><br>Mandatory for every custom Fabric workload.",
+              "<b>Read and write all workspaces</b><br>Used to create the <code>bc2fabric_internal</code> folder for organisation. Fabric offers no finer-grained permission scoped to folder creation.",
+              "<b>Read and write on all Fabric items</b><br>Used to create the solution's items — the <code>bc2fabric_internal</code> lakehouse, mirrored database, notebooks and the data pipeline. The actual data flow runs directly between Business Central and the workspace; the workload only installs and manages these components.",
+              "<b>Execute on all Fabric items</b><br>Used to run the notebooks and pipeline that validate settings and perform the initial load.",
+              "<b>Access Azure Storage</b><br>Used to store workload settings (such as environment and company name) inside the <code>bc2fabric_internal</code> lakehouse.",
+              "<b>Sign you in and read your profile</b><br>Every custom Fabric workload must declare at least one Microsoft Graph permission; this is the standard default."
+            ],
+            note:
+              "Microsoft validated and approved the workload after an extensive review. Security is a high priority: BC2Fab requires an Entra app with minimal access in Business Central, and its secret must be stored in a Key Vault."
+          }
+        };
+
+        const panel = document.getElementById('arch-panel');
+        if (!panel) return;
+
+        function render(key) {
+          const f = flows[key];
+          const steps = f.steps
+            .map(
+              (s, i) =>
+                '<div class="arch-step"><div class="arch-num">' +
+                (i + 1) +
+                '</div><div class="arch-step-body">' +
+                s +
+                '</div></div>'
+            )
+            .join('');
+          const note = f.note
+            ? '<p class="arch-panel-note"><i class="ti ti-shield-check" aria-hidden="true"></i>' +
+              f.note +
+              '</p>'
+            : '';
+          panel.innerHTML =
+            '<h3>' + f.h + '</h3><p class="arch-panel-lead">' + f.lead + '</p>' + steps + note;
+        }
+
+        function selectTab(key) {
+          document.querySelectorAll('.arch-tab').forEach((t) => {
+            const on = t.dataset.archTab === key;
+            t.classList.toggle('is-active', on);
+            t.setAttribute('aria-selected', on ? 'true' : 'false');
+          });
+          render(key);
+        }
+
+        document.querySelectorAll('.arch-tab').forEach((t) =>
+          t.addEventListener('click', () => selectTab(t.dataset.archTab))
+        );
+
+        selectTab('install');
+      })();
+    </script>
     <script src="../assets/js/main.js"></script>
   </body>
 </html>
