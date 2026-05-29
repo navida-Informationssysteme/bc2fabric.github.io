@@ -43,8 +43,8 @@
         font-size: 0.7rem; font-weight: 500;
         padding: 0.18rem 0.6rem; border-radius: 999px;
       }
-      .arch-zone.arch-navida .arch-tag { background: #e6f1fb; color: #0c447c; }
-      .arch-zone.arch-tenant .arch-tag { background: #faeeda; color: #854f0b; }
+      .arch-zone.arch-navida .arch-tag { background: transparent; color: #185fa5; border: 1px solid #a8c4e0; }
+      .arch-zone.arch-tenant .arch-tag { background: transparent; color: #5f5e5a; border: 1px solid #b0aea6; }
 
       .arch-tier { display: grid; gap: 0.75rem; margin-bottom: 0.75rem; }
       .arch-tier:last-child { margin-bottom: 0; }
@@ -84,6 +84,8 @@
       .arch-n-amber .arch-nt  { color: #633806; } .arch-n-amber .arch-ns  { color: #854f0b; }
       .arch-n-teal   { background: #e1f5ee; border-color: #0f6e56; }
       .arch-n-teal .arch-nt   { color: #085041; } .arch-n-teal .arch-ns   { color: #0f6e56; }
+      .arch-n-purple { background: #f0eafb; border-color: #6b3fa0; }
+      .arch-n-purple .arch-nt { color: #4a2175; } .arch-n-purple .arch-ns { color: #6b3fa0; }
       .arch-n-neutral { border-color: rgba(15, 23, 42, 0.18); }
       .arch-n-neutral .arch-nt { color: var(--text-color); }
       .arch-n-neutral .arch-ns { color: var(--muted-text-color); }
@@ -137,8 +139,75 @@
       }
       .arch-panel-note i { vertical-align: -2px; margin-right: 0.4rem; }
 
+      /* ── Architecture at a glance – flow schematic ──────────────────── */
+      .glance-flow {
+        display: flex;
+        align-items: stretch;
+        gap: 0.5rem;
+        margin: 1.5rem 0 0.25rem;
+      }
+      .glance-node {
+        flex: 1;
+        min-width: 120px;
+        border-radius: 14px;
+        padding: 1.25rem 0.85rem 1.1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        border: 1.5px solid;
+      }
+      .glance-icon {
+        font-size: 2rem;
+        margin-bottom: 0.6rem;
+        line-height: 1;
+      }
+      .glance-title {
+        font-size: 0.875rem;
+        font-weight: 700;
+        margin: 0 0 0.3rem;
+        line-height: 1.25;
+      }
+      .glance-desc {
+        font-size: 0.75rem;
+        margin: 0;
+        line-height: 1.45;
+      }
+      .glance-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        padding: 0 0.15rem;
+        font-size: 1.25rem;
+        color: #8b8a83;
+        align-self: center;
+      }
+      .glance-bc        { background: #e1f5ee; border-color: #0f6e56; }
+      .glance-bc .glance-icon, .glance-bc .glance-title { color: #085041; }
+      .glance-bc .glance-desc { color: #0f6e56; }
+      .glance-connector { background: #e6f1fb; border-color: #185fa5; }
+      .glance-connector .glance-icon, .glance-connector .glance-title { color: #0c447c; }
+      .glance-connector .glance-desc { color: #185fa5; }
+      .glance-fabric    { background: #faeeda; border-color: #854f0b; }
+      .glance-fabric .glance-icon, .glance-fabric .glance-title { color: #633806; }
+      .glance-fabric .glance-desc { color: #854f0b; }
+      .glance-analytics { background: #f0eafb; border-color: #6b3fa0; }
+      .glance-analytics .glance-icon, .glance-analytics .glance-title { color: #4a2175; }
+      .glance-analytics .glance-desc { color: #6b3fa0; }
+      .glance-caption {
+        text-align: center;
+        font-size: 0.8rem;
+        color: var(--muted-text-color);
+        margin: 0.75rem 0 0;
+      }
+
       @media (max-width: 720px) {
         .arch-grid-2, .arch-grid-3, .arch-grid-13-1 { grid-template-columns: 1fr; }
+        .glance-flow { flex-direction: column; align-items: stretch; gap: 0; }
+        .glance-arrow { transform: rotate(90deg); font-size: 1.1rem; padding: 0.15rem 0; line-height: 1; }
+        .glance-node { flex-direction: row; align-items: center; text-align: left; gap: 0.85rem; padding: 0.9rem 1rem; }
+        .glance-icon { font-size: 1.5rem; margin-bottom: 0; flex-shrink: 0; }
       }
     </style>
   </head>
@@ -243,16 +312,32 @@
 
         <section class="content-card">
           <h2>Architecture at a glance</h2>
-          <figure class="media-frame">
-            <img
-              src="../assets/images/BC2Fabric_Architecture.jpg"
-              alt="Diagram of the BC2Fab mirroring architecture from Business Central into Microsoft Fabric"
-            />
-            <figcaption>
-              BC2Fab orchestrates secure data movement from Business Central tenants into a
-              Microsoft Fabric lakehouse.
-            </figcaption>
-          </figure>
+          <div class="glance-flow" role="img" aria-label="High-level architecture: Business Central feeds into the BC2Fab Connector, which mirrors data into the Fabric Lakehouse, consumed by Analytics and AI tools.">
+            <div class="glance-node glance-bc">
+              <div class="glance-icon"><i class="ti ti-building-store" aria-hidden="true"></i></div>
+              <p class="glance-title">Business Central</p>
+              <p class="glance-desc">BC2Fab App defines tables &amp; API endpoints to mirror</p>
+            </div>
+            <div class="glance-arrow" aria-hidden="true">→</div>
+            <div class="glance-node glance-connector">
+              <div class="glance-icon"><i class="ti ti-arrows-exchange-2" aria-hidden="true"></i></div>
+              <p class="glance-title">BC2Fab Connector</p>
+              <p class="glance-desc">Near real-time mirroring via Fabric workload</p>
+            </div>
+            <div class="glance-arrow" aria-hidden="true">→</div>
+            <div class="glance-node glance-fabric">
+              <div class="glance-icon"><i class="ti ti-database" aria-hidden="true"></i></div>
+              <p class="glance-title">Fabric Lakehouse</p>
+              <p class="glance-desc">Mirrored tables &amp; Delta Parquet storage</p>
+            </div>
+            <div class="glance-arrow" aria-hidden="true">→</div>
+            <div class="glance-node glance-analytics">
+              <div class="glance-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></div>
+              <p class="glance-title">Analytics &amp; AI</p>
+              <p class="glance-desc">Power BI Semantic Model & Reports</p>
+            </div>
+          </div>
+          <p class="glance-caption">BC2Fab orchestrates secure data movement from Business Central tenants into a Microsoft Fabric lakehouse.</p>
       
         </section>
 
@@ -260,21 +345,21 @@
           <h2>BC2Fab components in detail</h2>
           <p class="arch-lead">
             BC2Fab spans two trust boundaries. The <strong>BC2Fab workload</strong> is hosted in
-            Navida's backend and is responsible for serving installation files and performing the
+            navida's backend and is responsible for serving installation files and performing the
             license check. Everything it deploys runs entirely inside the
-            <strong>customer's own Fabric tenant</strong> — no business data ever leaves it.
+            <strong>customer's own O365 tenant</strong> — no business data ever leaves it.
           </p>
 
           <div class="arch-legend" aria-hidden="true">
-            <span><span class="arch-swatch" style="border-color: #185fa5;"></span> Navida backend (BC2Fab workload)</span>
-            <span><span class="arch-swatch" style="border-color: #ba7517;"></span> Customer Fabric tenant</span>
+            <span><span class="arch-swatch" style="border-color: #185fa5;"></span> navida backend (BC2Fab workload)</span>
+            <span><span class="arch-swatch" style="border-color: #ba7517;"></span> Customer Office 365 tenant</span>
           </div>
 
           <div class="arch-zone arch-navida">
             <p class="arch-zone-hd">
               <i class="ti ti-cloud-lock" style="font-size: 1rem" aria-hidden="true"></i>
-              Navida backend
-              <span class="arch-tag">BC2Fab workload — hosted by Navida</span>
+              navida backend
+              <span class="arch-tag">BC2Fab workload — hosted by navida</span>
             </p>
             <div class="arch-tier arch-grid-3">
               <div class="arch-node arch-n-navida">
@@ -293,18 +378,18 @@
           </div>
 
           <div class="arch-crossline">
-            ↕ &nbsp;install &amp; update files (deploy / on open) &nbsp;·&nbsp; license validation (runtime) &nbsp;↕
+            ↕ &nbsp;install &amp; update files &nbsp;·&nbsp; license validation &nbsp;↕
           </div>
 
           <div class="arch-zone arch-tenant">
             <p class="arch-zone-hd">
               <i class="ti ti-building" style="font-size: 1rem" aria-hidden="true"></i>
-              Customer Fabric tenant
-              <span class="arch-tag">all components installed by the workload</span>
+              Customer O365 Tenant
+              <span class="arch-tag">all components installed by the workload/BC App</span>
             </p>
 
             <div class="arch-tier">
-              <div class="arch-node arch-n-neutral">
+              <div class="arch-node arch-n-blue">
                 <p class="arch-nt"><i class="ti ti-clock" aria-hidden="true"></i>bc2fab_refresh pipeline</p>
                 <p class="arch-ns">Scheduler · triggers the loader notebook</p>
               </div>
@@ -312,16 +397,16 @@
             <div class="arch-flowline">↓ triggers</div>
 
             <div class="arch-tier">
-              <div class="arch-node arch-n-green">
+              <div class="arch-node arch-n-blue">
                 <p class="arch-nt"><i class="ti ti-cpu" aria-hidden="true"></i>BC2Fab loader notebook</p>
                 <p class="arch-ns">Orchestrator · calls Python code from internal lakehouse</p>
               </div>
             </div>
 
             <div class="arch-tier arch-grid-3">
-              <div class="arch-node arch-n-green">
-                <p class="arch-nt">Business Central</p>
-                <p class="arch-ns">OData / REST · paged reads</p>
+              <div class="arch-node arch-n-teal">
+                <p class="arch-nt"><i class="ti ti-building-store" aria-hidden="true"></i>Business Central</p>
+                <p class="arch-ns">BC2Fab App defines tables &amp; API endpoints · OData / REST</p>
               </div>
               <div class="arch-node arch-n-gray">
                 <p class="arch-nt">Internal lakehouse</p>
@@ -335,7 +420,7 @@
             <div class="arch-flowline">↓ writes Parquet change files</div>
 
             <div class="arch-tier">
-              <div class="arch-node arch-n-blue">
+              <div class="arch-node arch-n-amber">
                 <p class="arch-nt"><i class="ti ti-database-import" aria-hidden="true"></i>Landing zone · Mirrored Database</p>
                 <p class="arch-ns">Parquet upserts + delete markers · Open Mirroring</p>
               </div>
@@ -343,19 +428,19 @@
             <div class="arch-flowline">↓ auto-mirrors to delta</div>
 
             <div class="arch-tier arch-grid-13-1">
-              <div class="arch-node arch-n-blue">
+              <div class="arch-node arch-n-amber">
                 <p class="arch-nt">bc schema</p>
                 <p class="arch-ns">Mirrored delta tables</p>
               </div>
               <div class="arch-node arch-n-amber">
                 <p class="arch-nt">bc_silver schema<span class="arch-premium">* premium</span></p>
-                <p class="arch-ns">SQL views · surrogate + relation IDs</p>
+                <p class="arch-ns">SQL views · surrogate + relation IDs · <a href="bc-model-accelerator.html">BC Model Accelerator</a></p>
               </div>
             </div>
             <div class="arch-flowline">↓ consumed by</div>
 
             <div class="arch-tier">
-              <div class="arch-node arch-n-teal">
+              <div class="arch-node arch-n-purple">
                 <p class="arch-nt"><i class="ti ti-chart-bar" aria-hidden="true"></i>Power BI semantic models<span class="arch-premium">* premium</span></p>
                 <p class="arch-ns"><a href="out-of-the-box-power-bi-reports.html">Out-of-the-box reports</a></p>
               </div>
@@ -366,14 +451,14 @@
             <div class="arch-panel">
               <h3>Install, license &amp; update — the workload boundary</h3>
               <p class="arch-panel-lead">
-                The BC2Fab workload lives in Navida's backend. Everything it deploys runs in the customer's own Fabric tenant.
+                The BC2Fab workload lives in Navida's backend. Everything it deploys runs in the customer's own O365 tenant.
               </p>
               <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body"><b>Deploy:</b> the workload's installer service retrieves the installation files and provisions all Fabric components — loader notebook, pipeline, lakehouse, mirrored database — into the customer tenant.</div></div>
-              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body"><b>Ownership handover:</b> once installed, those components belong to and run entirely inside the customer's Fabric capacity. No customer data flows back to Navida.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body"><b>Ownership handover:</b> once installed, those components belong to and run entirely inside the customer's Fabric capacity. No customer data flows back to Navida — except for the general configuration settings maintained in the workload: Name of BC Environment, BC Companies, Key Vault URI, and Tenant ID.</div></div>
               <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body"><b>License check:</b> on each run, the loader calls the workload's license endpoint to validate the customer's entitlement before loading.</div></div>
               <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body"><b>Update check:</b> when a user opens the workload, it checks for a newer version of the BC2Fab components.</div></div>
               <div class="arch-step"><div class="arch-num">5</div><div class="arch-step-body"><b>Update on demand:</b> if a new version is available, an update button appears. The components are updated only when the user clicks it — updates are never applied automatically.</div></div>
-              <div class="arch-step"><div class="arch-num">6</div><div class="arch-step-body"><b>Separation:</b> the Navida backend only ever serves install files and answers license and update calls — it never sees BC data, watermarks, or the mirrored tables.</div></div>
+              <div class="arch-step"><div class="arch-num">6</div><div class="arch-step-body"><b>Separation:</b> the BC2Fab backend only ever serves install files and answers license and update calls — it never sees BC data, watermarks, or the mirrored tables.</div></div>
             </div>
 
             <div class="arch-panel">
@@ -411,7 +496,7 @@
             <div class="arch-panel">
               <h3>Why the workload needs delegated permissions</h3>
               <p class="arch-panel-lead">
-                Fabric workloads currently must run actions using delegated permissions. Delegated means the consent process can never grant the BC2Fab app more than the signed-in user already has — the requested permissions reflect exactly what the app needs to automate setup inside the Fabric tenant. No customer data is ever accessed by the app.
+                Fabric workloads currently must run actions using delegated permissions. Delegated means the consent process can never grant the BC2Fab app more than the signed-in user already has — the requested permissions reflect exactly what the app needs to automate setup inside the Fabric tenant. 
               </p>
               <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body"><b>Extend Fabric with new item types</b><br>Mandatory for every custom Fabric workload.</div></div>
               <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body"><b>Read and write all workspaces</b><br>Used to create the <code>bc2fab_internal</code> folder for organisation. Fabric offers no finer-grained permission scoped to folder creation.</div></div>
