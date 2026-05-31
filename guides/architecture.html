@@ -493,21 +493,6 @@
               <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">The same app registration is used for both the initial load and all incremental loads.</div></div>
             </div>
 
-            <div class="arch-panel">
-              <h3>Why the workload needs delegated permissions</h3>
-              <p class="arch-panel-lead">
-                Fabric workloads currently must run actions using delegated permissions. Delegated means the consent process can never grant the BC2Fab app more than the signed-in user already has — the requested permissions reflect exactly what the app needs to automate setup inside the Fabric tenant. 
-              </p>
-              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body"><b>Extend Fabric with new item types</b><br>Mandatory for every custom Fabric workload.</div></div>
-              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body"><b>Read and write all workspaces</b><br>Used to create the <code>bc2fab_internal</code> folder for organisation. Fabric offers no finer-grained permission scoped to folder creation.</div></div>
-              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body"><b>Read and write on all Fabric items</b><br>Used to create the solution's items — the <code>bc2fab_internal</code> lakehouse, mirrored database, notebooks and the data pipeline. The actual data flow runs directly between Business Central and the workspace; the workload only installs and manages these components.</div></div>
-              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body"><b>Execute on all Fabric items</b><br>Used to run the notebooks and pipeline that validate settings and perform the initial load.</div></div>
-              <div class="arch-step"><div class="arch-num">5</div><div class="arch-step-body"><b>Access Azure Storage</b><br>Used to store workload settings (such as environment and company name) inside the <code>bc2fab_internal</code> lakehouse.</div></div>
-              <div class="arch-step"><div class="arch-num">6</div><div class="arch-step-body"><b>Sign you in and read your profile</b><br>Every custom Fabric workload must declare at least one Microsoft Graph permission; this is the standard default.</div></div>
-              <p class="arch-panel-note">
-                <i class="ti ti-shield-check" aria-hidden="true"></i>Microsoft validated and approved the workload after an extensive review. Security is a high priority: BC2Fab requires an Entra app with minimal access in Business Central, and its secret must be stored in a Key Vault.
-              </p>
-            </div>
           </div>
         </section>
 

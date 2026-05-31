@@ -174,6 +174,7 @@
             <li><a href="#multiple-environments">How to use BC2Fab with multiple BC environments?</a></li>
             <li><a href="#pause-resume-capacity">What needs to be considered when pausing/resuming the Fabric capacity?</a></li>
             <li><a href="#excel-connect">How to connect with Excel to the mirrored database?</a></li>
+            <li><a href="#delegated-permissions">Why does the workload need delegated permissions?</a></li>
           </ul>
         </section>
 
@@ -516,6 +517,22 @@ END</code></pre>
           <p>BC2Fab authenticates to Business Central with an Azure AD service principal and stores the credentials securely in Azure Key Vault.</p>
           <p>For the installation follow the <a href="prerequisites.html">instructions</a>.</p>
           
+        </section>
+
+        <section class="content-card">
+          <h2 id="delegated-permissions"><a class="anchor-link" href="#delegated-permissions">Why does the workload need delegated permissions?</a></h2>
+          <p>Fabric workloads currently must run actions using delegated permissions. Delegated means the consent process can never grant the BC2Fab app more than the signed-in user already has — the requested permissions reflect exactly what the app needs to automate setup inside the Fabric tenant.</p>
+          <ol>
+            <li><strong>Extend Fabric with new item types</strong> &mdash; Mandatory for every custom Fabric workload.</li>
+            <li><strong>Read and write all workspaces</strong> &mdash; Used to create the <code>bc2fab_internal</code> folder for organisation. Fabric offers no finer-grained permission scoped to folder creation.</li>
+            <li><strong>Read and write on all Fabric items</strong> &mdash; Used to create the solution's items — the <code>bc2fab_internal</code> lakehouse, mirrored database, notebooks and the data pipeline. The actual data flow runs directly between Business Central and the workspace; the workload only installs and manages these components.</li>
+            <li><strong>Execute on all Fabric items</strong> &mdash; Used to run the notebooks and pipeline that validate settings and perform the initial load.</li>
+            <li><strong>Access Azure Storage</strong> &mdash; Used to store workload settings (such as environment and company name) inside the <code>bc2fab_internal</code> lakehouse.</li>
+            <li><strong>Sign you in and read your profile</strong> &mdash; Every custom Fabric workload must declare at least one Microsoft Graph permission; this is the standard default.</li>
+          </ol>
+          <div class="callout callout-info">
+            <strong>Note:</strong> Microsoft validated and approved the workload after an extensive review. Security is a high priority: BC2Fab requires an Entra app with minimal access in Business Central, and its secret must be stored in a Key Vault.
+          </div>
         </section>
 
         <section class="content-card">
