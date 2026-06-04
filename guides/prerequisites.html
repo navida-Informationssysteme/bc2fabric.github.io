@@ -210,7 +210,12 @@
           <p>Note: Azure Key Vault is a low-cost resource.</p>
 
           <h3>Assign Key Vault Permissions</h3>
-          The user who installs the BC2Fab workload must have access to the Azure Key Vault. To read the required secrets, assign the Key Vault Secrets User role, which is the least-privileged built-in role that allows reading secret values.
+          Two users need access to the Azure Key Vault:
+          <ul>
+            <li>The user who <strong>installs</strong> the BC2Fab workload — to read secrets during setup.</li>
+            <li>The user that <strong>configures the scheduling in the pipeline</strong> — to read secrets at runtime when synchronization jobs execute.</li>
+          </ul>
+          For each of these users, assign the <strong>Key Vault Secrets User</strong> role, which is the least-privileged built-in role that allows reading secret values.
           <ol>
             <li>Open the Key Vault resource and select <strong>Access control (IAM)</strong>.</li>
             <li>Click <strong>Add</strong> &gt; <strong>Add role assignment</strong>.</li>
@@ -220,8 +225,7 @@
             </li>
             <li>Click <strong>Next</strong>, then choose <strong>User, group, or service principal</strong>.</li>
             <li>
-              Select the user that will perform the BC2Fab installation.
-              secrets, then click <strong>Review + assign</strong>.
+              Select the user and click <strong>Review + assign</strong>. Repeat this process for both the installing user and the scheduling user.
             </li>
           </ol>
 
