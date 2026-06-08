@@ -164,8 +164,10 @@
             <li><a href="#table-field-naming">How are tables and fields named in BC2Fab?</a></li>
             <li><a href="#custom-endpoints">How can I use my own endpoints for mirroring?</a></li>
             <li><a href="#extend-mirroring">How can I extend or change the mirrored data after the initial load?</a></li>
+            <li><a href="#schema-drift">Does BC2Fab keep historical schema versions or track schema drift?</a></li>
             <li><a href="#query-scope">Should I limit the columns in my Custom Queries?</a></li>
             <li><a href="#extend-data">How can I extend the mirrored data with other data sources?</a></li>
+            <li><a href="#medallion-layers">How do the bronze, silver, and gold layers work?</a></li>
             <li><a href="#deleted-records">How are deleted records handled with incremental loading?</a></li>
             <li><a href="#load-notifications">How do I get notified about load failures?</a></li>
             <li><a href="#loading-impact">How does the loading impact Business Central?</a></li>
@@ -175,6 +177,7 @@
             <li><a href="#pause-resume-capacity">What needs to be considered when pausing/resuming the Fabric capacity?</a></li>
             <li><a href="#excel-connect">How to connect with Excel to the mirrored database?</a></li>
             <li><a href="#delegated-permissions">Why does the workload need delegated permissions?</a></li>
+            <li><a href="#support-and-sla">What support and service levels are available?</a></li>
           </ul>
         </section>
 
@@ -426,10 +429,16 @@ END</code></pre>
 
         <section class="content-card">
           <h2 id="custom-endpoints"><a class="anchor-link" href="#custom-endpoints">How can I use my own endpoints for mirroring?</a></h2>
-          <p>Custom APIs and tables can be mirrored as long as they expose the Business Central change tracking columns that BC2Fab expects.</p>
+          <p>BC2Fab works off Business Central <strong>API queries</strong> rather than reflecting on the BC schema directly. You therefore define what to mirror by exposing it through an API <strong>query</strong> &mdash; custom API <strong>pages</strong> are not supported. A query must expose:</p>
+          <ul>
+            <li>the Business Central <strong>change-tracking columns</strong> that the incremental load relies on,</li>
+            <li>the <code>$systemId</code> column, and</li>
+            <li>fields that follow the required <strong>naming convention</strong>, which the exact-BC-field-name mirroring depends on (see <a href="#table-field-naming">How are tables and fields named in BC2Fab?</a>).</li>
+          </ul>
+          <div class="callout callout-info">
+            <strong>Supported:</strong> Use the <a href="create-bc-queries.html">BC2Fab query generator</a> to create your queries. It guarantees all of the above automatically &mdash; the change-tracking columns, the <code>$systemId</code> column, and the field naming convention &mdash; so the mirroring works without manual adjustments. The generator builds AL query objects that you compile and publish to Business Central.</div>
           <p><strong>Limitation:</strong> FlowFields are not fully supported by BC2Fab. FlowFields can slow down loads, and not all FlowField changes are tracked by the incremental load change-tracking mechanism. Instead of exposing FlowFields on mirrored endpoints, expose the underlying fact table and build the calculation in Fabric or Power BI. As a result the <a href="create-bc-queries.html">BC2Fab query generator</a> does not allow adding FlowFields.</p>
-          <p>After creating the Queries (e.g. by using the <a href="create-bc-queries.html">BC2Fab query
-          generator</a>), endpoints for custom tables need to be added to the BC2Fab table config. Once added, they are automatically picked up by the mirroring mechanism—no changes are required in Fabric.</p>
+          <p>After creating the Queries, endpoints for custom tables need to be added to the BC2Fab table config. Adding a brand-new table is therefore a deliberate config step &mdash; but once the query is in the table config, it is automatically picked up by the mirroring mechanism—no changes are required in Fabric.</p>
           
           <p>Follow the <a href="install-bc2fab.html">instructions how to add custom tables.</a></p>
           <p>If custom fields should be added to an existing standard table for mirroring, the Entity Set Name in the existing BC2Fab table config needs to be replaced by the custom API endpoint. To do so the Assist-Edit of the "Entity Set Name" (... in the field) can be used to select the custom endpoint. The other relevant fields (Publisher, Group, API Version) will be set based on this selection. </p>
@@ -439,7 +448,21 @@ END</code></pre>
         <section class="content-card">
           <h2 id="extend-mirroring"><a class="anchor-link" href="#extend-mirroring">How can I extend or change the mirrored data after the initial load?</a></h2>
           <p><strong>Adding new tables:</strong> If you add new tables in BC2Fab Setup in Business Central, they will be picked up automatically and fetched with the next load.</p>
-          <p><strong>Changing an existing table schema (fields):</strong> If you add or remove fields on endpoints that are already being mirrored, go to the BC2Fab workload → <b>Tables</b> tab and use the <b>Reset</b> button for the affected table. The next refresh will reload the table using the updated schema.</p>
+          <p><strong>Removing tables:</strong> Existing data in the mirrored database is kept and no new data flows in for the table. Use the <b>Reset</b> button (BC2Fab workload → <b>Tables</b> tab) for the affected table if you want to clear the existing table.</p>
+          <p><strong>Adding fields:</strong> New data is mirrored automatically with the next load. Use the <b>Reset</b> button (BC2Fab workload → <b>Tables</b> tab) for the affected table to backfill the new field for existing rows as well.</p>
+          <p><strong>Removing fields:</strong> When a field is removed from a mirrored endpoint, existing data in the mirrored database is retained, but no new data is transferred for that field on subsequent loads. Use the <b>Reset</b> button (BC2Fab workload → <b>Tables</b> tab) for the affected table to enforce a new full refresh of the table without the removed field.</p>
+        </section>
+
+        <section class="content-card">
+          <h2 id="schema-drift"><a class="anchor-link" href="#schema-drift">Does BC2Fab keep historical schema versions or track schema drift?</a></h2>
+          <p>No. BC2Fab applies schema changes <strong>in place</strong> via the Reset/reload mechanism described in <a href="#extend-mirroring">How can I extend or change the mirrored data after the initial load?</a> &mdash; it does not preserve prior schema versions or maintain Slowly Changing Dimension (SCD) style history of the schema itself.</p>
+          <ul>
+            <li>Each mirrored row carries a <code>Modified at BC2FAB</code> column (see <a href="#data-freshness">How can I see how up to date the data is?</a>) that records when the row was last retrieved from Business Central, giving you per-row freshness &mdash; but this is data freshness, not schema versioning.</li>
+            <li>If you need to retain previous schema versions, snapshot historical states, or track drift over time, design that into your own silver/gold layer (for example with SCD patterns in a Lakehouse or Warehouse downstream of the <code>bc</code> schema).</li>
+          </ul>
+          <div class="callout callout-info">
+            <strong>Note:</strong> The mirrored <code>bc</code> schema is intended as a faithful, current-state bronze layer. Historical and point-in-time modeling belongs in the layers you build on top of it &mdash; see <a href="#medallion-layers">How do the bronze, silver, and gold layers work?</a>.
+          </div>
         </section>
 
       <section class="content-card">
@@ -481,6 +504,18 @@ END</code></pre>
           </ol>
           <p>Microsoft documentation for this pattern: <a href="https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-schemas">Lakehouse schemas and schema shortcuts</a>.</p>
       </section>
+
+        <section class="content-card">
+          <h2 id="medallion-layers"><a class="anchor-link" href="#medallion-layers">How do the bronze, silver, and gold layers work?</a></h2>
+          <p>Everything runs in <strong>your own Fabric tenant</strong>. BC2Fab provides the bronze layer and (on Premium) a silver layer starting point, and you own and build the layers on top.</p>
+          <ul>
+            <li><strong>Bronze &mdash; provided.</strong> BC2Fab lands raw Business Central data into the mirrored <code>bc2fab_mirror</code> database under the <code>bc</code> schema. This is a faithful, current-state copy of your BC tables (see <a href="#table-field-naming">How are tables and fields named in BC2Fab?</a>).</li>
+            <li><strong>Silver &mdash; provided on Premium as a starting point.</strong> The <a href="bc-model-accelerator.html">BC Model Accelerator</a> generates the <code>bc_silver</code> schema: SQL views over the bronze tables with surrogate and relation IDs for every BC table relationship, multi-company by default. Premium also ships out-of-the-box <a href="out-of-the-box-power-bi-reports.html">Power BI semantic models and reports</a>.</li>
+            <li><strong>Gold.</strong> Build your business-specific models, aggregations, and any historical/SCD logic (see <a href="#schema-drift">schema drift</a>) in your own gold layer on top of silver.</li>
+          </ul>
+          <h3>Multi-environment ownership</h3>
+          <p>Each BC environment needs its own BC2Fab workspace. Consolidate across environments in a shared silver-layer Lakehouse that you own, using schema shortcuts pointed at each <code>bc2fab_mirror</code> database &mdash; see <a href="#multiple-environments">How to use BC2Fab with multiple BC environments?</a> and <a href="#extend-data">How can I extend the mirrored data with other data sources?</a>.</p>
+        </section>
 
         <section class="content-card">
           <h2 id="deleted-records"><a class="anchor-link" href="#deleted-records">How are deleted records handled with incremental loading?</a></h2>
@@ -594,6 +629,19 @@ END</code></pre>
             <li>Select the tables you need and click <strong>Load</strong> (or <strong>Transform Data</strong> to apply filters in Power Query first).</li>
           </ol>
           <p>The data is now available in Excel as a connected table and can be refreshed on demand via <strong>Data</strong> &gt; <strong>Refresh All</strong>.</p>
+        </section>
+
+        <section class="content-card">
+          <h2 id="support-and-sla"><a class="anchor-link" href="#support-and-sla">What support and service levels are available?</a></h2>
+          <p>BC2Fab is largely self-managed: it installs into your own tenant and updates only when you choose &mdash; never automatically. Beyond that, the following options are available.</p>
+          <h3>Getting Started package</h3>
+          <p>A fixed-price onboarding package for <strong>EUR 2,000</strong>. We help you create and deploy your queries, activate the silver layer, and share mirroring best practices.</p>
+          <h3>Premium support</h3>
+          <ul>
+            <li><strong>Normal incidents:</strong> 24-hour response time.</li>
+            <li><strong>Critical incidents:</strong> 12-hour response time.</li>
+          </ul>
+          <p>For onboarding or ongoing support options, get in touch via the <a href="https://www.navida.eu/bc2fab#contact-us">contact form</a>.</p>
         </section>
 
       </main>
