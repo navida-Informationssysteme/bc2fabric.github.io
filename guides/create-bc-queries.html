@@ -133,9 +133,12 @@
         <div class="callout callout-info">
           <strong>Sandbox first, then production.</strong>
           Always develop and build your AL app against a <strong>Business Central sandbox environment</strong>.
-          Once the <code>.app</code> file is built and validated, deploy it to your
-          <strong>production environment</strong> via Extension Management.
-       
+          Building against the sandbox produces a <code>.app</code> file in your VS Code project folder.
+          This same <code>.app</code> file is then uploaded to your <strong>production environment</strong> via
+          Extension Management — you do not rebuild against production. This is the standard way to deploy a
+          per-tenant customization, as described in Microsoft's
+          <a href="https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-deploy-tenant-customization" target="_blank" rel="noopener noreferrer">Deploy a tenant customization</a>
+          guidance.
         </div>
         <p>
           Follow these steps to build and publish your generated <code>.app</code> in Visual Studio Code.
@@ -210,6 +213,13 @@
         </ol>
 
         <h3>7) Publish and install in production</h3>
+        <p>
+          The <code>.app</code> file created in your VS Code project when you built against the sandbox is the
+          exact file you upload to production. There is no separate production build step — you take the validated
+          <code>.app</code> and deploy it as a per-tenant customization. See Microsoft's
+          <a href="https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-deploy-tenant-customization" target="_blank" rel="noopener noreferrer">Deploy a tenant customization</a>
+          for the full background.
+        </p>
         <ol>
           <li>Open Business Central in your production environment.</li>
           <li>Search for and open <strong>Extension Management</strong>.</li>
@@ -234,6 +244,10 @@
           <li>
             Packaging/deploying extensions:
             <a href="https://learn.microsoft.com/dynamics365/business-central/dev-itpro/developer/devenv-deploy-extensions" target="_blank" rel="noopener noreferrer">Deploy extensions</a>
+          </li>
+          <li>
+            Deploying a per-tenant customization (uploading the <code>.app</code> to production):
+            <a href="https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-deploy-tenant-customization" target="_blank" rel="noopener noreferrer">Deploy a tenant customization</a>
           </li>
         </ul>
 
