@@ -109,67 +109,79 @@
             </thead>
             <tbody>
               <tr>
-                <td>01.11.2025</td>
-                <td>V1.0</td>
-                <td>Fabric Workload</td>
-                <td>Initial version of Fabric Workload.</td>
-              </tr>
-              <tr>
-                <td>20.11.2025</td>
-                <td>V1.1</td>
-                <td>Fabric Workload</td>
-                <td>Performance- and stability improvements.</td>
-              </tr>
-              <tr>
-                <td>27.01.2026</td>
-                <td>V1.2</td>
+                <td>13.07.2026</td>
+                <td>V1.7</td>
                 <td>Fabric Workload</td>
                 <td>
-                  New features:
+                  New features &amp; improvements:
                   <ul>
+                    <li>New "Reset all" button in the Tables tab to reset all mirrored tables at once.</li>
                     <li>
-                      New Tab "Tables" in BC2Fab workload showing all mirrored delta tables with last refresh timestamp and a reset-button to enforce
-                      a full refresh with schema update.
-                    </li>
-                    <li>
-                      Improved full-loading implementation that keeps the delta tables intact during the refresh of endpoints that are defined with Load Type Full in Business Central for
-                      improved reporting consumption (especially relevant when using Direct Lake Mode).
-                    </li>
-                    <li>
-                      Load-logging (aggregated logging with one row per load and detailed logging on table-company level)
-                      written into the internal lakehouse logs folder.
-                    </li>
-                    <li>
-                      New delta table "Environment Information" is automatically created with information about the mirrored
-                      environment to allow displaying the environment name in reports.
+                      Stability improvement for ID generation when creating views with a
+                      pre-existing lakehouse.
                     </li>
                   </ul>
                 </td>
               </tr>
-         
               <tr>
-                <td>28.01.2026</td>
-                <td>V1.3</td>
+                <td>06.07.2026</td>
+                <td>V1.6</td>
                 <td>Fabric Workload</td>
-                <td>Hotfix for V1.2</td>
+                <td>
+                  New features &amp; improvements:
+                  <ul>
+                    <li>New UI feature to add or remove companies.</li>
+                    <li>
+                      Automatic log cleanup: structured logs are retained for 60 days,
+                      unstructured logs for 14 days.
+                    </li>
+                    <li>Stability improvements.</li>
+                  </ul>
+                </td>
               </tr>
               <tr>
-                <td>25.02.2026</td>
-                <td>V1.4</td>
-                <td>Fabric Workload, BC App</td>
-                <td>Renamed the solution and Fabric components from BC2Fabric to BC2Fab.</td>
+                <td>28.04.2026</td>
+                <td>V1.5</td>
+                <td>Fabric Workload</td>
+                <td>
+                  New features &amp; improvements:
+                  <ul>
+                    <li>
+                      <strong><a href="bc-model-accelerator.html">BC Model Accelerator</a></strong> — generates a <code>bc_silver</code> schema on top of the raw mirrored
+                      <code>bc</code> tables. The Metadata Engine reads BC key and relation metadata and emits
+                      <code>CREATE OR ALTER VIEW</code> statements for every BC table. Each view
+                      preserves all original columns and adds deterministic surrogate-key columns
+                      (e.g. <code>Sales Line ID (PK)</code>, <code>Item ID (No.)</code>) with a company prefix
+                      for multi-company support. Conditional foreign keys (e.g. Sales Line → Item / Resource / G/L Account)
+                      are resolved via <code>CASE WHEN</code> on the <code>Type</code> field, producing single-column
+                      relationships that are Direct Lake compatible and navigable by AI agents.
+                    </li>
+                    <li>
+                      Robustness improvements: reliable handling of late-arriving BC data to prevent
+                      stale or missing rows when BC API responses are delayed or arrive out of order.
+                    </li>
+                  </ul>
+                </td>
               </tr>
               <tr>
-                <td>05.03.2026</td>
-                <td>V38</td>
+                <td>09.04.2026</td>
+                <td>V42</td>
+                <td>BC App</td>
+                <td>Performance and stability upgrade.</td>
+              </tr>
+              <tr>
+                <td>08.04.2026</td>
+                <td>V41</td>
+                <td>BC App</td>
+                <td>Improved deletion logging for multi-company scenarios.</td>
+              </tr>
+              <tr>
+                <td>31.03.2026</td>
+                <td>V40</td>
                 <td>BC App</td>
                 <td>
-                  <p>Synchronize BC2Fab Setup to other companies.</p>
-                  <p>Query generator optimized:</p>
-                  <ul>
-                    <li>Set GUID and version automatically.</li>
-                    <li>Renaming and formatting of <code>app.json</code>.</li>
-                  </ul>
+                  New API endpoints <code>TableInformation</code> and <code>RowVersionInfo</code>. <code>TableInformation</code>
+                  shows the number of rows of each BC table.
                 </td>
               </tr>
               <tr>
@@ -227,80 +239,67 @@
                 </td>
               </tr>
               <tr>
-                <td>31.03.2026</td>
-                <td>V40</td>
+                <td>05.03.2026</td>
+                <td>V38</td>
                 <td>BC App</td>
                 <td>
-                  New API endpoints <code>TableInformation</code> and <code>RowVersionInfo</code>. <code>TableInformation</code>
-                  shows the number of rows of each BC table.
+                  <p>Synchronize BC2Fab Setup to other companies.</p>
+                  <p>Query generator optimized:</p>
+                  <ul>
+                    <li>Set GUID and version automatically.</li>
+                    <li>Renaming and formatting of <code>app.json</code>.</li>
+                  </ul>
                 </td>
               </tr>
               <tr>
-                <td>08.04.2026</td>
-                <td>V41</td>
-                <td>BC App</td>
-                <td>Improved deletion logging for multi-company scenarios.</td>
+                <td>25.02.2026</td>
+                <td>V1.4</td>
+                <td>Fabric Workload, BC App</td>
+                <td>Renamed the solution and Fabric components from BC2Fabric to BC2Fab.</td>
               </tr>
               <tr>
-                <td>09.04.2026</td>
-                <td>V42</td>
-                <td>BC App</td>
-                <td>Performance and stability upgrade.</td>
+                <td>28.01.2026</td>
+                <td>V1.3</td>
+                <td>Fabric Workload</td>
+                <td>Hotfix for V1.2</td>
               </tr>
               <tr>
-                <td>28.04.2026</td>
-                <td>V1.5</td>
+                <td>27.01.2026</td>
+                <td>V1.2</td>
                 <td>Fabric Workload</td>
                 <td>
-                  New features &amp; improvements:
+                  New features:
                   <ul>
                     <li>
-                      <strong><a href="bc-model-accelerator.html">BC Model Accelerator</a></strong> — generates a <code>bc_silver</code> schema on top of the raw mirrored
-                      <code>bc</code> tables. The Metadata Engine reads BC key and relation metadata and emits
-                      <code>CREATE OR ALTER VIEW</code> statements for every BC table. Each view
-                      preserves all original columns and adds deterministic surrogate-key columns
-                      (e.g. <code>Sales Line ID (PK)</code>, <code>Item ID (No.)</code>) with a company prefix
-                      for multi-company support. Conditional foreign keys (e.g. Sales Line → Item / Resource / G/L Account)
-                      are resolved via <code>CASE WHEN</code> on the <code>Type</code> field, producing single-column
-                      relationships that are Direct Lake compatible and navigable by AI agents.
+                      New Tab "Tables" in BC2Fab workload showing all mirrored delta tables with last refresh timestamp and a reset-button to enforce
+                      a full refresh with schema update.
                     </li>
                     <li>
-                      Robustness improvements: reliable handling of late-arriving BC data to prevent
-                      stale or missing rows when BC API responses are delayed or arrive out of order.
+                      Improved full-loading implementation that keeps the delta tables intact during the refresh of endpoints that are defined with Load Type Full in Business Central for
+                      improved reporting consumption (especially relevant when using Direct Lake Mode).
+                    </li>
+                    <li>
+                      Load-logging (aggregated logging with one row per load and detailed logging on table-company level)
+                      written into the internal lakehouse logs folder.
+                    </li>
+                    <li>
+                      New delta table "Environment Information" is automatically created with information about the mirrored
+                      environment to allow displaying the environment name in reports.
                     </li>
                   </ul>
                 </td>
               </tr>
               <tr>
-                <td>06.07.2026</td>
-                <td>V1.6</td>
+                <td>20.11.2025</td>
+                <td>V1.1</td>
                 <td>Fabric Workload</td>
-                <td>
-                  New features &amp; improvements:
-                  <ul>
-                    <li>New UI feature to add or remove companies.</li>
-                    <li>
-                      Automatic log cleanup: structured logs are retained for 60 days,
-                      unstructured logs for 14 days.
-                    </li>
-                    <li>Stability improvements.</li>
-                  </ul>
-                </td>
+                <td>Performance- and stability improvements.</td>
               </tr>
               <tr>
-                <td>13.07.2026</td>
-                <td>V1.7</td>
+                <td>01.11.2025</td>
+                <td>V1.0</td>
                 <td>Fabric Workload</td>
-                <td>
-                  New features &amp; improvements:
-                  <ul>
-                    <li>New "Reset all" button in the Tables tab to reset all mirrored tables at once.</li>
-                    <li>
-                      Stability improvement for ID generation when creating views with a
-                      pre-existing lakehouse.
-                    </li>
-                  </ul>
-                </td>
+                <td>Initial version of Fabric Workload.</td>
               </tr>
             </tbody>
           </table>
