@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:image" content="https://docs.bc2fab.com/assets/images/BC2Fabric_icon.png" />
+    <meta property="og:description" content="How Analysis Mode for Power BI works — Business Central's data analysis mode on top of a Power BI semantic model, with every value evaluated by the model engine." />
+    <title>Architecture | Analysis Mode for Power BI</title>
+    <link rel="icon" type="image/x-icon" sizes="any" href="https://www.navida.eu/favicon.ico" />
+    <link rel="shortcut icon" href="https://www.navida.eu/favicon.ico" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"
+    />
+    <style>
+      .glance-flow { display: flex; align-items: stretch; gap: 0.5rem; margin: 1.5rem 0 0.25rem; }
+      .glance-node {
+        flex: 1; min-width: 120px; border-radius: 14px;
+        padding: 1.25rem 0.85rem 1.1rem;
+        display: flex; flex-direction: column; align-items: center; text-align: center;
+        border: 1.5px solid;
+      }
+      .glance-icon { font-size: 2rem; margin-bottom: 0.6rem; line-height: 1; }
+      .glance-title { font-size: 0.875rem; font-weight: 700; margin: 0 0 0.3rem; line-height: 1.25; }
+      .glance-desc { font-size: 0.75rem; margin: 0; line-height: 1.45; }
+      .glance-arrow {
+        display: flex; align-items: center; justify-content: center; flex: 0 0 auto;
+        padding: 0 0.15rem; font-size: 1.25rem; color: #8b8a83; align-self: center;
+      }
+      .glance-bc { background: #e1f5ee; border-color: #0f6e56; }
+      .glance-bc .glance-icon, .glance-bc .glance-title { color: #085041; }
+      .glance-bc .glance-desc { color: #0f6e56; }
+      .glance-connector { background: #e6f1fb; border-color: #185fa5; }
+      .glance-connector .glance-icon, .glance-connector .glance-title { color: #0c447c; }
+      .glance-connector .glance-desc { color: #185fa5; }
+      .glance-fabric { background: #faeeda; border-color: #854f0b; }
+      .glance-fabric .glance-icon, .glance-fabric .glance-title { color: #633806; }
+      .glance-fabric .glance-desc { color: #854f0b; }
+      .glance-analytics { background: #f0eafb; border-color: #6b3fa0; }
+      .glance-analytics .glance-icon, .glance-analytics .glance-title { color: #4a2175; }
+      .glance-analytics .glance-desc { color: #6b3fa0; }
+      .glance-caption { text-align: center; font-size: 0.8rem; color: var(--muted-text-color); margin: 0.75rem 0 0; }
+
+      .arch-zone { border-radius: 18px; padding: 1rem 1rem 1.1rem; margin-bottom: 0.85rem; border: 1.5px dashed; }
+      .arch-zone.arch-navida { border-color: #185fa5; }
+      .arch-zone.arch-tenant { border-color: #ba7517; }
+      .arch-zone-hd {
+        display: flex; align-items: center; gap: 0.55rem;
+        font-size: 0.85rem; font-weight: 600; margin: 0 0 0.9rem; flex-wrap: wrap;
+      }
+      .arch-zone.arch-navida .arch-zone-hd { color: #0c447c; }
+      .arch-zone.arch-tenant .arch-zone-hd { color: #854f0b; }
+      .arch-tag { font-size: 0.7rem; font-weight: 500; padding: 0.18rem 0.6rem; border-radius: 999px; }
+      .arch-zone.arch-navida .arch-tag { background: transparent; color: #185fa5; border: 1px solid #a8c4e0; }
+      .arch-zone.arch-tenant .arch-tag { background: transparent; color: #5f5e5a; border: 1px solid #b0aea6; }
+      .arch-tier { display: grid; gap: 0.75rem; margin-bottom: 0.75rem; }
+      .arch-tier:last-child { margin-bottom: 0; }
+      .arch-grid-2 { grid-template-columns: 1fr 1fr; }
+      .arch-grid-3 { grid-template-columns: repeat(3, 1fr); }
+      .arch-node { border-radius: 12px; padding: 0.8rem 0.95rem; border: 1px solid rgba(15, 23, 42, 0.1); background: var(--surface-color); }
+      .arch-nt { font-size: 0.9rem; font-weight: 600; margin: 0; display: flex; align-items: center; gap: 0.45rem; }
+      .arch-ns { font-size: 0.8rem; margin: 0.18rem 0 0; opacity: 0.9; }
+      .arch-n-navida { background: #e6f1fb; border-color: #185fa5; }
+      .arch-n-navida .arch-nt { color: #0c447c; } .arch-n-navida .arch-ns { color: #185fa5; }
+      .arch-n-teal { background: #e1f5ee; border-color: #0f6e56; }
+      .arch-n-teal .arch-nt { color: #085041; } .arch-n-teal .arch-ns { color: #0f6e56; }
+      .arch-n-amber { background: #faeeda; border-color: #854f0b; }
+      .arch-n-amber .arch-nt { color: #633806; } .arch-n-amber .arch-ns { color: #854f0b; }
+      .arch-n-purple { background: #f0eafb; border-color: #6b3fa0; }
+      .arch-n-purple .arch-nt { color: #4a2175; } .arch-n-purple .arch-ns { color: #6b3fa0; }
+      .arch-flowline { text-align: center; color: #8b8a83; font-size: 0.85rem; margin: -0.1rem 0 0.65rem; }
+      .arch-crossline { text-align: center; color: #185fa5; font-size: 0.85rem; font-weight: 500; margin: 0.15rem 0 1rem; padding: 0.5rem 0; }
+      .arch-legend { display: flex; flex-wrap: wrap; gap: 1.1rem; margin: 0.5rem 0 1.5rem; font-size: 0.85rem; color: var(--muted-text-color); }
+      .arch-legend span { display: inline-flex; align-items: center; gap: 0.45rem; }
+      .arch-swatch { width: 22px; height: 0; border-top: 2px dashed; border-radius: 2px; }
+
+      .arch-panel-stack { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.75rem; }
+      .arch-panel { background: var(--background-color); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.1rem 1.25rem; }
+      .arch-panel h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.3rem; color: var(--text-color); }
+      .arch-panel-lead { font-size: 0.875rem; color: var(--muted-text-color); margin: 0 0 1rem; }
+      .arch-step { display: flex; gap: 0.85rem; align-items: flex-start; padding: 0.6rem 0; border-top: 1px solid var(--border-color); }
+      .arch-step:first-of-type { border-top: none; padding-top: 0; }
+      .arch-num {
+        flex: 0 0 23px; height: 23px; border-radius: 50%;
+        background: #eff6ff; color: var(--link-color);
+        font-size: 0.75rem; font-weight: 600;
+        display: flex; align-items: center; justify-content: center; margin-top: 1px;
+      }
+      .arch-step-body { font-size: 0.875rem; line-height: 1.55; color: var(--text-color); }
+      .arch-step-body code {
+        font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        font-size: 0.78rem; background: var(--surface-color);
+        padding: 0.05rem 0.35rem; border-radius: 4px; border: 1px solid var(--border-color);
+      }
+      .arch-panel-note {
+        margin: 1rem 0 0; padding: 0.75rem 0.9rem; border-radius: 10px;
+        background: #eff6ff; color: #1e3a6e; font-size: 0.85rem; line-height: 1.55;
+      }
+      .arch-panel-note i { vertical-align: -2px; margin-right: 0.4rem; }
+
+      @media (max-width: 720px) {
+        .arch-grid-2, .arch-grid-3 { grid-template-columns: 1fr; }
+        .glance-flow { flex-direction: column; align-items: stretch; gap: 0; }
+        .glance-arrow { transform: rotate(90deg); font-size: 1.1rem; padding: 0.15rem 0; line-height: 1; }
+        .glance-node { flex-direction: row; align-items: center; text-align: left; gap: 0.85rem; padding: 0.9rem 1rem; }
+        .glance-icon { font-size: 1.5rem; margin-bottom: 0; flex-shrink: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <button
+      class="sidebar-toggle"
+      type="button"
+      data-sidebar-toggle
+      aria-expanded="false"
+      aria-controls="doc-sidebar"
+      aria-label="Open navigation"
+    >
+      <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
+      <span>Menu</span>
+    </button>
+    <div class="sidebar-backdrop" data-sidebar-backdrop></div>
+    <div class="docs-layout">
+      <aside
+        class="sidebar"
+        id="doc-sidebar"
+        data-sidebar
+        aria-label="Documentation navigation"
+      >
+        <div class="sidebar-inner">
+          <h1><a href="https://docs.bc2fab.com">BC2Fab Docs</a></h1>
+
+          <nav>
+            <div class="nav-section">
+              <div class="nav-section-title">Getting Started</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../getting-started/bc2fab.html" data-doc-link>BC2Fab</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../getting-started/quickstart.html" data-doc-link>Quickstart</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Guides</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../guides/architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/prerequisites.html" data-doc-link>Prerequisites</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/install-bc2fab.html" data-doc-link>Install BC2Fab</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/create-bc-queries.html" data-doc-link>Create BC Queries</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Analysis Mode for Power BI</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="install.html" data-doc-link>Install</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Resources</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../guides/faq.html" data-doc-link>FAQ</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/out-of-the-box-power-bi-reports.html" data-doc-link>Power BI Reports</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/bc-model-accelerator.html" data-doc-link>BC Model Accelerator</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/changelog.html" data-doc-link>Changelog</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header>
+          <p class="eyebrow">Analysis Mode for Power BI</p>
+          <h1>Architecture</h1>
+          <p>
+            Analysis Mode for Power BI replicates Business Central's data analysis mode (pivot
+            mode) on top of a Power BI semantic model: the model's field list, the Row Groups,
+            Column Labels and Values buckets, subtotals at every level, and per-user analysis
+            tabs. The page runs inside Business Central; the data stays in Power BI.
+          </p>
+        </header>
+
+        <section class="content-card">
+          <h2>The core principle: zero client-side aggregation</h2>
+          <p>
+            Every number you see — detail cells, subtotals, the Total column, the grand total —
+            is calculated by the Power BI semantic model itself and returned as its own row.
+            Business Central and the browser never add, average or otherwise compute a measure
+            value; they only place returned values into the grid.
+          </p>
+          <p>
+            This matters for non-additive measures. Ratios, distinct counts, time-intelligence
+            measures and anything with a custom filter context return the same figure here as in
+            Power BI, because it is the figure from Power BI. Summing detail rows on the client
+            would produce different — and wrong — subtotals for exactly those measures.
+          </p>
+        </section>
+
+        <section class="content-card">
+          <h2>Architecture at a glance</h2>
+          <div class="glance-flow" role="img" aria-label="Flow: the analysis designer in Business Central sends a DAX query from the browser directly to the Power BI semantic model, which evaluates it and returns rows that are rendered as a pivot grid.">
+            <div class="glance-node glance-bc">
+              <div class="glance-icon"><i class="ti ti-building-store" aria-hidden="true"></i></div>
+              <p class="glance-title">Business Central</p>
+              <p class="glance-desc">Analysis designer page &amp; saved analysis tabs</p>
+            </div>
+            <div class="glance-arrow" aria-hidden="true">→</div>
+            <div class="glance-node glance-connector">
+              <div class="glance-icon"><i class="ti ti-code" aria-hidden="true"></i></div>
+              <p class="glance-title">DAX query</p>
+              <p class="glance-desc">Built from your layout, sent straight from the browser</p>
+            </div>
+            <div class="glance-arrow" aria-hidden="true">→</div>
+            <div class="glance-node glance-fabric">
+              <div class="glance-icon"><i class="ti ti-database" aria-hidden="true"></i></div>
+              <p class="glance-title">Semantic model</p>
+              <p class="glance-desc">Evaluates detail rows, subtotals and totals</p>
+            </div>
+            <div class="glance-arrow" aria-hidden="true">→</div>
+            <div class="glance-node glance-analytics">
+              <div class="glance-icon"><i class="ti ti-table" aria-hidden="true"></i></div>
+              <p class="glance-title">Pivot grid</p>
+              <p class="glance-desc">Renders returned values — no recalculation</p>
+            </div>
+          </div>
+          <p class="glance-caption">
+            One round trip per layout change. Expanding and collapsing rows filters data that has
+            already arrived.
+          </p>
+        </section>
+
+        <section class="content-card arch-section">
+          <h2>Where each part runs</h2>
+          <p>
+            No navida service takes part at runtime. Your queries and your data travel directly
+            between your browser and your Power BI tenant. navida operates exactly two things:
+            the Microsoft Entra application you sign in with, and the key vault holding its
+            credential — both used for authentication only, never for data.
+          </p>
+
+          <div class="arch-legend" aria-hidden="true">
+            <span><span class="arch-swatch" style="border-color: #185fa5;"></span> navida (sign-in only)</span>
+            <span><span class="arch-swatch" style="border-color: #ba7517;"></span> Your Microsoft 365 tenant</span>
+          </div>
+
+          <div class="arch-zone arch-navida">
+            <p class="arch-zone-hd">
+              <i class="ti ti-cloud-lock" style="font-size: 1rem" aria-hidden="true"></i>
+              navida
+              <span class="arch-tag">authentication only — no data, no runtime service</span>
+            </p>
+            <div class="arch-tier arch-grid-2">
+              <div class="arch-node arch-n-navida">
+                <p class="arch-nt"><i class="ti ti-shield-lock" aria-hidden="true"></i>Entra application</p>
+                <p class="arch-ns">Multi-tenant registration · you grant admin consent once</p>
+              </div>
+              <div class="arch-node arch-n-navida">
+                <p class="arch-nt"><i class="ti ti-key" aria-hidden="true"></i>Azure Key Vault</p>
+                <p class="arch-ns">Holds the application credential · never leaves navida</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="arch-crossline">
+            ↕ &nbsp;sign-in only &nbsp;·&nbsp; no business data crosses this line &nbsp;↕
+          </div>
+
+          <div class="arch-zone arch-tenant">
+            <p class="arch-zone-hd">
+              <i class="ti ti-building" style="font-size: 1rem" aria-hidden="true"></i>
+              Your Microsoft 365 tenant
+              <span class="arch-tag">everything below runs entirely inside it</span>
+            </p>
+
+            <div class="arch-tier arch-grid-3">
+              <div class="arch-node arch-n-teal">
+                <p class="arch-nt"><i class="ti ti-layout-dashboard" aria-hidden="true"></i>Analysis designer</p>
+                <p class="arch-ns">Business Central page hosting the add-in</p>
+              </div>
+              <div class="arch-node arch-n-teal">
+                <p class="arch-nt"><i class="ti ti-list-check" aria-hidden="true"></i>Model catalog</p>
+                <p class="arch-ns">Which semantic models are available</p>
+              </div>
+              <div class="arch-node arch-n-teal">
+                <p class="arch-nt"><i class="ti ti-bookmark" aria-hidden="true"></i>Saved analyses</p>
+                <p class="arch-ns">Per user, stored in Business Central tables</p>
+              </div>
+            </div>
+            <div class="arch-flowline">↓ builds and sends DAX from the browser</div>
+
+            <div class="arch-tier">
+              <div class="arch-node arch-n-amber">
+                <p class="arch-nt"><i class="ti ti-database" aria-hidden="true"></i>Power BI semantic model</p>
+                <p class="arch-ns">Your workspace · evaluates every value, applies row-level security</p>
+              </div>
+            </div>
+            <div class="arch-flowline">↓ returns detail rows, subtotals and totals</div>
+
+            <div class="arch-tier">
+              <div class="arch-node arch-n-purple">
+                <p class="arch-nt"><i class="ti ti-table" aria-hidden="true"></i>Pivot grid in the browser</p>
+                <p class="arch-ns">Expand, collapse, sort and window over the returned rows</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="arch-panel-stack">
+            <div class="arch-panel">
+              <h3>Sign-in and permissions</h3>
+              <p class="arch-panel-lead">
+                Delegated throughout: every query runs as the signed-in Business Central user.
+              </p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">An administrator grants consent once for the tenant. After that, users sign in silently — the app reuses the Microsoft session they already have.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">The access token carries the user's own identity. <b>Row-level security applies per person</b>, and users only ever see models they have access to in Power BI.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Power BI's audit log and its rate limit of 120 queries per minute apply per user, exactly as they would if the user queried the model directly.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Each user additionally needs <code>Read</code> and <code>Build</code> permission on the semantic model. Without them, Power BI refuses the query. The app does not extend a user's access.</div></div>
+              <div class="arch-panel-note">
+                <i class="ti ti-info-circle" aria-hidden="true"></i>
+                Using your own Entra app registration instead of navida's is supported; see
+                <a href="install.html">Install</a>.
+              </div>
+            </div>
+
+            <div class="arch-panel">
+              <h3>How a pivot is built</h3>
+              <p class="arch-panel-lead">
+                One query per layout change, with all levels evaluated by the model.
+              </p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">The field list is read live from the model, so tables, display folders, columns and measures always match the current model definition.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">Your layout is translated into a single grouping query that asks for detail rows <b>and</b> every subtotal, the Total column and the grand total in one go.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Columns with a sort-by column in the model group by that order, so months appear in calendar order rather than alphabetically.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Expanding and collapsing rows re-filters rows that already arrived. Only a change to the layout itself triggers a new query.</div></div>
+            </div>
+
+            <div class="arch-panel">
+              <h3>Large models</h3>
+              <p class="arch-panel-lead">
+                Queries are sized against Power BI's documented limits before they are sent.
+              </p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">The app budgets rows per query so that results stay within Power BI's limits, and prioritises totals so they survive truncation.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">If a result would still be too large, the deepest row level switches to load-on-expand rather than returning a partial result.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">The grid shows 500 rows at a time with <b>Show more</b>, and the summary bar reports the true total row count from the model.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Queries are debounced, and only the most recent one is kept in flight.</div></div>
+            </div>
+
+            <div class="arch-panel">
+              <h3>Number formats</h3>
+              <p class="arch-panel-lead">
+                Figures are formatted the way the model defines them, where the platform allows it.
+              </p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">On Fabric or Premium capacity the app can read the model definition and cache its format strings, so currency, percentages and decimals match Power BI.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">On Pro workspaces that API does not exist. The app records this once and formats by data type instead — expected behaviour, not an error.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Administrators can override any format manually. Manual entries win and survive every refresh.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-card">
+          <h2>Next step</h2>
+          <p>
+            <a href="install.html" data-doc-link>Install Analysis Mode for Power BI</a> and connect a
+            semantic model.
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

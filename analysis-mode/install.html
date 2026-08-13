@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:image" content="https://docs.bc2fab.com/assets/images/BC2Fabric_icon.png" />
+    <meta property="og:description" content="Install and configure Analysis Mode for Power BI in Business Central — prerequisites, admin consent, connecting a semantic model and opening your first analysis." />
+    <title>Install | Analysis Mode for Power BI</title>
+    <link rel="icon" type="image/x-icon" sizes="any" href="https://www.navida.eu/favicon.ico" />
+    <link rel="shortcut icon" href="https://www.navida.eu/favicon.ico" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"
+    />
+    <style>
+      .arch-panel-stack { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.25rem; }
+      .arch-panel { background: var(--background-color); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.1rem 1.25rem; }
+      .arch-panel h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.3rem; color: var(--text-color); }
+      .arch-panel-lead { font-size: 0.875rem; color: var(--muted-text-color); margin: 0 0 1rem; }
+      .arch-step { display: flex; gap: 0.85rem; align-items: flex-start; padding: 0.6rem 0; border-top: 1px solid var(--border-color); }
+      .arch-step:first-of-type { border-top: none; padding-top: 0; }
+      .arch-num {
+        flex: 0 0 23px; height: 23px; border-radius: 50%;
+        background: #eff6ff; color: var(--link-color);
+        font-size: 0.75rem; font-weight: 600;
+        display: flex; align-items: center; justify-content: center; margin-top: 1px;
+      }
+      .arch-step-body { font-size: 0.9rem; line-height: 1.55; color: var(--text-color); }
+      .arch-step-body code {
+        font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        font-size: 0.78rem; background: var(--surface-color);
+        padding: 0.05rem 0.35rem; border-radius: 4px; border: 1px solid var(--border-color);
+      }
+      .req-list { margin: 0; padding-left: 1.1rem; }
+      .req-list li { margin-bottom: 0.5rem; line-height: 1.55; }
+    </style>
+  </head>
+  <body>
+    <button
+      class="sidebar-toggle"
+      type="button"
+      data-sidebar-toggle
+      aria-expanded="false"
+      aria-controls="doc-sidebar"
+      aria-label="Open navigation"
+    >
+      <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
+      <span>Menu</span>
+    </button>
+    <div class="sidebar-backdrop" data-sidebar-backdrop></div>
+    <div class="docs-layout">
+      <aside
+        class="sidebar"
+        id="doc-sidebar"
+        data-sidebar
+        aria-label="Documentation navigation"
+      >
+        <div class="sidebar-inner">
+          <h1><a href="https://docs.bc2fab.com">BC2Fab Docs</a></h1>
+
+          <nav>
+            <div class="nav-section">
+              <div class="nav-section-title">Getting Started</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../getting-started/bc2fab.html" data-doc-link>BC2Fab</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../getting-started/quickstart.html" data-doc-link>Quickstart</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Guides</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../guides/architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/prerequisites.html" data-doc-link>Prerequisites</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/install-bc2fab.html" data-doc-link>Install BC2Fab</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/create-bc-queries.html" data-doc-link>Create BC Queries</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Analysis Mode for Power BI</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="install.html" data-doc-link>Install</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Resources</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../guides/faq.html" data-doc-link>FAQ</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/out-of-the-box-power-bi-reports.html" data-doc-link>Power BI Reports</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/bc-model-accelerator.html" data-doc-link>BC Model Accelerator</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/changelog.html" data-doc-link>Changelog</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header>
+          <p class="eyebrow">Analysis Mode for Power BI</p>
+          <h1>Install</h1>
+          <p>
+            Analysis Mode for Power BI is installed from Microsoft AppSource. It signs in with
+            navida's multi-tenant Microsoft Entra application, so no application registration is
+            required in your own tenant; an administrator approves it once. Using your own
+            registration instead is supported and described below.
+          </p>
+        </header>
+
+        <section class="content-card">
+          <h2>Before you start</h2>
+          <ul class="req-list">
+            <li><strong>Business Central online</strong>, version 26 or later. A sandbox works for evaluation.</li>
+            <li><strong>A Power BI semantic model</strong> in a workspace, and a <strong>Power BI licence</strong> for everyone who will use the analysis. Pro is sufficient; Fabric capacity is only needed for number formats (see below).</li>
+            <li>Every analysis user needs <strong>Read</strong> and <strong>Build</strong> permission on that semantic model — through a workspace role or granted directly on the model.</li>
+            <li>The Fabric tenant setting <strong>“Semantic Model Execute Queries REST API”</strong> must be enabled (Fabric admin portal → Tenant settings → Integration settings).</li>
+            <li>A <strong>Global Administrator</strong> to approve the application once.</li>
+            <li>Browsers must allow pop-ups and cookies for <code>businesscentral.dynamics.com</code> and <code>login.microsoftonline.com</code>.</li>
+          </ul>
+        </section>
+
+        <section class="content-card">
+          <h2>Set-up steps</h2>
+
+          <div class="arch-panel-stack">
+            <div class="arch-panel">
+              <h3>1 · Install and grant access</h3>
+              <p class="arch-panel-lead">Done once per environment, by an administrator.</p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">Install <b>Analysis Mode for Power BI</b> from Microsoft AppSource into your Business Central environment.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">Assign the permission sets: <code>NBI Analysis Admin</code> for administrators, <code>NBI Analysis User</code> for everyone who will build analyses.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Open <b>Power BI Analysis Setup</b> (search for it with Tell Me). The <b>Status</b> field confirms which application is in use and where its credential comes from.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Choose <b>Grant Admin Consent</b> and sign in as Global Administrator. This approves the application for your whole tenant, so your users are never prompted.</div></div>
+              <div class="arch-step"><div class="arch-num">5</div><div class="arch-step-body">Choose <b>Test Sign-In</b>. A token stage of <code>Cache</code> or <code>SilentSSO</code> confirms sign-in works.</div></div>
+            </div>
+
+            <div class="arch-panel">
+              <h3>2 · Connect a semantic model</h3>
+              <p class="arch-panel-lead">Repeat for each semantic model; multiple models per environment are supported.</p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">Open <b>Power BI Analysis Models</b> and choose <b>Add Model…</b>.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">Pick the workspace, then the semantic model. Both lists only ever show what you can already access in Power BI.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">If listing is not possible in your tenant, type the IDs instead: both GUIDs appear in the Power BI service URL of the model — <code>…/groups/&lt;workspace&gt;/datasets/&lt;model&gt;</code>.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Choose <b>Test Connection</b> on the row. It acquires a token and runs a minimal query against the model.</div></div>
+            </div>
+
+            <div class="arch-panel">
+              <h3>3 · Open an analysis</h3>
+              <p class="arch-panel-lead">Performed by each analysis user.</p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">Select the model and choose <b>Open Analysis</b>. On first use, one Microsoft sign-in window appears; afterwards it is silent.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">In the field list, tick a <b>measure</b> — it goes to <b>Values</b>. Tick a <b>column</b> — it goes to <b>Row Groups</b>. The grid is populated with the result.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Drag fields between Row Groups, Column Labels and Values, expand and collapse levels, and click column headers to sort.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Use the <b>+</b> to add more analysis tabs. Tabs are saved per user automatically and are there again next time.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-card">
+          <h2>Optional settings</h2>
+          <p>
+            <strong>Number formats.</strong> On Fabric or Premium capacity, choose
+            <b>Refresh Format Strings</b> on the model row to take currency, percentage and
+            decimal formats from the model definition. It takes about 15 seconds. The user who
+            runs it needs contributor rights on the model. On Pro workspaces this API does not
+            exist — the app formats by data type instead, and you can maintain individual formats
+            under <b>Format Strings</b>. Manual entries always win.
+          </p>
+          <p>
+            <strong>Run DAX through AL proxy.</strong> Off by default. When switched on, queries
+            travel through the Business Central server instead of directly from the browser. It is
+            slower, but avoids the browser sign-in window in environments with restrictive browser
+            policies.
+          </p>
+          <p>
+            <strong>Your own app registration.</strong> If your organisation prefers to use its own
+            Microsoft Entra application, set <b>App Registration</b> to <b>Own App Registration</b>
+            and enter client ID and secret. Leave the tenant ID empty to use your own tenant. The
+            registration needs a <b>Web</b> redirect URI
+            <code>https://businesscentral.dynamics.com/OAuthLanding.htm</code>, a
+            <b>single-page application</b> redirect URI
+            <code>https://businesscentral.dynamics.com/oauthlanding.htm</code> (lower case), and the
+            delegated Power BI permission <code>Dataset.Read.All</code>.
+          </p>
+        </section>
+
+        <section class="content-card">
+          <h2>If something does not work</h2>
+          <table class="table-compact">
+            <thead>
+              <tr><th>What you see</th><th>What it means</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>A sign-in window on every session instead of silent sign-in</td>
+                <td>The browser is blocking storage for the sign-in library. Everything keeps working — check third-party cookie and site-data policies to make it silent.</td>
+              </tr>
+              <tr>
+                <td>“Unauthorized” or an empty field list</td>
+                <td>The user is missing <b>Build</b> permission on the semantic model, or the tenant setting <i>Semantic Model Execute Queries REST API</i> is switched off.</td>
+              </tr>
+              <tr>
+                <td>Test Connection succeeds, but the designer stays empty</td>
+                <td>The user is missing the <code>NBI Analysis User</code> permission set, or the model contains no visible measures.</td>
+              </tr>
+              <tr>
+                <td>Format cache shows <b>Unavailable</b></td>
+                <td>Normal on Pro workspaces — the model definition API needs Fabric or Premium capacity. Use manual formats instead.</td>
+              </tr>
+              <tr>
+                <td>Workspaces cannot be listed</td>
+                <td>Business Central could not reach Power BI for your user. Check the Power BI licence, then enter the workspace and model IDs manually.</td>
+              </tr>
+              <tr>
+                <td>“HTTP send failed” in Business Central</td>
+                <td><b>Allow HttpClient Requests</b> is switched off for the extension (Extension Management → Configure).</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="content-card">
+          <h2>Learn more</h2>
+          <p>
+            <a href="architecture.html" data-doc-link>Architecture</a> explains how queries are
+            evaluated, how subtotals are produced, and which components run in which tenant.
+          </p>
+          <h2>Contact us</h2>
+          <p>
+            Need support? Use
+            <a href="#" id="support-email-link" data-user="bc2fab" data-domain="navida.eu" rel="nofollow">
+              this contact link
+            </a>
+            to send us an email.
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+      (function () {
+        const supportLink = document.getElementById('support-email-link');
+        if (!supportLink) {
+          return;
+        }
+        const user = supportLink.dataset.user;
+        const domain = supportLink.dataset.domain;
+        supportLink.addEventListener('click', function (event) {
+          event.preventDefault();
+          window.location.href = 'mailto:' + user + '@' + domain;
+        });
+      })();
+    </script>
+  </body>
+</html>
