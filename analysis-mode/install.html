@@ -141,6 +141,7 @@
           <ul class="req-list">
             <li><strong>Business Central online</strong>, version 26 or later. A sandbox works for evaluation.</li>
             <li><strong>A Power BI semantic model</strong> in a workspace, and a <strong>Power BI licence</strong> for everyone who will use the analysis. Pro is sufficient; Fabric capacity is only needed for number formats (see below).</li>
+            <li>An <strong>app licence per analysis user</strong>, purchased with the app on AppSource — the first month is a <strong>free trial</strong>. See <a href="#licensing">Licensing</a> below.</li>
             <li>Every analysis user needs <strong>Read</strong> and <strong>Build</strong> permission on that semantic model — through a workspace role or granted directly on the model.</li>
             <li>The Fabric tenant setting <strong>“Semantic Model Execute Queries REST API”</strong> must be enabled (Fabric admin portal → Tenant settings → Integration settings).</li>
             <li>A <strong>Global Administrator</strong> to approve the application once.</li>
@@ -180,6 +181,23 @@
               <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Use the <b>+</b> to add more analysis tabs. Tabs are saved per user automatically and are there again next time.</div></div>
             </div>
           </div>
+        </section>
+
+        <section class="content-card" id="licensing">
+          <h2>Licensing</h2>
+          <p>
+            <strong>Analysis Mode for Power BI</strong> is licensed <strong>per user per month</strong> and sold
+            directly through Microsoft AppSource — current pricing is shown on the AppSource listing.
+            Every subscription starts with a <strong>one-month free trial</strong> that can be cancelled at
+            any time during the trial.
+          </p>
+          <ul class="req-list">
+            <li><strong>Buying:</strong> choose <b>Get it now</b> on the AppSource listing and complete the checkout. Billing is handled entirely by Microsoft and appears on your Microsoft invoice.</li>
+            <li><strong>Assigning licences:</strong> purchased licences appear in the <b>Microsoft 365 admin center</b> under <b>Billing → Licenses</b>. Assign one to every user who opens analyses — exactly like Microsoft 365 licences.</li>
+            <li><strong>Without a licence</strong> a user can still open the setup page and the model list; opening an analysis then shows a message pointing to the licence assignment instead of the designer.</li>
+            <li><strong>Sandbox environments</strong> are not licence-enforced, so you can evaluate the app in a sandbox before buying.</li>
+            <li><strong>Partner support:</strong> delegated administrators (CSP partner roles) have access without consuming a licence, so your partner can configure and troubleshoot.</li>
+          </ul>
         </section>
 
         <section class="content-card">
