@@ -143,7 +143,7 @@
             <li><strong>A Power BI semantic model</strong> in a workspace, and a <strong>Power BI licence</strong> for everyone who will use the analysis. Pro is sufficient; Fabric capacity is only needed for number formats (see below).</li>
             <li>An <strong>app licence per analysis user</strong>, purchased with the app on AppSource — the first month is a <strong>free trial</strong>. See <a href="#licensing">Licensing</a> below.</li>
             <li>Every analysis user needs <strong>Read</strong> and <strong>Build</strong> permission on that semantic model — through a workspace role or granted directly on the model.</li>
-            <li>The Fabric tenant setting <strong>“Semantic Model Execute Queries REST API”</strong> must be enabled (Fabric admin portal → Tenant settings → Integration settings).</li>
+            <li>The Fabric tenant setting <strong>“Semantic Model Execute Queries REST API”</strong> must be enabled (Fabric admin portal → Tenant settings → Integration settings). It is enabled by default, so this is usually just a check — but some organizations disable it or restrict it to specific security groups; analysis users must then be members of an allowed group.</li>
             <li>A <strong>Global Administrator</strong> to approve the application once.</li>
             <li>Browsers must allow pop-ups and cookies for <code>businesscentral.dynamics.com</code> and <code>login.microsoftonline.com</code>.</li>
           </ul>
