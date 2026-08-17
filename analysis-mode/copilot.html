@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:image" content="https://docs.bc2fab.com/assets/images/BC2Fabric_icon.png" />
+    <meta property="og:description" content="Copilot in Analysis Mode for Power BI — describe an analysis in your own words, refine it with follow-up instructions, and keep what the live preview shows. Structure and your question travel to your own Azure OpenAI resource; your data never does." />
+    <title>Copilot | Analysis Mode for Power BI</title>
+    <link rel="icon" type="image/x-icon" sizes="any" href="https://www.navida.eu/favicon.ico" />
+    <link rel="shortcut icon" href="https://www.navida.eu/favicon.ico" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"
+    />
+    <style>
+      .arch-panel-stack { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.25rem; }
+      .arch-panel { background: var(--background-color); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.1rem 1.25rem; }
+      .arch-panel h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.3rem; color: var(--text-color); }
+      .arch-panel-lead { font-size: 0.875rem; color: var(--muted-text-color); margin: 0 0 1rem; }
+      .arch-step { display: flex; gap: 0.85rem; align-items: flex-start; padding: 0.6rem 0; border-top: 1px solid var(--border-color); }
+      .arch-step:first-of-type { border-top: none; padding-top: 0; }
+      .arch-num {
+        flex: 0 0 23px; height: 23px; border-radius: 50%;
+        background: #eff6ff; color: var(--link-color);
+        font-size: 0.75rem; font-weight: 600;
+        display: flex; align-items: center; justify-content: center; margin-top: 1px;
+      }
+      .arch-step-body { font-size: 0.9rem; line-height: 1.55; color: var(--text-color); }
+      .arch-step-body code, .prompt-example code {
+        font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        font-size: 0.78rem; background: var(--surface-color);
+        padding: 0.05rem 0.35rem; border-radius: 4px; border: 1px solid var(--border-color);
+      }
+      .arch-panel-note {
+        margin: 1rem 0 0; padding: 0.75rem 0.9rem; border-radius: 10px;
+        background: #eff6ff; color: #1e3a6e; font-size: 0.85rem; line-height: 1.55;
+      }
+      .arch-panel-note i { vertical-align: -2px; margin-right: 0.4rem; }
+      .req-list { margin: 0; padding-left: 1.1rem; }
+      .req-list li { margin-bottom: 0.5rem; line-height: 1.55; }
+      .data-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.25rem; }
+      .data-col { border-radius: 14px; padding: 1rem 1.15rem; border: 1.5px solid; }
+      .data-col h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; font-weight: 700; margin: 0 0 0.6rem; }
+      .data-col ul { margin: 0; padding-left: 1.1rem; }
+      .data-col li { font-size: 0.875rem; line-height: 1.55; margin-bottom: 0.4rem; }
+      .data-sent { background: #e6f1fb; border-color: #185fa5; }
+      .data-sent h3 { color: #0c447c; }
+      .data-sent li { color: #143d63; }
+      .data-never { background: #e1f5ee; border-color: #0f6e56; }
+      .data-never h3 { color: #085041; }
+      .data-never li { color: #0b5342; }
+      .prompt-example { margin: 0.35rem 0 0.85rem; font-size: 0.875rem; }
+      @media (max-width: 720px) { .data-cols { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <button
+      class="sidebar-toggle"
+      type="button"
+      data-sidebar-toggle
+      aria-expanded="false"
+      aria-controls="doc-sidebar"
+      aria-label="Open navigation"
+    >
+      <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
+      <span>Menu</span>
+    </button>
+    <div class="sidebar-backdrop" data-sidebar-backdrop></div>
+    <div class="docs-layout">
+      <aside
+        class="sidebar"
+        id="doc-sidebar"
+        data-sidebar
+        aria-label="Documentation navigation"
+      >
+        <div class="sidebar-inner">
+          <h1><a href="https://docs.bc2fab.com">BC2Fab Docs</a></h1>
+
+          <nav>
+            <div class="nav-section">
+              <div class="nav-section-title">Getting Started</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../getting-started/bc2fab.html" data-doc-link>BC2Fab</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../getting-started/quickstart.html" data-doc-link>Quickstart</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Guides</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../guides/architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/prerequisites.html" data-doc-link>Prerequisites</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/install-bc2fab.html" data-doc-link>Install BC2Fab</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/create-bc-queries.html" data-doc-link>Create BC Queries</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Analysis Mode for Power BI</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="install.html" data-doc-link>Install</a>
+                </li>
+                <li class="nav-item">
+                  <a href="copilot.html" data-doc-link>Copilot</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Resources</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../guides/faq.html" data-doc-link>FAQ</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/out-of-the-box-power-bi-reports.html" data-doc-link>Power BI Reports</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/bc-model-accelerator.html" data-doc-link>BC Model Accelerator</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/changelog.html" data-doc-link>Changelog</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header>
+          <p class="eyebrow">Analysis Mode for Power BI</p>
+          <h1>Copilot</h1>
+          <p>
+            Describe an analysis in your own words and Copilot builds the tab — with a live
+            preview on your real data, follow-up refinement, and a history of every proposal.
+            This page explains how to use it, what it can and cannot do, and exactly which
+            information leaves your tenant. Enabling it is
+            <a href="install.html">one setup step</a> with an Azure OpenAI resource of your own.
+          </p>
+        </header>
+
+        <section class="content-card">
+          <h2>How it works</h2>
+          <div class="arch-panel-stack">
+            <div class="arch-panel">
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">In an open analysis, choose <b>Create new analysis</b> and describe what you want. Name the <b>figure</b> and the <b>attributes</b>: <i>“net sales by customer and year, highest first”</i>.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">Copilot proposes a layout and shows it as a <b>live preview with your real data</b> — not a description of it. You can sort, expand and resize columns right in the preview.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body"><b>Refine</b> with follow-up instructions: <i>“add product no. as second level”</i>, <i>“only 2026”</i>, <i>“without quotes”</i>, <i>“sort descending”</i>. Everything you do not mention stays as it is.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Browse earlier proposals with <b>‹ n of n ›</b>. <b>Keep it</b> always takes exactly what the preview shows — including your own sorting and column widths — and adds it as a new analysis tab. <b>Discard</b> leaves no trace.</div></div>
+            </div>
+          </div>
+          <p class="arch-panel-note">
+            <i class="ti ti-adjustments" aria-hidden="true"></i>
+            An administrator can switch the capability off at any time under Business Central's
+            <b>Copilot &amp; agent capabilities</b> — the entry point then disappears for everyone.
+          </p>
+        </section>
+
+        <section class="content-card">
+          <h2>Writing prompts that work</h2>
+          <ul class="req-list">
+            <li><strong>Name a figure.</strong> Every analysis needs at least one measure. <span class="prompt-example"><code>show net sales per product category</code></span> works; “show product categories” alone is refused, because there is nothing to calculate.</li>
+            <li><strong>Name the attributes to group by</strong>, outermost first: <span class="prompt-example"><code>net sales by salesperson then country</code></span>. Say which attribute becomes the columns if you care: <span class="prompt-example"><code>years as columns</code></span>.</li>
+            <li><strong>Filters belong in the sentence.</strong> <span class="prompt-example"><code>net sales per customer, without quotes, only 2026</code></span>. The full operator set is available — equals and not equals, contains and not contains, starts/ends with, greater/less than, between, blank and not blank.</li>
+            <li><strong>Write filter values the way your data does.</strong> Copilot never sees your data, so it takes values literally from your question. “Rechnung” finds <i>Rechnung</i>; it cannot know that your model calls it <i>Invoice</i> (see below).</li>
+            <li><strong>Refine instead of restarting.</strong> After the first proposal, short instructions are enough — <i>add …, remove …, filter by …, sort by …</i>. The prompt guide offers these as starting points.</li>
+          </ul>
+        </section>
+
+        <section class="content-card">
+          <h2>What Copilot can and cannot do</h2>
+          <ul class="req-list">
+            <li><strong>It builds layouts, not queries.</strong> The model answers with a small layout description — fields, filters, sorting. The DAX query is built and checked by the app, and every figure is evaluated by your semantic model, exactly like a hand-built analysis.</li>
+            <li><strong>Everything is checked against your model.</strong> Field names are verified against the live field list. A field that does not exist is reported in the review notes — never silently invented. If a question cannot be answered with the model's fields at all, Copilot says so instead of guessing.</li>
+            <li><strong>Filter values are verified in your tenant, not by the model.</strong> After the proposal arrives, the app checks filter values with ordinary queries against your semantic model: exact matches adopt the model's spelling, close matches are completed (<i>“Adatum” → “Adatum Corporation”</i>), and a value that does not exist is named in the review notes — the analysis never silently shows zero rows. What this deliberately cannot do is translate: <i>“Büromöbel”</i> will not find a member called <i>“Office Furniture”</i>, because that would require sending your data to the model. Pick the right value in the filter pane afterwards — its list never left your tenant.</li>
+            <li><strong>Same question, different proposal.</strong> Language models are not deterministic; asking again can produce a different (equally valid) layout. The history keeps every proposal, so nothing is lost by trying again.</li>
+            <li><strong>Review notes are the reliable half.</strong> The explanation is what the model believes it built; the review notes list what actually changed — corrected fields, corrected values, dropped filters. When they disagree, trust the notes and the preview.</li>
+          </ul>
+        </section>
+
+        <section class="content-card">
+          <h2>Your data</h2>
+          <p>
+            Copilot runs against an <strong>Azure OpenAI resource in your own subscription</strong>,
+            called server-side from Business Central. The key is stored in Business Central's
+            Isolated Storage and never reaches the browser. No navida service is involved, and
+            AI consumption is billed by Microsoft Azure on your resource.
+          </p>
+          <div class="data-cols">
+            <div class="data-col data-sent">
+              <h3><i class="ti ti-arrow-up-right" aria-hidden="true"></i>Sent to your Azure OpenAI resource</h3>
+              <ul>
+                <li>The <b>structure</b> of the semantic model: table, field and measure names, display folders and their descriptions</li>
+                <li>Your <b>question</b> and follow-up instructions, verbatim</li>
+                <li>When refining: the <b>current layout</b> — which fields, filters and sorting the preview shows</li>
+              </ul>
+            </div>
+            <div class="data-col data-never">
+              <h3><i class="ti ti-shield-check" aria-hidden="true"></i>Never sent</h3>
+              <ul>
+                <li>Query results, cell values, totals</li>
+                <li>Lists of the values a column contains</li>
+                <li>Anything read from your data — filter values are verified inside your tenant instead</li>
+              </ul>
+            </div>
+          </div>
+          <p class="arch-panel-note">
+            <i class="ti ti-info-circle" aria-hidden="true"></i>
+            The analysis itself works like every other analysis in the app: queries run as the
+            signed-in user, row-level security applies, and results travel directly between your
+            browser and your Power BI tenant — see <a href="architecture.html">Architecture</a>.
+          </p>
+        </section>
+
+        <section class="content-card">
+          <h2>Set-up in short</h2>
+          <p>
+            An administrator creates a <b>chat-completions deployment</b> on an Azure OpenAI
+            resource, enters endpoint, deployment and key on <b>Power BI Analysis Setup</b>,
+            switches <b>Enable Copilot</b> on and runs <b>Test Copilot Connection</b>. The
+            step-by-step guide, licensing notes and troubleshooting are on the
+            <a href="install.html">Install page</a>. Copilot is included in the app licence —
+            no separate plan.
+          </p>
+        </section>
+
+        <section class="content-card">
+          <h2>Contact us</h2>
+          <p>
+            Need support? Use
+            <a href="#" id="support-email-link" data-user="bc2fab" data-domain="navida.eu" rel="nofollow">
+              this contact link
+            </a>
+            to send us an email.
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+      (function () {
+        const supportLink = document.getElementById('support-email-link');
+        if (!supportLink) {
+          return;
+        }
+        const user = supportLink.dataset.user;
+        const domain = supportLink.dataset.domain;
+        supportLink.addEventListener('click', function (event) {
+          event.preventDefault();
+          window.location.href = 'mailto:' + user + '@' + domain;
+        });
+      })();
+    </script>
+  </body>
+</html>

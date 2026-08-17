@@ -100,6 +100,9 @@
                 <li class="nav-item">
                   <a href="install.html" data-doc-link>Install</a>
                 </li>
+                <li class="nav-item">
+                  <a href="copilot.html" data-doc-link>Copilot</a>
+                </li>
               </ul>
             </div>
 
@@ -129,10 +132,11 @@
           <p class="eyebrow">Analysis Mode for Power BI</p>
           <h1>Install</h1>
           <p>
-            Analysis Mode for Power BI is installed from Microsoft AppSource. It signs in with
+            Analysis Mode for Power BI is installed from <a href="https://marketplace.microsoft.com/en-us/product/dynamics-365-business-central/PUBID.navidainformationssysteme1611067488644%7CAID.analysis_mode_for_power_bi%7CPAPPID.377cb8e1-8ce4-4fc2-ae36-9b529f637391?tab=Overview" target="_blank" rel="noopener">Microsoft AppSource</a>. It signs in with
             navida's multi-tenant Microsoft Entra application, so no application registration is
             required in your own tenant; an administrator approves it once. Using your own
-            registration instead is supported and described below.
+            registration instead is supported and described below, and the optional Copilot is
+            enabled in a separate step with an Azure OpenAI resource of your own.
           </p>
         </header>
 
@@ -145,7 +149,9 @@
             <li>Every analysis user needs <strong>Read</strong> and <strong>Build</strong> permission on that semantic model — through a workspace role or granted directly on the model.</li>
             <li>The Fabric tenant setting <strong>“Semantic Model Execute Queries REST API”</strong> must be enabled (Fabric admin portal → Tenant settings → Integration settings). It is enabled by default, so this is usually just a check — but some organizations disable it or restrict it to specific security groups; analysis users must then be members of an allowed group.</li>
             <li>A <strong>Global Administrator</strong> to approve the application once.</li>
+            <li><strong>Allow HttpClient Requests</strong> — the app enables this Extension Management setting <em>automatically during installation</em> (it is what lets the extension call the Power BI and Fabric APIs). No action needed on a fresh install; only after <em>copying an environment</em> must it be switched on again, because Business Central resets it for every app then. The setup page shows the current state under <b>Outbound HTTP Requests</b>.</li>
             <li>Browsers must allow pop-ups and cookies for <code>businesscentral.dynamics.com</code> and <code>login.microsoftonline.com</code>.</li>
+            <li><strong>Optional, for Copilot:</strong> an <strong>Azure OpenAI resource of your own</strong> with a chat-completions deployment of a current model. Copilot is part of the app licence; the AI consumption is billed by Microsoft on that Azure resource.</li>
           </ul>
         </section>
 
@@ -156,11 +162,12 @@
             <div class="arch-panel">
               <h3>1 · Install and grant access</h3>
               <p class="arch-panel-lead">Done once per environment, by an administrator.</p>
-              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">Install <b>Analysis Mode for Power BI</b> from Microsoft AppSource into your Business Central environment.</div></div>
-              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">Assign the permission sets: <code>NBI Analysis Admin</code> for administrators, <code>NBI Analysis User</code> for everyone who will build analyses.</div></div>
-              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Open <b>Power BI Analysis Setup</b> (search for it with Tell Me). The <b>Status</b> field confirms which application is in use and where its credential comes from.</div></div>
-              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Choose <b>Grant Admin Consent</b> and sign in as Global Administrator. This approves the application for your whole tenant, so your users are never prompted.</div></div>
-              <div class="arch-step"><div class="arch-num">5</div><div class="arch-step-body">Choose <b>Test Sign-In</b>. A token stage of <code>Cache</code> or <code>SilentSSO</code> confirms sign-in works.</div></div>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">Install <b>Analysis Mode for Power BI</b> from <a href="https://marketplace.microsoft.com/en-us/product/dynamics-365-business-central/PUBID.navidainformationssysteme1611067488644%7CAID.analysis_mode_for_power_bi%7CPAPPID.377cb8e1-8ce4-4fc2-ae36-9b529f637391?tab=Overview" target="_blank" rel="noopener">Microsoft AppSource</a> into your Business Central environment.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body"><b>Allow HttpClient Requests</b> is switched on <b>automatically by the installation</b> — installing the app is the consent to let it call the Power BI service. Nothing to do here on a fresh install. Only after <b>copying an environment</b>: Business Central then resets the setting for every app, so switch it on again under <b>Extension Management</b> → select the app → <b>Configure</b>. The <b>Power BI Analysis Setup</b> page shows the current state under <b>Outbound HTTP Requests</b>.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Assign the permission sets: <code>NBI Analysis Admin</code> for administrators, <code>NBI Analysis User</code> for everyone who will build analyses.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Open <b>Power BI Analysis Setup</b> (search for it with Tell Me). The <b>Status</b> field confirms which application is in use and where its credential comes from.</div></div>
+              <div class="arch-step"><div class="arch-num">5</div><div class="arch-step-body">Choose <b>Grant Admin Consent</b> and sign in as Global Administrator. This approves the application for your whole tenant, so your users are never prompted.</div></div>
+              <div class="arch-step"><div class="arch-num">6</div><div class="arch-step-body">Choose <b>Test Sign-In</b>. A token stage of <code>Cache</code> or <code>SilentSSO</code> confirms sign-in works.</div></div>
             </div>
 
             <div class="arch-panel">
@@ -180,6 +187,26 @@
               <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Drag fields between Row Groups, Column Labels and Values, expand and collapse levels, and click column headers to sort.</div></div>
               <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Use the <b>+</b> to add more analysis tabs. Tabs are saved per user automatically and are there again next time.</div></div>
             </div>
+
+            <div class="arch-panel">
+              <h3>4 · Enable Copilot (optional)</h3>
+              <p class="arch-panel-lead">
+                Lets users describe an analysis in their own words and refine it with follow-up
+                instructions. Runs against an Azure OpenAI resource in your own subscription.
+              </p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">In the Azure portal, create an <b>Azure OpenAI</b> resource (or reuse one) and add a <b>chat-completions deployment</b> of a current model. Note the endpoint, the deployment name and a key.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">On <b>Power BI Analysis Setup</b>, in the <b>Copilot</b> group, enter the <b>endpoint</b> and <b>deployment</b>, set the <b>key</b> (it is stored in Isolated Storage and never shown or sent to the browser), and switch <b>Enable Copilot</b> on.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Choose <b>Test Copilot Connection</b> — it sends one minimal request to your deployment and reports whether the model answered.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">The capability appears under Business Central's <b>Copilot &amp; agent capabilities</b>, where administrators can switch it off at any time. When everything is in place, the designer shows <b>Create new analysis</b> above the grid.</div></div>
+              <div class="arch-panel-note">
+                <i class="ti ti-shield-check" aria-hidden="true"></i>
+                Copilot receives the <b>structure</b> of the semantic model — table, field and
+                measure names with their descriptions — and the user's question, <b>never data</b>:
+                no query results, no cell values, no lists of the values a column contains. The
+                <a href="copilot.html">Copilot page</a> has the full guide — prompt tips, what it
+                can and cannot do, and the complete data note.
+              </div>
+            </div>
           </div>
         </section>
 
@@ -187,16 +214,17 @@
           <h2>Licensing</h2>
           <p>
             <strong>Analysis Mode for Power BI</strong> is licensed <strong>per user per month</strong> and sold
-            directly through Microsoft AppSource — current pricing is shown on the AppSource listing.
+            directly through Microsoft AppSource — current pricing is shown on the <a href="https://marketplace.microsoft.com/en-us/product/dynamics-365-business-central/PUBID.navidainformationssysteme1611067488644%7CAID.analysis_mode_for_power_bi%7CPAPPID.377cb8e1-8ce4-4fc2-ae36-9b529f637391?tab=Overview" target="_blank" rel="noopener">AppSource listing</a>.
             Every subscription starts with a <strong>one-month free trial</strong> that can be cancelled at
             any time during the trial.
           </p>
           <ul class="req-list">
-            <li><strong>Buying:</strong> choose <b>Get it now</b> on the AppSource listing and complete the checkout. Billing is handled entirely by Microsoft and appears on your Microsoft invoice.</li>
+            <li><strong>Buying:</strong> choose <b>Get it now</b> on the <a href="https://marketplace.microsoft.com/en-us/product/dynamics-365-business-central/PUBID.navidainformationssysteme1611067488644%7CAID.analysis_mode_for_power_bi%7CPAPPID.377cb8e1-8ce4-4fc2-ae36-9b529f637391?tab=Overview" target="_blank" rel="noopener">AppSource listing</a> and complete the checkout. Billing is handled entirely by Microsoft and appears on your Microsoft invoice.</li>
             <li><strong>Assigning licences:</strong> purchased licences appear in the <b>Microsoft 365 admin center</b> under <b>Billing → Licenses</b>. Assign one to every user who opens analyses — exactly like Microsoft 365 licences.</li>
             <li><strong>Without a licence</strong> a user can still open the setup page and the model list; opening an analysis then shows a message pointing to the licence assignment instead of the designer.</li>
             <li><strong>Sandbox environments</strong> are not licence-enforced, so you can evaluate the app in a sandbox before buying.</li>
             <li><strong>Partner support:</strong> delegated administrators (CSP partner roles) have access without consuming a licence, so your partner can configure and troubleshoot.</li>
+            <li><strong>Copilot</strong> is included in the app licence — no separate plan and no surcharge. The AI consumption runs on your own Azure OpenAI resource and is billed by Microsoft Azure, so you keep full control over model choice and cost.</li>
           </ul>
         </section>
 
@@ -256,8 +284,20 @@
                 <td>Business Central could not reach Power BI for your user. Check the Power BI licence, then enter the workspace and model IDs manually.</td>
               </tr>
               <tr>
-                <td>“HTTP send failed” in Business Central</td>
-                <td><b>Allow HttpClient Requests</b> is switched off for the extension (Extension Management → Configure).</td>
+                <td>“Business Central is blocking outbound HTTP requests …” or “The request was blocked by the runtime to prevent accidental use of production services”</td>
+                <td><b>Allow HttpClient Requests</b> is switched off for the extension. The installation enables it automatically, but <b>copying an environment resets it</b> for every app. Switch it on again under Extension Management → Configure; the setup page shows the state under <b>Outbound HTTP Requests</b>.</td>
+              </tr>
+              <tr>
+                <td><b>Create new analysis</b> does not appear in the designer</td>
+                <td>Copilot needs all of: <b>Enable Copilot</b> switched on with endpoint, deployment and key set; the capability active under <b>Copilot &amp; agent capabilities</b>; and a licensed user. The setup page shows a status line for each.</td>
+              </tr>
+              <tr>
+                <td>Copilot answers “The Azure OpenAI resource rejected the key”</td>
+                <td>Key or endpoint is wrong, or the key was rotated in Azure. Re-enter both on the setup page and run <b>Test Copilot Connection</b>.</td>
+              </tr>
+              <tr>
+                <td>A Copilot proposal shows “Filter NOT applied” in the review notes</td>
+                <td>Expected behaviour, not an error: the filter value from your question does not exist in that column. Copilot never sees your data, so it cannot check values itself — pick the right value in the filter pane after keeping the analysis.</td>
               </tr>
             </tbody>
           </table>

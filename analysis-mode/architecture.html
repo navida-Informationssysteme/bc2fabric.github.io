@@ -172,6 +172,9 @@
                 <li class="nav-item">
                   <a href="install.html" data-doc-link>Install</a>
                 </li>
+                <li class="nav-item">
+                  <a href="copilot.html" data-doc-link>Copilot</a>
+                </li>
               </ul>
             </div>
 
@@ -204,7 +207,8 @@
             Analysis Mode for Power BI replicates Business Central's data analysis mode (pivot
             mode) on top of a Power BI semantic model: the model's field list, the Row Groups,
             Column Labels and Values buckets, subtotals at every level, and per-user analysis
-            tabs. The page runs inside Business Central; the data stays in Power BI.
+            tabs — plus an optional Copilot that builds and refines analyses from a description
+            in your own words. The page runs inside Business Central; the data stays in Power BI.
           </p>
         </header>
 
@@ -330,6 +334,14 @@
                 <p class="arch-ns">Expand, collapse, sort and window over the returned rows</p>
               </div>
             </div>
+
+            <div class="arch-flowline">↓ optional, only with Copilot enabled: structure and your question — never data</div>
+            <div class="arch-tier">
+              <div class="arch-node arch-n-amber">
+                <p class="arch-nt"><i class="ti ti-sparkles" aria-hidden="true"></i>Your Azure OpenAI resource</p>
+                <p class="arch-ns">Optional, in your own Azure subscription · called from the Business Central server · receives field names and your question, never query results</p>
+              </div>
+            </div>
           </div>
 
           <div class="arch-panel-stack">
@@ -369,6 +381,29 @@
               <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">If a result would still be too large, the deepest row level switches to load-on-expand rather than returning a partial result.</div></div>
               <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">The grid shows 500 rows at a time with <b>Show more</b>, and the summary bar reports the true total row count from the model.</div></div>
               <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Queries are debounced, and only the most recent one is kept in flight.</div></div>
+            </div>
+
+            <div class="arch-panel">
+              <h3>Copilot: describe an analysis, refine it, keep it</h3>
+              <p class="arch-panel-lead">
+                Optional — switched on in setup with your own Azure OpenAI resource. Copilot
+                turns a sentence into an analysis tab and refines it with follow-up instructions.
+                The full guide, including prompt tips and limitations, is on the
+                <a href="copilot.html">Copilot page</a>.
+              </p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">Choose <b>Create new analysis</b> in the designer and describe what you want — <i>“net sales by customer and year, highest first”</i>. Copilot proposes a layout and shows it as a <b>live preview on your real data</b>.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">Refine with further instructions — <i>“add product no. as second level”</i>, <i>“without quotes”</i>, <i>“sort descending”</i>. Everything you do not mention stays as it is. Browse earlier proposals with <b>‹ n of n ›</b> and keep the one you like; <b>Keep</b> always takes exactly what the preview shows.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">The model answers with a small <b>layout description</b> — which fields, which filters, which sorting. It never writes queries and never sees query results. The proposal is checked against the live field list; anything that does not exist in your model is reported, not guessed.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Filters support the full operator set — equals and not equals, contains and not contains, starts/ends with, greater/less than, between, blank and not blank. Filter <b>values</b> are verified inside your tenant with ordinary queries; a value your model does not hold is named in the review notes instead of silently returning an empty analysis.</div></div>
+              <div class="arch-panel-note">
+                <i class="ti ti-shield-check" aria-hidden="true"></i>
+                <b>What leaves your tenant:</b> the structure of the semantic model — table, field
+                and measure names with their descriptions — plus your question and the current
+                layout. <b>Never data:</b> no query results, no cell values, no lists of the values
+                a column contains. The call runs server-side against <b>your own</b> Azure OpenAI
+                resource; the key is stored in Business Central's Isolated Storage and never
+                reaches the browser.
+              </div>
             </div>
 
             <div class="arch-panel">
