@@ -411,8 +411,8 @@
               <p class="arch-panel-lead">
                 Figures are formatted the way the model defines them, where the platform allows it.
               </p>
-              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">On Fabric or Premium capacity the app can read the model definition and cache its format strings, so currency, percentages and decimals match Power BI.</div></div>
-              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">On Pro workspaces that API does not exist. The app records this once and formats by data type instead — expected behaviour, not an error.</div></div>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">The app reads the model definition and caches its format strings — on Pro and dedicated capacity alike — so currency, percentages and decimals match Power BI.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">The one-time refresh needs a user with write permission on the model and a consented ReadWrite scope. Until it has run, the app formats by data type — expected behaviour, not an error.</div></div>
               <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Administrators can override any format manually. Manual entries win and survive every refresh.</div></div>
             </div>
           </div>

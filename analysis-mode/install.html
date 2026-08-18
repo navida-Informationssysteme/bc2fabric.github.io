@@ -231,12 +231,14 @@
         <section class="content-card">
           <h2>Optional settings</h2>
           <p>
-            <strong>Number formats.</strong> On Fabric or Premium capacity, choose
-            <b>Refresh Format Strings</b> on the model row to take currency, percentage and
-            decimal formats from the model definition. It takes about 15 seconds. The user who
-            runs it needs contributor rights on the model. On Pro workspaces this API does not
-            exist — the app formats by data type instead, and you can maintain individual formats
-            under <b>Format Strings</b>. Manual entries always win.
+            <strong>Number formats.</strong> Choose <b>Refresh Format Strings</b> on the model
+            row to take currency, percentage and decimal formats from the model definition —
+            this works on Pro and Fabric/Premium workspaces alike. It takes about 15 seconds.
+            The user who runs it needs write permission on the model (workspace role Member or
+            Contributor), and the app registration needs the optional ReadWrite scope with
+            admin consent; one successful refresh then serves every user from the cache. Until
+            such a refresh has run, the app formats by data type, and you can maintain
+            individual formats under <b>Format Strings</b>. Manual entries always win.
           </p>
           <p>
             <strong>Run DAX through AL proxy.</strong> Off by default. When switched on, queries
@@ -277,7 +279,7 @@
               </tr>
               <tr>
                 <td>Format cache shows <b>Unavailable</b></td>
-                <td>Normal on Pro workspaces — the model definition API needs Fabric or Premium capacity. Use manual formats instead.</td>
+                <td>No refresh has succeeded yet. The signed-in user needs write permission on the model and the app registration the consented ReadWrite scope — the API itself works on Pro workspaces too. Until then the app formats by data type; manual formats are always available.</td>
               </tr>
               <tr>
                 <td>Workspaces cannot be listed</td>
