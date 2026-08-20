@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:image" content="https://docs.bc2fab.com/assets/images/BC2Fabric_icon.png" />
-    <meta property="og:description" content="Copilot in Analysis Mode for Power BI — describe an analysis in your own words, refine it with follow-up instructions, and keep what the live preview shows. Structure and your question travel to your own Azure OpenAI resource; your data never does." />
-    <title>Copilot | Analysis Mode for Power BI</title>
+    <meta property="og:description" content="Ask your data in Analysis Mode for Power BI — ask questions in your own words, get answers computed by live DAX queries against your semantic model, see every query it ran, and adopt an answer as a real analysis tab." />
+    <title>Ask your data | Analysis Mode for Power BI</title>
     <link rel="icon" type="image/x-icon" sizes="any" href="https://www.navida.eu/favicon.ico" />
     <link rel="shortcut icon" href="https://www.navida.eu/favicon.ico" />
     <link rel="stylesheet" href="../assets/css/styles.css" />
@@ -18,7 +18,6 @@
       .arch-panel-stack { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.25rem; }
       .arch-panel { background: var(--background-color); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.1rem 1.25rem; }
       .arch-panel h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.3rem; color: var(--text-color); }
-      .arch-panel-lead { font-size: 0.875rem; color: var(--muted-text-color); margin: 0 0 1rem; }
       .arch-step { display: flex; gap: 0.85rem; align-items: flex-start; padding: 0.6rem 0; border-top: 1px solid var(--border-color); }
       .arch-step:first-of-type { border-top: none; padding-top: 0; }
       .arch-num {
@@ -151,15 +150,15 @@
       <main class="main-content">
         <header>
           <p class="eyebrow">Analysis Mode for Power BI</p>
-          <h1>Copilot</h1>
+          <h1>Ask your data</h1>
           <p>
-            Describe an analysis in your own words and Copilot builds the tab — with a live
-            preview on your real data, follow-up refinement, and a history of every proposal.
-            This page explains how to use it, what it can and cannot do, and exactly which
-            information leaves your tenant. Enabling it is
-            <a href="install.html">one setup step</a> with an Azure OpenAI resource of your own.
-            Looking for answers instead of a layout? That is
-            <a href="ask-your-data.html">Ask your data</a> — the chat that runs the queries itself.
+            Ask questions about the data of a semantic model in your own words — Copilot answers
+            by running real DAX queries against the model and shows every query it ran, so every
+            figure can be verified. When an answer is a breakdown, one click turns it into a real
+            analysis tab. This page explains how to use it, what it can and cannot do, and exactly
+            which information leaves your tenant. It uses the same
+            <a href="install.html">Azure OpenAI setup</a> as
+            <a href="copilot.html">Copilot analysis creation</a>.
           </p>
         </header>
 
@@ -167,84 +166,75 @@
           <h2>How it works</h2>
           <div class="arch-panel-stack">
             <div class="arch-panel">
-              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">In an open analysis, choose <b>Create new analysis</b> and describe what you want. Name the <b>figure</b> and the <b>attributes</b>: <i>“net sales by customer and year, highest first”</i>.</div></div>
-              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">Copilot proposes a layout and shows it as a <b>live preview with your real data</b> — not a description of it. You can sort, expand and resize columns right in the preview.</div></div>
-              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body"><b>Refine</b> with follow-up instructions: <i>“add product no. as second level”</i>, <i>“only 2026”</i>, <i>“without quotes”</i>, <i>“sort descending”</i>. Everything you do not mention stays as it is.</div></div>
-              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Browse earlier proposals with <b>‹ n of n ›</b>. <b>Keep it</b> always takes exactly what the preview shows — including your own sorting and column widths — and adds it as a new analysis tab. <b>Discard</b> leaves no trace.</div></div>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">In an open analysis, choose <b>Ask data</b> in the side rail and ask in your own words: <i>“which weeks have a negative net cash flow?”</i>, <i>“top customers this year, and how did they develop?”</i>. Answers come in the language you ask in.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">Copilot works out which queries answer the question, <b>runs them against the semantic model</b> and interprets the results. Every answer carries an expandable <b>DAX queries</b> section listing each query with its runtime and result size — the arithmetic is auditable, not a black box.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">The <b>open analysis is the default frame</b>: its dimensions, filters and time windows are assumed unless your question says otherwise. Click <b>✦</b> on a cell or row of the grid to anchor the conversation to exactly that coordinate — follow-ups like <i>“why is this one so high?”</i> need no further explanation.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">When an answer is a breakdown — groupings × figures — a quiet <b>Adopt</b> line appears beneath it: keep it as a <b>new analysis tab</b> or apply it to the analysis you have open. If the adoptable layout differs from the answer (say, a full list instead of a top 3), the difference is stated right there.</div></div>
             </div>
           </div>
           <p class="arch-panel-note">
             <i class="ti ti-adjustments" aria-hidden="true"></i>
             An administrator can switch the capability off at any time under Business Central's
-            <b>Copilot &amp; agent capabilities</b> — the entry point then disappears for everyone.
+            <b>Copilot &amp; agent capabilities</b> — the pane then disappears for everyone.
           </p>
         </section>
 
         <section class="content-card">
-          <h2>Writing prompts that work</h2>
+          <h2>What it can and cannot do</h2>
           <ul class="req-list">
-            <li><strong>Name a figure.</strong> Every analysis needs at least one measure. <span class="prompt-example"><code>show net sales per product category</code></span> works; “show product categories” alone is refused, because there is nothing to calculate.</li>
-            <li><strong>Name the attributes to group by</strong>, outermost first: <span class="prompt-example"><code>net sales by salesperson then country</code></span>. Say which attribute becomes the columns if you care: <span class="prompt-example"><code>years as columns</code></span>.</li>
-            <li><strong>Filters belong in the sentence.</strong> <span class="prompt-example"><code>net sales per customer, without quotes, only 2026</code></span>. The full operator set is available — equals and not equals, contains and not contains, starts/ends with, greater/less than, between, blank and not blank.</li>
-            <li><strong>Write filter values the way your data does.</strong> Copilot never sees your data, so it takes values literally from your question. “Rechnung” finds <i>Rechnung</i>; it cannot know that your model calls it <i>Invoice</i> (see below).</li>
-            <li><strong>Refine instead of restarting.</strong> After the first proposal, short instructions are enough — <i>add …, remove …, filter by …, sort by …</i>. The prompt guide offers these as starting points.</li>
-          </ul>
-        </section>
-
-        <section class="content-card">
-          <h2>What Copilot can and cannot do</h2>
-          <ul class="req-list">
-            <li><strong>It builds layouts, not queries.</strong> The model answers with a small layout description — fields, filters, sorting. The DAX query is built and checked by the app, and every figure is evaluated by your semantic model, exactly like a hand-built analysis.</li>
-            <li><strong>Everything is checked against your model.</strong> Field names are verified against the live field list. A field that does not exist is reported in the review notes — never silently invented. If a question cannot be answered with the model's fields at all, Copilot says so instead of guessing.</li>
-            <li><strong>Filter values are verified in your tenant, not by the model.</strong> After the proposal arrives, the app checks filter values with ordinary queries against your semantic model: exact matches adopt the model's spelling, close matches are completed (<i>“Adatum” → “Adatum Corporation”</i>), and a value that does not exist is named in the review notes — the analysis never silently shows zero rows. What this deliberately cannot do is translate: <i>“Büromöbel”</i> will not find a member called <i>“Office Furniture”</i>, because that would require sending your data to the model. Pick the right value in the filter pane afterwards — its list never left your tenant.</li>
-            <li><strong>Same question, different proposal.</strong> Language models are not deterministic; asking again can produce a different (equally valid) layout. The history keeps every proposal, so nothing is lost by trying again.</li>
-            <li><strong>Review notes are the reliable half.</strong> The explanation is what the model believes it built; the review notes list what actually changed — corrected fields, corrected values, dropped filters. When they disagree, trust the notes and the preview.</li>
+            <li><strong>Every figure comes from a query.</strong> The AI decides <em>which</em> queries to run; the numbers themselves are computed by the Power BI engine, under the signed-in user's identity, with row-level security applied. Check the DAX queries section when a figure matters — that is what it is for.</li>
+            <li><strong>Answers are AI-generated — verify results.</strong> The interpretation around the figures is a language model's text. The pane says so, and the shown queries are the way to verify.</li>
+            <li><strong>Field names come from your model.</strong> Copilot works with the model's real tables, fields and measures. If a question cannot be answered from them, it says so rather than inventing a figure — and when a term is ambiguous, it names the reading it chose.</li>
+            <li><strong>Complex questions take several queries.</strong> A multi-part question can run a handful of queries and take some seconds; the steps stay visible while it works.</li>
+            <li><strong>Same question, different route.</strong> Language models are not deterministic; asking again can take a different (equally valid) query route to the same answer.</li>
           </ul>
         </section>
 
         <section class="content-card">
           <h2>Your data</h2>
           <p>
-            Copilot runs against an <strong>Azure OpenAI resource in your own subscription</strong>,
-            called server-side from Business Central. The key is stored in Business Central's
-            Isolated Storage and never reaches the browser. No navida service is involved, and
-            AI consumption is billed by Microsoft Azure on your resource.
+            Ask your data runs against an <strong>Azure OpenAI resource in your own
+            subscription</strong>, called server-side from Business Central. The key is stored in
+            Business Central's Isolated Storage and never reaches the browser. No navida service
+            is involved, and AI consumption is billed by Microsoft Azure on your resource.
+            Unlike <a href="copilot.html">Copilot analysis creation</a>, answering questions about
+            data requires showing the AI data: the results of the queries it runs travel to your
+            Azure OpenAI resource — and only there.
           </p>
           <div class="data-cols">
             <div class="data-col data-sent">
               <h3><i class="ti ti-arrow-up-right" aria-hidden="true"></i>Sent to your Azure OpenAI resource</h3>
               <ul>
-                <li>The <b>structure</b> of the semantic model: table, field and measure names, display folders and their descriptions</li>
-                <li>Your <b>question</b> and follow-up instructions, verbatim</li>
-                <li>When refining: the <b>current layout</b> — which fields, filters and sorting the preview shows</li>
+                <li>The <b>structure</b> of the semantic model: table, field and measure names, descriptions and relationships</li>
+                <li>Your <b>questions</b>, verbatim, and the layout of the open analysis (plus the anchored cell, if any)</li>
+                <li>The <b>results of the DAX queries</b> the chat runs, and lists of the values common attributes contain — so questions can be matched to your data's real spellings</li>
               </ul>
             </div>
             <div class="data-col data-never">
-              <h3><i class="ti ti-shield-check" aria-hidden="true"></i>Never sent</h3>
+              <h3><i class="ti ti-shield-check" aria-hidden="true"></i>The boundaries that hold</h3>
               <ul>
-                <li>Query results, cell values, totals</li>
-                <li>Lists of the values a column contains</li>
-                <li>Anything read from your data — filter values are verified inside your tenant instead</li>
+                <li>Every query runs <b>as the signed-in user</b> — row-level security limits what the chat can ever read</li>
+                <li>Data travels only between Business Central, your Power BI tenant and <b>your own Azure resource</b> — never to navida or any third party</li>
+                <li>Read-only: the chat can query the model, never change it or write anything back</li>
               </ul>
             </div>
           </div>
           <p class="arch-panel-note">
             <i class="ti ti-info-circle" aria-hidden="true"></i>
-            The analysis itself works like every other analysis in the app: queries run as the
-            signed-in user, row-level security applies, and results travel directly between your
-            browser and your Power BI tenant — see <a href="architecture.html">Architecture</a>.
+            Azure OpenAI is an enterprise service in your subscription: prompts and responses are
+            not used to train models, and your Azure region and compliance boundary apply — see
+            <a href="architecture.html">Architecture</a> for the app's overall data flow.
           </p>
         </section>
 
         <section class="content-card">
           <h2>Set-up in short</h2>
           <p>
-            An administrator creates a <b>chat-completions deployment</b> on an Azure OpenAI
-            resource, enters endpoint, deployment and key on <b>Power BI Analysis Setup</b>,
-            switches <b>Enable Copilot</b> on and runs <b>Test Copilot Connection</b>. The
-            step-by-step guide, licensing notes and troubleshooting are on the
-            <a href="install.html">Install page</a>. Copilot is included in the app licence —
-            no separate plan.
+            There is nothing separate to configure: the same <b>Azure OpenAI resource</b> that
+            powers Copilot analysis creation powers Ask your data — endpoint, deployment and key
+            on <b>Power BI Analysis Setup</b>, with <b>Enable Copilot</b> switched on. The
+            step-by-step guide is on the <a href="install.html">Install page</a>. Both features
+            are included in the app licence — no separate plan.
           </p>
         </section>
 

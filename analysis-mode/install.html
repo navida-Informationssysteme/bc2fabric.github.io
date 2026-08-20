@@ -103,6 +103,9 @@
                 <li class="nav-item">
                   <a href="copilot.html" data-doc-link>Copilot</a>
                 </li>
+                <li class="nav-item">
+                  <a href="ask-your-data.html" data-doc-link>Ask your data</a>
+                </li>
               </ul>
             </div>
 
@@ -151,7 +154,7 @@
             <li>A <strong>Global Administrator</strong> to approve the application once.</li>
             <li><strong>Allow HttpClient Requests</strong> — the app enables this Extension Management setting <em>automatically during installation</em> (it is what lets the extension call the Power BI and Fabric APIs). No action needed on a fresh install; only after <em>copying an environment</em> must it be switched on again, because Business Central resets it for every app then. The setup page shows the current state under <b>Outbound HTTP Requests</b>.</li>
             <li>Browsers must allow pop-ups and cookies for <code>businesscentral.dynamics.com</code> and <code>login.microsoftonline.com</code>.</li>
-            <li><strong>Optional, for Copilot:</strong> an <strong>Azure OpenAI resource of your own</strong> with a chat-completions deployment of a current model. Copilot is part of the app licence; the AI consumption is billed by Microsoft on that Azure resource.</li>
+            <li><strong>Optional, for the AI features</strong> (<a href="copilot.html">Copilot analysis creation</a> and <a href="ask-your-data.html">Ask your data</a>): an <strong>Azure OpenAI resource of your own</strong> with a chat-completions deployment of a current model. Both are part of the app licence; the AI consumption is billed by Microsoft on that Azure resource.</li>
           </ul>
         </section>
 
@@ -189,22 +192,25 @@
             </div>
 
             <div class="arch-panel">
-              <h3>4 · Enable Copilot (optional)</h3>
+              <h3>4 · Enable Copilot and Ask your data (optional)</h3>
               <p class="arch-panel-lead">
-                Lets users describe an analysis in their own words and refine it with follow-up
-                instructions. Runs against an Azure OpenAI resource in your own subscription.
+                One configuration enables both AI features: describing an analysis in your own
+                words (<a href="copilot.html">Copilot</a>) and asking questions answered by live
+                queries (<a href="ask-your-data.html">Ask your data</a>). Runs against an Azure
+                OpenAI resource in your own subscription.
               </p>
               <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">In the Azure portal, create an <b>Azure OpenAI</b> resource (or reuse one) and add a <b>chat-completions deployment</b> of a current model. Note the endpoint, the deployment name and a key.</div></div>
               <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">On <b>Power BI Analysis Setup</b>, in the <b>Copilot</b> group, enter the <b>endpoint</b> and <b>deployment</b>, set the <b>key</b> (it is stored in Isolated Storage and never shown or sent to the browser), and switch <b>Enable Copilot</b> on.</div></div>
               <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Choose <b>Test Copilot Connection</b> — it sends one minimal request to your deployment and reports whether the model answered.</div></div>
-              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">The capability appears under Business Central's <b>Copilot &amp; agent capabilities</b>, where administrators can switch it off at any time. When everything is in place, the designer shows <b>Create new analysis</b> above the grid.</div></div>
+              <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">The capability appears under Business Central's <b>Copilot &amp; agent capabilities</b>, where administrators can switch it off at any time. When everything is in place, the designer shows <b>Create new analysis</b> above the grid and the <b>Ask data</b> pane in the side rail.</div></div>
               <div class="arch-panel-note">
                 <i class="ti ti-shield-check" aria-hidden="true"></i>
-                Copilot receives the <b>structure</b> of the semantic model — table, field and
-                measure names with their descriptions — and the user's question, <b>never data</b>:
-                no query results, no cell values, no lists of the values a column contains. The
-                <a href="copilot.html">Copilot page</a> has the full guide — prompt tips, what it
-                can and cannot do, and the complete data note.
+                For <b>analysis creation</b>, Copilot receives the <b>structure</b> of the semantic
+                model — table, field and measure names with their descriptions — and the user's
+                question, <b>never data</b>. <b>Ask your data</b> necessarily goes further: to
+                answer questions it sends the results of the queries it runs to your own Azure
+                OpenAI resource — and only there. Each feature page has the complete data note:
+                <a href="copilot.html">Copilot</a>, <a href="ask-your-data.html">Ask your data</a>.
               </div>
             </div>
           </div>
