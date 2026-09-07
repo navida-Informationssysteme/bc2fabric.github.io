@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:image" content="https://docs.bc2fab.com/assets/images/BC2Fabric_icon.png" />
+    <meta property="og:description" content="Set up the Sales Report of BC2Fab - AI Insights — register the sales semantic model, link it with the report code SALES, assign the Sales Analysis licence, and what the model must contain." />
+    <title>Sales Report setup | BC2Fab - AI Insights</title>
+    <link rel="icon" type="image/x-icon" sizes="any" href="https://www.navida.eu/favicon.ico" />
+    <link rel="shortcut icon" href="https://www.navida.eu/favicon.ico" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"
+    />
+    <style>
+      .arch-panel-stack { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.25rem; }
+      .arch-panel { background: var(--background-color); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.1rem 1.25rem; }
+      .arch-panel h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.3rem; color: var(--text-color); }
+      .arch-panel-lead { font-size: 0.875rem; color: var(--muted-text-color); margin: 0 0 1rem; }
+      .arch-step { display: flex; gap: 0.85rem; align-items: flex-start; padding: 0.6rem 0; border-top: 1px solid var(--border-color); }
+      .arch-step:first-of-type { border-top: none; padding-top: 0; }
+      .arch-num {
+        flex: 0 0 23px; height: 23px; border-radius: 50%;
+        background: #eff6ff; color: var(--link-color);
+        font-size: 0.75rem; font-weight: 600;
+        display: flex; align-items: center; justify-content: center; margin-top: 1px;
+      }
+      .arch-step-body { font-size: 0.9rem; line-height: 1.55; color: var(--text-color); }
+      .arch-step-body code, .table-compact code, .req-list code, header p code {
+        font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        font-size: 0.78rem; background: var(--surface-color);
+        padding: 0.05rem 0.35rem; border-radius: 4px; border: 1px solid var(--border-color);
+      }
+      .arch-panel-note {
+        margin: 1rem 0 0; padding: 0.75rem 0.9rem; border-radius: 10px;
+        background: var(--surface-color); border: 1px solid var(--border-color);
+        font-size: 0.85rem; line-height: 1.55; color: var(--muted-text-color);
+      }
+      .arch-panel-note i { vertical-align: -2px; margin-right: 0.4rem; }
+      .req-list { margin: 0; padding-left: 1.1rem; }
+      .req-list li { margin-bottom: 0.5rem; line-height: 1.55; }
+    </style>
+  </head>
+  <body>
+    <button
+      class="sidebar-toggle"
+      type="button"
+      data-sidebar-toggle
+      aria-expanded="false"
+      aria-controls="doc-sidebar"
+      aria-label="Open navigation"
+    >
+      <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
+      <span>Menu</span>
+    </button>
+    <div class="sidebar-backdrop" data-sidebar-backdrop></div>
+    <div class="docs-layout">
+      <aside
+        class="sidebar"
+        id="doc-sidebar"
+        data-sidebar
+        aria-label="Documentation navigation"
+      >
+        <div class="sidebar-inner">
+          <h1><a href="https://docs.bc2fab.com">BC2Fab Docs</a></h1>
+
+          <nav>
+            <div class="nav-section">
+              <div class="nav-section-title">Getting Started</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../getting-started/bc2fab.html" data-doc-link>BC2Fab</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../getting-started/quickstart.html" data-doc-link>Quickstart</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Guides</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../guides/architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/prerequisites.html" data-doc-link>Prerequisites</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/install-bc2fab.html" data-doc-link>Install BC2Fab</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/create-bc-queries.html" data-doc-link>Create BC Queries</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">BC2Fab - AI Insights</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="install.html" data-doc-link>Install</a>
+                </li>
+                <li class="nav-item">
+                  <a href="copilot.html" data-doc-link>Copilot</a>
+                </li>
+                <li class="nav-item">
+                  <a href="ask-your-data.html" data-doc-link>Ask your data</a>
+                </li>
+                <li class="nav-item">
+                  <a href="sales-report.html" data-doc-link>Sales Report</a>
+                </li>
+                <li class="nav-item">
+                  <a href="sales-report-setup.html" data-doc-link>Sales Report setup</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Resources</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../guides/faq.html" data-doc-link>FAQ</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/out-of-the-box-power-bi-reports.html" data-doc-link>Power BI Reports</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/bc-model-accelerator.html" data-doc-link>BC Model Accelerator</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/changelog.html" data-doc-link>Changelog</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header>
+          <p class="eyebrow">BC2Fab - AI Insights</p>
+          <h1>Sales Report setup</h1>
+          <p>
+            The <a href="sales-report.html">Sales Report</a> needs three things on top of the
+            <a href="install.html">base installation</a>: a sales semantic model built on
+            navida's sales template, the <b>Report Code</b> <code>SALES</code> on that model's
+            row, and the <b>Sales Analysis</b> licence for every report user. This page walks
+            through them, lists what the model must contain, and explains the messages you may
+            see on the way.
+          </p>
+        </header>
+
+        <section class="content-card">
+          <h2>Before you start</h2>
+          <ul class="req-list">
+            <li><strong>The base installation is complete</strong> — the app is installed, admin consent granted and <b>Test Sign-In</b> succeeds (<a href="install.html">Install</a>, panels 1 and 2).</li>
+            <li><strong>A sales semantic model built on navida's sales template</strong>: the <b>BC2Fab Sales</b> model from your Microsoft Fabric workspace, or navida's NAVBI sales model connected directly to Business Central. Other models work when they carry the same tables and measures — see <a href="#model">What the model must contain</a>.</li>
+            <li><strong>Read and Build permission</strong> on that model for every report user, exactly as for analyses.</li>
+            <li><strong>Sales Analysis licences</strong> — purchased with the app on AppSource; the plan includes the analysis mode, so a report user needs no second licence. Sandboxes are not licence-enforced.</li>
+            <li><strong>Optional, for the AI cards and Ask your data:</strong> the Azure OpenAI resource configured for Copilot (<a href="install.html">Install</a>, panel 4). Without it the report works completely; only the AI cards and the chat are absent.</li>
+          </ul>
+        </section>
+
+        <section class="content-card">
+          <h2>Set-up steps</h2>
+          <div class="arch-panel-stack">
+            <div class="arch-panel">
+              <h3>1 · Register the sales model</h3>
+              <p class="arch-panel-lead">Done once per environment, by an administrator, on <b>Power BI Analysis Models</b>.</p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">Choose <b>Add Model…</b>, pick the workspace and the sales semantic model. If the model is the one behind Business Central's own Power BI sales report, <b>Get Standard Reporting Models</b> does the same in one go: it adds the models of the <b>Power BI Reports Setup</b> (Finance, Sales, Purchases, …) once each and loads their metadata. Resolving a report's model needs the delegated Power BI permission <code>Report.Read.All</code>, so a consent dialog may appear the first time.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">Choose <b>Test Connection</b> on the row — a token is acquired and a minimal query runs against the model.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Choose <b>Refresh Model Metadata</b> to take number formats and field translations from the model definition. The user who runs it needs write permission on the model; one refresh serves everyone.</div></div>
+              <div class="arch-panel-note">
+                <i class="ti ti-info-circle" aria-hidden="true"></i>
+                Models installed as a Power BI <b>template app</b> (the NAVBI sales model among them) do not allow the definition export. The report then formats by data type; maintain currency and percentage formats under <b>Format Strings</b> on the row — manual entries always win.
+              </div>
+            </div>
+
+            <div class="arch-panel">
+              <h3>2 · Link the model with the report</h3>
+              <p class="arch-panel-lead">One model per report code; the code is what Tell Me and the role centers open.</p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">On the model's row set <b>Report Code</b> to <code>SALES</code>. <b>Get Standard Reporting Models</b> sets it automatically on the sales model when no model carries the code yet.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">Choose <b>Open Report</b> on the row. The report validates its definition against the model on opening; if a table or measure is missing, it says which.</div></div>
+            </div>
+
+            <div class="arch-panel">
+              <h3>3 · Licences and permissions</h3>
+              <p class="arch-panel-lead">Per user, by an administrator.</p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">Assign a <b>Sales Analysis</b> licence in the <b>Microsoft 365 admin center</b> under <b>Billing → Licenses</b>. A user with this plan needs no Analysis Mode licence in addition.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">Assign the permission sets <code>NBI Analysis User</code> and <code>NBI Sales Analysis</code>. The second one holds the objects of the report only; the first one everything shared with the analysis mode.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Without the plan the report page shows a message naming the missing plan instead of the report. Delegated administrators (CSP partner roles) have access without consuming a licence.</div></div>
+            </div>
+
+            <div class="arch-panel">
+              <h3>4 · Open the report</h3>
+              <p class="arch-panel-lead">By each report user.</p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">On the <b>Business Manager</b>, <b>Sales &amp; Relationship Manager</b>, <b>Order Processor</b> or <b>Accountant</b> role center choose <b>Sales Report (Power BI)</b> under the reporting actions — or search for it with Tell Me. Both open the model that carries the code <code>SALES</code>.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">On first use one Microsoft sign-in window may appear; afterwards sign-in is silent. The report opens with the period <b>year to date up to the last closed month</b> and all companies.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Set the report year, the cut-off month and the companies in the slicer bar. The state is remembered for you and this model.</div></div>
+            </div>
+
+            <div class="arch-panel">
+              <h3>5 · AI cards and Ask your data (optional)</h3>
+              <p class="arch-panel-lead">Nothing separate to configure.</p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">The Azure OpenAI resource, deployment and key entered for Copilot on <b>Power BI Analysis Setup</b> serve the report as well, with <b>Enable Copilot</b> switched on and the capability active under <b>Copilot &amp; agent capabilities</b>.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">By default AI cards are stored per model and shown to every reader whose data produce the same figures. Switch <b>AI Texts per User</b> on the setup page if every user should get cards of their own.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body"><b>Delete AI Texts</b> on the models page removes the stored cards of a model, for example after the model was reloaded.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-card" id="model">
+          <h2>What the model must contain</h2>
+          <p>
+            The report definition names tables, columns and measures of navida's sales template.
+            Measures are found by name in whichever table hosts them, so the BC2Fab and the
+            NAVBI variants of the template both work unchanged. Captions and number formats come
+            from the model at runtime. Optional objects improve the report when present and are
+            skipped when absent.
+          </p>
+          <table class="table-compact">
+            <thead>
+              <tr><th>Object</th><th>Used for</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Measures <code>Net Sales</code>, <code>Order Income</code>, <code>Profit Margin</code>, <code>Profit Margin 2 %</code>, <code>New Customer's Net Sales</code>, <code>Active Customers</code>, <code>Discount %</code>, <code>Order Backlog (key date)</code>, <code>Expected Net Sales</code></td>
+                <td>The nine KPI tiles and the detail sections.</td>
+              </tr>
+              <tr>
+                <td>Measures <code>Invoice Amount</code>, <code>Sales Discount</code>, <code>Credit Amount</code>, <code>Existing Customer's Net Sales</code>, <code>Direct Costs</code>, <code>Credit Ratio _ %</code>, <code>Ø Net Sales per Customer</code></td>
+                <td>The calculation scheme.</td>
+              </tr>
+              <tr>
+                <td>Table <code>Date</code> with <code>Date</code>, <code>Year</code>, <code>Month Number</code></td>
+                <td>Period slicer, trend charts, cumulative chart.</td>
+              </tr>
+              <tr>
+                <td>Table <code>Company</code> with <code>Company Code</code>, <code>Company Name</code></td>
+                <td>Company slicer, per-company view, default breakdown of the free analyses.</td>
+              </tr>
+              <tr>
+                <td>Table <code>Facts</code> with <code>Prepayment Type</code>, <code>Posting Date</code></td>
+                <td>Base filter of the sales model (prepayment documents excluded) and <b>Data as of</b>.</td>
+              </tr>
+              <tr>
+                <td><i>Optional:</i> comparison variants <code>… PY</code>, <code>… YOY</code>, <code>… YOY %</code> per measure</td>
+                <td>Used when present; otherwise the report defines the comparison inside the query.</td>
+              </tr>
+              <tr>
+                <td><i>Optional:</i> field parameter table <code>Chart Dimension 1</code></td>
+                <td>The dimension catalog of the breakdown picker; without it, the model's columns are offered.</td>
+              </tr>
+              <tr>
+                <td><i>Optional:</i> <code>Company Name</code>, <code>Customer Name (Sell-to)</code>, <code>Product Hierarchy Level 1</code>, <code>Salesperson Name (Document)</code></td>
+                <td>Driver dimensions of the AI cards — the largest movers per KPI. A missing column drops that dimension.</td>
+              </tr>
+              <tr>
+                <td><i>Optional:</i> measure <code>No. Rows in Facts</code></td>
+                <td>Presence condition of the value lists in the filter drawer; <code>Net Sales</code> is used otherwise.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="content-card">
+          <h2>If something does not work</h2>
+          <table class="table-compact">
+            <thead>
+              <tr><th>What you see</th><th>What it means</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>“No semantic model is linked to a report yet. Set the Report Code on the Power BI Analysis Models page.”</td>
+                <td>No model carries the code <code>SALES</code>. Set it on the sales model's row (step 2).</td>
+              </tr>
+              <tr>
+                <td>“The sales report is part of the "Sales Analysis" plan …”</td>
+                <td>The user has no Sales Analysis licence. Assign one in the Microsoft 365 admin center (step 3). In sandboxes the message never appears.</td>
+              </tr>
+              <tr>
+                <td>“The report definition references fields this model does not have”</td>
+                <td>The model is not built on the sales template, or measures were renamed. The message lists the missing objects — compare with <a href="#model">What the model must contain</a>.</td>
+              </tr>
+              <tr>
+                <td>“KPIs could not be loaded”</td>
+                <td>The query failed: the user is missing <b>Build</b> permission on the model, or the tenant setting <i>Semantic Model Execute Queries REST API</i> is switched off. <b>Test Connection</b> on the models page shows the underlying error.</td>
+              </tr>
+              <tr>
+                <td>Amounts without currency, percentages as decimals</td>
+                <td>No format refresh has succeeded, or the model is a template app that refuses the definition export. Run <b>Refresh Model Metadata</b>, or maintain the formats under <b>Format Strings</b>.</td>
+              </tr>
+              <tr>
+                <td>The role center action opens the wrong model</td>
+                <td>The code <code>SALES</code> sits on another row. A code can be linked to one model only; move it.</td>
+              </tr>
+              <tr>
+                <td><b>Add AI interpretation</b> and the ✦ are missing</td>
+                <td>Copilot is not enabled: endpoint, deployment and key on the setup page, <b>Enable Copilot</b> on, and the capability active under <b>Copilot &amp; agent capabilities</b>. The setup page shows a status line for each.</td>
+              </tr>
+              <tr>
+                <td>A colleague sees an AI card, you do not</td>
+                <td>Expected: cards are shared only among readers whose data produce the same figures. Request your own card, or let an administrator switch on <b>AI Texts per User</b>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="content-card">
+          <h2>Learn more</h2>
+          <p>
+            <a href="sales-report.html" data-doc-link>Sales Report</a> describes what the report
+            shows and which data the AI features receive;
+            <a href="install.html" data-doc-link>Install</a> covers the base installation and
+            licensing.
+          </p>
+          <h2>Contact us</h2>
+          <p>
+            Need support? Use
+            <a href="#" id="support-email-link" data-user="bc2fab" data-domain="navida.eu" rel="nofollow">
+              this contact link
+            </a>
+            to send us an email.
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+      (function () {
+        const supportLink = document.getElementById('support-email-link');
+        if (!supportLink) {
+          return;
+        }
+        const user = supportLink.dataset.user;
+        const domain = supportLink.dataset.domain;
+        supportLink.addEventListener('click', function (event) {
+          event.preventDefault();
+          window.location.href = 'mailto:' + user + '@' + domain;
+        });
+      })();
+    </script>
+  </body>
+</html>

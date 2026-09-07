@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:image" content="https://docs.bc2fab.com/assets/images/BC2Fabric_icon.png" />
+    <meta property="og:description" content="The Sales Report in BC2Fab - AI Insights — nine sales KPIs against the prior year, a calculation scheme, cumulative sales with outlook, a free breakdown under every KPI, AI interpretation and Ask your data, all computed live by your Power BI semantic model inside Business Central." />
+    <title>Sales Report | BC2Fab - AI Insights</title>
+    <link rel="icon" type="image/x-icon" sizes="any" href="https://www.navida.eu/favicon.ico" />
+    <link rel="shortcut icon" href="https://www.navida.eu/favicon.ico" />
+    <link rel="stylesheet" href="../assets/css/styles.css" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.34.0/tabler-icons.min.css"
+    />
+    <style>
+      .arch-panel-stack { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.25rem; }
+      .arch-panel { background: var(--background-color); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.1rem 1.25rem; }
+      .arch-panel h3 { font-size: 1rem; font-weight: 600; margin: 0 0 0.3rem; color: var(--text-color); }
+      .arch-panel-lead { font-size: 0.875rem; color: var(--muted-text-color); margin: 0 0 1rem; }
+      .arch-step { display: flex; gap: 0.85rem; align-items: flex-start; padding: 0.6rem 0; border-top: 1px solid var(--border-color); }
+      .arch-step:first-of-type { border-top: none; padding-top: 0; }
+      .arch-num {
+        flex: 0 0 23px; height: 23px; border-radius: 50%;
+        background: #eff6ff; color: var(--link-color);
+        font-size: 0.75rem; font-weight: 600;
+        display: flex; align-items: center; justify-content: center; margin-top: 1px;
+      }
+      .arch-step-body { font-size: 0.9rem; line-height: 1.55; color: var(--text-color); }
+      .arch-step-body code, .content-card p code {
+        font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+        font-size: 0.78rem; background: var(--surface-color);
+        padding: 0.05rem 0.35rem; border-radius: 4px; border: 1px solid var(--border-color);
+      }
+      .arch-panel-note {
+        margin: 1rem 0 0; padding: 0.75rem 0.9rem; border-radius: 10px;
+        background: var(--surface-color); border: 1px solid var(--border-color);
+        font-size: 0.85rem; line-height: 1.55; color: var(--muted-text-color);
+      }
+      .arch-panel-note i { vertical-align: -2px; margin-right: 0.4rem; }
+      .req-list { margin: 0; padding-left: 1.1rem; }
+      .req-list li { margin-bottom: 0.5rem; line-height: 1.55; }
+      .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin: 0.75rem 0 0.25rem; }
+      .kpi-tile { border: 1px solid var(--border-color); border-radius: 10px; padding: 0.55rem 0.7rem; background: var(--surface-color); }
+      .kpi-tile b { display: block; font-size: 0.85rem; }
+      .kpi-tile span { font-size: 0.75rem; color: var(--muted-text-color); }
+      @media (max-width: 720px) { .kpi-grid { grid-template-columns: 1fr 1fr; } }
+      .data-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.25rem; }
+      .data-col { border-radius: 14px; padding: 1rem 1.15rem; border: 1.5px solid; }
+      .data-col h3 { display: flex; align-items: center; gap: 0.5rem; font-size: 0.95rem; font-weight: 700; margin: 0 0 0.6rem; }
+      .data-col ul { margin: 0; padding-left: 1.1rem; }
+      .data-col li { font-size: 0.875rem; line-height: 1.55; margin-bottom: 0.4rem; }
+      .data-sent { background: #e6f1fb; border-color: #185fa5; }
+      .data-sent h3 { color: #0c447c; }
+      .data-sent li { color: #143d63; }
+      .data-never { background: #e1f5ee; border-color: #0f6e56; }
+      .data-never h3 { color: #085041; }
+      .data-never li { color: #0b5342; }
+      @media (max-width: 720px) { .data-cols { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <button
+      class="sidebar-toggle"
+      type="button"
+      data-sidebar-toggle
+      aria-expanded="false"
+      aria-controls="doc-sidebar"
+      aria-label="Open navigation"
+    >
+      <span class="sidebar-toggle-icon" aria-hidden="true">☰</span>
+      <span>Menu</span>
+    </button>
+    <div class="sidebar-backdrop" data-sidebar-backdrop></div>
+    <div class="docs-layout">
+      <aside
+        class="sidebar"
+        id="doc-sidebar"
+        data-sidebar
+        aria-label="Documentation navigation"
+      >
+        <div class="sidebar-inner">
+          <h1><a href="https://docs.bc2fab.com">BC2Fab Docs</a></h1>
+
+          <nav>
+            <div class="nav-section">
+              <div class="nav-section-title">Getting Started</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../getting-started/bc2fab.html" data-doc-link>BC2Fab</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../getting-started/quickstart.html" data-doc-link>Quickstart</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Guides</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../guides/architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/prerequisites.html" data-doc-link>Prerequisites</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/install-bc2fab.html" data-doc-link>Install BC2Fab</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/create-bc-queries.html" data-doc-link>Create BC Queries</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">BC2Fab - AI Insights</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="architecture.html" data-doc-link>Architecture</a>
+                </li>
+                <li class="nav-item">
+                  <a href="install.html" data-doc-link>Install</a>
+                </li>
+                <li class="nav-item">
+                  <a href="copilot.html" data-doc-link>Copilot</a>
+                </li>
+                <li class="nav-item">
+                  <a href="ask-your-data.html" data-doc-link>Ask your data</a>
+                </li>
+                <li class="nav-item">
+                  <a href="sales-report.html" data-doc-link>Sales Report</a>
+                </li>
+                <li class="nav-item">
+                  <a href="sales-report-setup.html" data-doc-link>Sales Report setup</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="nav-section">
+              <div class="nav-section-title">Resources</div>
+              <ul class="nav-list">
+                <li class="nav-item">
+                  <a href="../guides/faq.html" data-doc-link>FAQ</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/out-of-the-box-power-bi-reports.html" data-doc-link>Power BI Reports</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/bc-model-accelerator.html" data-doc-link>BC Model Accelerator</a>
+                </li>
+                <li class="nav-item">
+                  <a href="../guides/changelog.html" data-doc-link>Changelog</a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header>
+          <p class="eyebrow">BC2Fab - AI Insights</p>
+          <h1>Sales Report</h1>
+          <p>
+            A ready-made sales report on your sales semantic model, opened with one click from
+            the role center. One page shows how your sales are doing: nine KPIs against the
+            prior-year period, a calculation scheme from orders to result, cumulative sales with
+            an outlook, a free breakdown under every KPI, AI interpretation on request, and
+            <a href="ask-your-data.html">Ask your data</a> anchored to any figure. Every number
+            is computed live by the Power BI engine under the signed-in user's own identity —
+            nothing is copied, nothing is recalculated in the browser. The report is part of the
+            <b>Sales Analysis</b> plan; switching it on takes three steps described on
+            <a href="sales-report-setup.html">Sales Report setup</a>.
+          </p>
+        </header>
+
+        <section class="content-card">
+          <h2>What the report shows</h2>
+          <p>
+            The page reads from top to bottom like a management report. Everything below the
+            slicer bar follows the period, comparison and filters set there.
+          </p>
+          <div class="arch-panel-stack">
+            <div class="arch-panel">
+              <h3>KPI tiles</h3>
+              <p class="arch-panel-lead">Nine sales KPIs, each with its value, the change against the prior-year period and the prior-year value.</p>
+              <div class="kpi-grid">
+                <div class="kpi-tile"><b>Net Sales</b><span>period, vs. prior year</span></div>
+                <div class="kpi-tile"><b>Order Income</b><span>period, vs. prior year</span></div>
+                <div class="kpi-tile"><b>Profit Margin</b><span>period, vs. prior year</span></div>
+                <div class="kpi-tile"><b>Margin %</b><span>ratio, change in percentage points</span></div>
+                <div class="kpi-tile"><b>New Customer's Net Sales</b><span>period, vs. prior year</span></div>
+                <div class="kpi-tile"><b>Active Customers</b><span>period, vs. prior year</span></div>
+                <div class="kpi-tile"><b>Discount %</b><span>ratio, lower is better</span></div>
+                <div class="kpi-tile"><b>Order Backlog</b><span>key-date value, no date window</span></div>
+                <div class="kpi-tile"><b>Expected Net Sales</b><span>outlook, no date window</span></div>
+              </div>
+              <p class="arch-panel-note">
+                <i class="ti ti-info-circle" aria-hidden="true"></i>
+                Order backlog and expected net sales are <b>stock</b> figures: they show the state as of the key date and carry no prior-year comparison. All other KPIs are period figures with the prior-year period alongside.
+              </p>
+            </div>
+
+            <div class="arch-panel">
+              <h3>At a glance (AI)</h3>
+              <p class="arch-panel-lead">On request, the AI writes what moved and why — for the report as a whole, from the report's own figures. See <a href="#ai-cards">AI cards</a>.</p>
+            </div>
+
+            <div class="arch-panel">
+              <h3>KPIs at a glance — the calculation scheme</h3>
+              <p class="arch-panel-lead">The full KPI schema, current period against the prior-year period, switchable between <b>Consolidated</b> and <b>Per company</b>.</p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body"><b>Orders</b> — order income, order backlog, expected net sales.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body"><b>From sales to result</b> — gross sales, less sales discount and credit amount, gives net sales (split into new and existing customers), less direct costs, gives profit margin.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body"><b>Further KPIs</b> — discount %, credit ratio %, margin, active customers, average net sales per customer.</div></div>
+            </div>
+
+            <div class="arch-panel">
+              <h3>Net Sales cumulative (YTD) — actual &amp; expected</h3>
+              <p class="arch-panel-lead">Month by month: the cumulative actual net sales up to the cut-off month, then the expected net sales from the order backlog. The prior year runs alongside for comparison.</p>
+            </div>
+
+            <div class="arch-panel">
+              <h3>KPIs in detail</h3>
+              <p class="arch-panel-lead">One section per KPI, in the order of the tiles. Each section has two parts.</p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body"><b>Overview</b> — the key figures of the KPI, a <b>trend</b> chart over the months of the period against the prior year (a <b>projection</b> chart for the key-date KPIs), and the AI interpretation of this KPI on request.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body"><b>Free analysis</b> — the KPI broken down by a dimension of your choice, by company by default. Pick the grouping from the model's dimension catalog (categories, customers, salespeople, dimensions), add up to four levels, expand a row to drill into the next level, and load more rows in steps of 500. Columns: current period, prior year, change in %.</div></div>
+            </div>
+
+            <div class="arch-panel">
+              <h3>Summary &amp; assessment (AI)</h3>
+              <p class="arch-panel-lead">The closing card: an AI-written summary and assessment of the whole report, on request, marked as AI generated.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-card">
+          <h2>Period, comparison and filters</h2>
+          <ul class="req-list">
+            <li><strong>Report year and cut-off month.</strong> The default is <b>year to date up to the last closed month</b>; alternatives are the current year, the previous year, or any year with a cut-off month of your choice. A cut-off after the last closed month is marked <i>provisional</i>.</li>
+            <li><strong>Comparison.</strong> Always the same window one year earlier — the prior-year period. Ratios compare in percentage points, everything else in absolute terms and in %.</li>
+            <li><strong>Company.</strong> Pick one or more companies; the default is all companies. The per-company view of the calculation scheme and the default breakdown of every free analysis follow the same list.</li>
+            <li><strong>Filter line.</strong> Under the slicer bar the report states its period, the comparison, the selected companies, the base filter of the sales model (prepayment documents excluded) and <b>Data as of</b> — the latest posting date in the model. What you see is what every figure on the page was computed with.</li>
+            <li><strong>Remembered per user.</strong> Period, companies and filters are stored for you and the model, and are there again next time. <b>Reset</b> returns to the defaults.</li>
+          </ul>
+        </section>
+
+        <section class="content-card">
+          <h2>From the report onward</h2>
+          <div class="arch-panel-stack">
+            <div class="arch-panel">
+              <h3>Advanced analysis</h3>
+              <p class="arch-panel-lead">Hands a KPI section over to the analysis mode as a real analysis tab — same model, same filters, same breakdown — and you keep drilling with the full pivot grid. Each KPI keeps its own tab per user; re-opening updates that tab instead of creating another.</p>
+            </div>
+            <div class="arch-panel">
+              <h3>Excel (live)</h3>
+              <p class="arch-panel-lead">Downloads a workbook whose table holds the query of the section with a live connection to the semantic model. Refreshing in Excel re-runs the query under your identity.</p>
+            </div>
+            <div class="arch-panel">
+              <h3>Print</h3>
+              <p class="arch-panel-lead">Opens the browser's print dialog; choose <b>Save as PDF</b>. The print shows the report as it is on screen — expanded levels, sorting, loaded rows, the active view of the calculation scheme and any AI cards — with a header carrying period, comparison, companies, filters, data as of and the print time on every page.</p>
+            </div>
+            <div class="arch-panel">
+              <h3>Ask your data</h3>
+              <p class="arch-panel-lead">A <b>✦</b> on every tile, row, card and chart starts a conversation about exactly that figure. Answers refer to the data of this report, come from live DAX queries, and show every query that ran. Everything on the <a href="ask-your-data.html">Ask your data</a> page applies here.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-card" id="ai-cards">
+          <h2>AI cards</h2>
+          <ul class="req-list">
+            <li><strong>On request, never unasked.</strong> <b>Add AI interpretation</b> writes the card for the report, for a KPI or the closing summary. Cards are marked <i>AI generated</i>.</li>
+            <li><strong>Written from the report's own figures.</strong> The AI receives the KPI values with their prior-year comparison, the calculation scheme, and per KPI the largest increases and decreases by company, customer, product hierarchy and salesperson — aggregated figures, no detail records.</li>
+            <li><strong>Shared where the numbers are the same.</strong> A stored card is shown to every reader whose data produce the same figures — users with a different row-level-security view never see a card written from figures they cannot see. An administrator can switch to <b>AI Texts per User</b> on the setup page instead.</li>
+            <li><strong>Deletable.</strong> <b>Delete AI Texts</b> on the models page removes the stored cards of a model; the next request writes them anew.</li>
+          </ul>
+        </section>
+
+        <section class="content-card">
+          <h2>Your data</h2>
+          <p>
+            The AI features run against an <strong>Azure OpenAI resource in your own
+            subscription</strong>, called server-side from Business Central. No navida service
+            is involved. Everything else on the page — tiles, scheme, charts, breakdowns — is
+            plain DAX against your semantic model and involves no AI at all.
+          </p>
+          <div class="data-cols">
+            <div class="data-col data-sent">
+              <h3><i class="ti ti-arrow-up-right" aria-hidden="true"></i>Sent to your Azure OpenAI resource</h3>
+              <ul>
+                <li>The <b>structure</b> of the semantic model: table, field and measure names with their descriptions</li>
+                <li>For AI cards: the <b>aggregated report figures</b> — KPI values, prior year, deltas, the per-company scheme and the largest movers per driver dimension</li>
+                <li>For the chat: your <b>questions</b>, the anchored figure, and the <b>results of the queries</b> it runs</li>
+              </ul>
+            </div>
+            <div class="data-col data-never">
+              <h3><i class="ti ti-shield-check" aria-hidden="true"></i>The boundaries that hold</h3>
+              <ul>
+                <li>Every query runs <b>as the signed-in user</b> — row-level security limits what the report and the AI can ever read</li>
+                <li>Data travels only between Business Central, your Power BI tenant and <b>your own Azure resource</b></li>
+                <li>Read-only: the report queries the model and never writes anything back</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-card">
+          <h2>Every number from the engine</h2>
+          <p>
+            Prior-year values, changes, year-to-date states and the outlook are either the
+            comparison measures your sales model already carries or measures defined inside the
+            query itself — never arithmetic in the browser. Ratios, distinct counts and
+            semi-additive figures such as active customers are therefore correct at every level,
+            in every breakdown, exactly as in Power BI. <a href="architecture.html">Architecture</a>
+            explains the mechanism.
+          </p>
+        </section>
+
+        <section class="content-card">
+          <h2>Set-up in short</h2>
+          <p>
+            Three things on top of the <a href="install.html">base installation</a>: a sales
+            semantic model built on navida's sales template, the <b>Report Code</b>
+            <code>SALES</code> on that model's row, and the <b>Sales Analysis</b> licence for
+            each report user. The step-by-step guide, the list of what the model must contain and
+            the troubleshooting table are on <a href="sales-report-setup.html">Sales Report setup</a>.
+          </p>
+        </section>
+
+        <section class="content-card">
+          <h2>Contact us</h2>
+          <p>
+            Need support? Use
+            <a href="#" id="support-email-link" data-user="bc2fab" data-domain="navida.eu" rel="nofollow">
+              this contact link
+            </a>
+            to send us an email.
+          </p>
+        </section>
+      </main>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
+    <script>
+      (function () {
+        const supportLink = document.getElementById('support-email-link');
+        if (!supportLink) {
+          return;
+        }
+        const user = supportLink.dataset.user;
+        const domain = supportLink.dataset.domain;
+        supportLink.addEventListener('click', function (event) {
+          event.preventDefault();
+          window.location.href = 'mailto:' + user + '@' + domain;
+        });
+      })();
+    </script>
+  </body>
+</html>

@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:image" content="https://docs.bc2fab.com/assets/images/BC2Fabric_icon.png" />
-    <meta property="og:description" content="Install and configure Analysis Mode for Power BI in Business Central — prerequisites, admin consent, connecting a semantic model and opening your first analysis." />
-    <title>Install | Analysis Mode for Power BI</title>
+    <meta property="og:description" content="Install and configure BC2Fab - AI Insights in Business Central — prerequisites, admin consent, connecting a semantic model and opening your first analysis." />
+    <title>Install | BC2Fab - AI Insights</title>
     <link rel="icon" type="image/x-icon" sizes="any" href="https://www.navida.eu/favicon.ico" />
     <link rel="shortcut icon" href="https://www.navida.eu/favicon.ico" />
     <link rel="stylesheet" href="../assets/css/styles.css" />
@@ -92,7 +92,7 @@
             </div>
 
             <div class="nav-section">
-              <div class="nav-section-title">Analysis Mode for Power BI</div>
+              <div class="nav-section-title">BC2Fab - AI Insights</div>
               <ul class="nav-list">
                 <li class="nav-item">
                   <a href="architecture.html" data-doc-link>Architecture</a>
@@ -105,6 +105,12 @@
                 </li>
                 <li class="nav-item">
                   <a href="ask-your-data.html" data-doc-link>Ask your data</a>
+                </li>
+                <li class="nav-item">
+                  <a href="sales-report.html" data-doc-link>Sales Report</a>
+                </li>
+                <li class="nav-item">
+                  <a href="sales-report-setup.html" data-doc-link>Sales Report setup</a>
                 </li>
               </ul>
             </div>
@@ -132,14 +138,14 @@
 
       <main class="main-content">
         <header>
-          <p class="eyebrow">Analysis Mode for Power BI</p>
+          <p class="eyebrow">BC2Fab - AI Insights</p>
           <h1>Install</h1>
           <p>
-            Analysis Mode for Power BI is installed from <a href="https://marketplace.microsoft.com/en-us/product/dynamics-365-business-central/PUBID.navidainformationssysteme1611067488644%7CAID.analysis_mode_for_power_bi%7CPAPPID.377cb8e1-8ce4-4fc2-ae36-9b529f637391?tab=Overview" target="_blank" rel="noopener">Microsoft AppSource</a>. It signs in with
+            BC2Fab - AI Insights is installed from <a href="https://marketplace.microsoft.com/en-us/product/dynamics-365-business-central/PUBID.navidainformationssysteme1611067488644%7CAID.analysis_mode_for_power_bi%7CPAPPID.377cb8e1-8ce4-4fc2-ae36-9b529f637391?tab=Overview" target="_blank" rel="noopener">Microsoft AppSource</a>. It signs in with
             navida's multi-tenant Microsoft Entra application, so no application registration is
             required in your own tenant; an administrator approves it once. Using your own
             registration instead is supported and described below, and the optional Copilot is
-            enabled in a separate step with an Azure OpenAI resource of your own.
+            enabled in a separate step with an Azure OpenAI resource of your own. The <a href="sales-report.html">Sales Report</a> of the Sales Analysis plan builds on these steps and has its own <a href="sales-report-setup.html">setup page</a>.
           </p>
         </header>
 
@@ -165,7 +171,7 @@
             <div class="arch-panel">
               <h3>1 · Install and grant access</h3>
               <p class="arch-panel-lead">Done once per environment, by an administrator.</p>
-              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">Install <b>Analysis Mode for Power BI</b> from <a href="https://marketplace.microsoft.com/en-us/product/dynamics-365-business-central/PUBID.navidainformationssysteme1611067488644%7CAID.analysis_mode_for_power_bi%7CPAPPID.377cb8e1-8ce4-4fc2-ae36-9b529f637391?tab=Overview" target="_blank" rel="noopener">Microsoft AppSource</a> into your Business Central environment.</div></div>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">Install <b>BC2Fab - AI Insights</b> from <a href="https://marketplace.microsoft.com/en-us/product/dynamics-365-business-central/PUBID.navidainformationssysteme1611067488644%7CAID.analysis_mode_for_power_bi%7CPAPPID.377cb8e1-8ce4-4fc2-ae36-9b529f637391?tab=Overview" target="_blank" rel="noopener">Microsoft AppSource</a> into your Business Central environment.</div></div>
               <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body"><b>Allow HttpClient Requests</b> is switched on <b>automatically by the installation</b> — installing the app is the consent to let it call the Power BI service. Nothing to do here on a fresh install. Only after <b>copying an environment</b>: Business Central then resets the setting for every app, so switch it on again under <b>Extension Management</b> → select the app → <b>Configure</b>. The <b>Power BI Analysis Setup</b> page shows the current state under <b>Outbound HTTP Requests</b>.</div></div>
               <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Assign the permission sets: <code>NBI Analysis Admin</code> for administrators, <code>NBI Analysis User</code> for everyone who will build analyses.</div></div>
               <div class="arch-step"><div class="arch-num">4</div><div class="arch-step-body">Open <b>Power BI Analysis Setup</b> (search for it with Tell Me). The <b>Status</b> field confirms which application is in use and where its credential comes from.</div></div>
@@ -213,13 +219,21 @@
                 <a href="copilot.html">Copilot</a>, <a href="ask-your-data.html">Ask your data</a>.
               </div>
             </div>
+
+            <div class="arch-panel">
+              <h3>5 · Set up the Sales Report (Sales Analysis plan)</h3>
+              <p class="arch-panel-lead">Only for the Sales Analysis plan; the full guide is on <a href="sales-report-setup.html">Sales Report setup</a>.</p>
+              <div class="arch-step"><div class="arch-num">1</div><div class="arch-step-body">Register your <b>sales semantic model</b> (built on navida's sales template) on <b>Power BI Analysis Models</b> — via <b>Add Model…</b> or <b>Get Standard Reporting Models</b>.</div></div>
+              <div class="arch-step"><div class="arch-num">2</div><div class="arch-step-body">Set <b>Report Code</b> to <code>SALES</code> on that row. Tell Me and the role centers open the model of that code.</div></div>
+              <div class="arch-step"><div class="arch-num">3</div><div class="arch-step-body">Assign the <b>Sales Analysis</b> licence and the permission set <code>NBI Sales Analysis</code> to the report users, then open <b>Sales Report (Power BI)</b> from a role center.</div></div>
+            </div>
           </div>
         </section>
 
         <section class="content-card" id="licensing">
           <h2>Licensing</h2>
           <p>
-            <strong>Analysis Mode for Power BI</strong> is licensed <strong>per user per month</strong> and sold
+            <strong>BC2Fab - AI Insights</strong> is licensed <strong>per user per month</strong> and sold
             directly through Microsoft AppSource — current pricing is shown on the <a href="https://marketplace.microsoft.com/en-us/product/dynamics-365-business-central/PUBID.navidainformationssysteme1611067488644%7CAID.analysis_mode_for_power_bi%7CPAPPID.377cb8e1-8ce4-4fc2-ae36-9b529f637391?tab=Overview" target="_blank" rel="noopener">AppSource listing</a>.
             Every subscription starts with a <strong>one-month free trial</strong> that can be cancelled at
             any time during the trial.
@@ -230,6 +244,7 @@
             <li><strong>Without a licence</strong> a user can still open the setup page and the model list; opening an analysis then shows a message pointing to the licence assignment instead of the designer.</li>
             <li><strong>Sandbox environments</strong> are not licence-enforced, so you can evaluate the app in a sandbox before buying.</li>
             <li><strong>Partner support:</strong> delegated administrators (CSP partner roles) have access without consuming a licence, so your partner can configure and troubleshoot.</li>
+            <li><strong>Plans:</strong> <b>Analysis Mode</b> is the base plan and is part of every plan. <b>Sales Analysis</b> includes Analysis Mode and adds the <a href="sales-report.html">Sales Report</a>; a user on Sales Analysis needs no second licence. Further report plans will follow the same model.</li>
             <li><strong>Copilot</strong> is included in the app licence — no separate plan and no surcharge. The AI consumption runs on your own Azure OpenAI resource and is billed by Microsoft Azure, so you keep full control over model choice and cost.</li>
           </ul>
         </section>
@@ -237,7 +252,7 @@
         <section class="content-card">
           <h2>Optional settings</h2>
           <p>
-            <strong>Number formats.</strong> Choose <b>Refresh Format Strings</b> on the model
+            <strong>Number formats.</strong> Choose <b>Refresh Model Metadata</b> on the model
             row to take currency, percentage and decimal formats from the model definition —
             this works on Pro and Fabric/Premium workspaces alike. It takes about 15 seconds.
             The user who runs it needs write permission on the model (workspace role Member or
@@ -316,6 +331,9 @@
           <p>
             <a href="architecture.html" data-doc-link>Architecture</a> explains how queries are
             evaluated, how subtotals are produced, and which components run in which tenant.
+          </p>
+          <p>
+            <a href="sales-report.html" data-doc-link>Sales Report</a> describes the ready-made report of the Sales Analysis plan, and <a href="sales-report-setup.html" data-doc-link>Sales Report setup</a> the three steps to switch it on.
           </p>
           <h2>Contact us</h2>
           <p>
