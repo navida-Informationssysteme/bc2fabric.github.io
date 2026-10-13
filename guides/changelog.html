@@ -133,6 +133,23 @@
             </thead>
             <tbody>
               <tr>
+                <td>13.10.2026</td>
+                <td>V46</td>
+                <td>BC App</td>
+                <td>
+                  New action <strong>Clean Record deletions</strong> on the BC2Fab Setup page:
+                  <ul>
+                    <li>Removes logged record deletions older than 14 days in the current company.</li>
+                    <li>
+                      Can also be scheduled as a job queue entry (codeunit 72830576
+                      <code>NBI Clean Record Deletions</code>), which runs without confirmation.
+                      Create one job queue entry per company.
+                    </li>
+                    <li>Requires the <code>NBI BC2FABRIC ADMIN</code> permission set.</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
                 <td>13.07.2026</td>
                 <td>V1.7</td>
                 <td>Fabric Workload</td>
@@ -164,6 +181,26 @@
                 </td>
               </tr>
               <tr>
+                <td>30.04.2026</td>
+                <td>V43</td>
+                <td>BC App</td>
+                <td>
+                  New features &amp; improvements:
+                  <ul>
+                    <li>
+                      New API endpoints <code>tableCaptions</code>, <code>fieldCaptions</code> and
+                      <code>fieldOptionCaptions</code> with translated captions of tables, fields and
+                      option values, including the <code>Company</code> table.
+                    </li>
+                    <li>
+                      New field <strong>Language for local silver layer</strong> on the BC2Fab Setup page
+                      sets the language of these captions. If left blank, the current session language is used.
+                    </li>
+                    <li>New API endpoint <code>appVersion</code> returns the installed BC2Fab app version.</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
                 <td>28.04.2026</td>
                 <td>V1.5</td>
                 <td>Fabric Workload</td>
@@ -178,7 +215,7 @@
                       (e.g. <code>Sales Line ID (PK)</code>, <code>Item ID (No.)</code>) with a company prefix
                       for multi-company support. Conditional foreign keys (e.g. Sales Line → Item / Resource / G/L Account)
                       are resolved via <code>CASE WHEN</code> on the <code>Type</code> field, producing single-column
-                      relationships that are Direct Lake compatible and navigable by AI agents.
+                      relationships that are navigable by AI agents. For Direct Lake consumption, materialize the view results as Delta tables; see <a href="bc-model-accelerator.html#consuming-silver-views">SQL views and Direct Lake</a>.
                     </li>
                     <li>
                       Robustness improvements: reliable handling of late-arriving BC data to prevent
