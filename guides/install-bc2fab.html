@@ -176,6 +176,34 @@
           </ol>
         </div>
 
+        <h3 id="multiple-companies">
+          <a class="anchor-link" href="#multiple-companies">Mirroring more than one company</a>
+        </h3>
+        <div class="callout callout-warning">
+          <strong>Required for every mirrored company:</strong> the BC2Fabric Table Config is stored per company.
+          Business Central only logs a deletion when the table setup of the company where the record is deleted
+          has <strong>Deletion Logging Active</strong>. Without the table setup in a company, records deleted
+          there remain in the mirrored database.
+        </div>
+        <p>
+          BC2Fab reads which tables to mirror from the first company in the company list of the BC2Fab workload.
+          Configure the table setup in that company, then copy it to all other companies that are mirrored:
+        </p>
+        <ol>
+          <li>
+            On the <strong>BC2Fabric Table Config</strong> page of the first company, under <strong>Tasks</strong>,
+            select <strong>Synchronize to companies</strong>.
+          </li>
+          <li>
+            Select all other companies that are mirrored and confirm. The existing table setup of the selected
+            companies is replaced by the setup of the current company.
+          </li>
+        </ol>
+        <p>
+          Run <strong>Synchronize to companies</strong> again whenever you change the table setup, and whenever you
+          add a company to the BC2Fab workload.
+        </p>
+
         <p>Prefer to see the process in action? Watch the video below for a walkthrough of the table setup steps.</p>
 
         <div class="video-embed">
@@ -243,7 +271,10 @@
                 <a href="prerequisites.html#key-vault-uri">Key Vault URI</a>
               </li>
               <li>The name of the environment</li>
-              <li>List of companies that should be loaded.</li>
+              <li>
+                List of companies that should be loaded. Each of these companies needs the BC2Fabric table setup; see
+                <a href="#multiple-companies">Mirroring more than one company</a>.
+              </li>
             </ul>
           </li>
           <li>Click <strong>Install</strong> to start the setup. This will perform the following steps:</li>
