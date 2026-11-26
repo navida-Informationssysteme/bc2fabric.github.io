@@ -9,6 +9,23 @@
     <link rel="icon" type="image/x-icon" sizes="any" href="https://www.navida.eu/favicon.ico" />
     <link rel="shortcut icon" href="https://www.navida.eu/favicon.ico" />
     <link rel="stylesheet" href="../assets/css/styles.css" />
+    <style>
+      .code-pre{
+        margin:8px 0;
+        padding:12px;
+        background:#0b1020;
+        color:#e5e7eb;
+        overflow:auto;
+        font-size:13px;
+        line-height:1.45;
+        border-radius:6px;
+      }
+      .code-pre code{
+        background:none;
+        color:inherit;
+        padding:0;
+      }
+    </style>
   </head>
   <body>
     <button
@@ -132,6 +149,63 @@
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td>26.11.2026</td>
+                <td>V29.0.0.0</td>
+                <td>BC App</td>
+                <td>
+                  Stability improvement:
+                  <ul>
+                    <li>
+                      In rare cases, when the read-only replica of Business Central was unavailable and
+                      the load ran against the primary database, uncommitted data could reach the mirror.
+                      The BC2Fab queries now use the new <code>ReadState = ReadCommitted</code> property
+                      of Business Central 2026 release wave 2 (BC29), which prevents this.
+                    </li>
+                    <li>
+                      Query generator updated: on BC29 and later, generated queries include
+                      <code>ReadState = ReadCommitted</code> and the generated <code>app.json</code> uses
+                      runtime 18.0.
+                    </li>
+                    <li>
+                      Available for BC29 and later. Environments on earlier versions stay on V26.5.0.x
+                      until their update to BC29.
+                    </li>                  </ul>
+                  <div class="callout callout-warning">
+                    <strong>Update your own queries after the switch to BC29.</strong>
+                    In queries you created, add this line directly after
+                    <code>DataAccessIntent = ReadOnly;</code>:
+                    <pre class="code-pre"><code>    DataAccessIntent = ReadOnly;
+    ReadState = ReadCommitted;</code></pre>
+                    Set <code>"runtime": "18.0"</code> in the <code>app.json</code> of your extension,
+                    raise its version and deploy it again as described in
+                    <a href="create-bc-queries.html">Create BC Queries</a>. Queries you generate from
+                    now on with the query generator already include the line.
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>26.11.2026</td>
+                <td>V1.8</td>
+                <td>Fabric Workload</td>
+                <td>
+                  New features &amp; improvements:
+                  <ul>
+                    <li>
+                      Stability improvement: more reliable incremental loads, so no changes are missed
+                      while transactions are still open in Business Central.
+                    </li>
+                    <li>
+                      Deletion logging is now checked in every mirrored company. A company with incomplete
+                      setup is reported at the end of the run, after all companies have been loaded.
+                    </li>
+                    <li>
+                      New run type to create translated views in the <code>bc_silver_local</code> schema,
+                      in the language set in the BC2Fab Setup.
+                    </li>
+                  </ul>
+                </td>
+              </tr>
               <tr>
                 <td>13.10.2026</td>
                 <td>V46</td>
